@@ -1,0 +1,76 @@
+plugins:
+  # See https://k9scli.io/topics/plugins/
+  raw-logs-follow:
+    shortCut: Shift-L
+    description: kubectl logs -f
+    scopes:
+    - containers
+    command: kubectl
+    background: false
+    args:
+    - logs
+    - -f
+    - $POD
+    - -n
+    - $NAMESPACE
+    - --container
+    - $COL-NAME
+    - --context
+    - $CONTEXT
+  export-logs:
+    shortCut: Shift-S
+    description: kubectl logs >
+    scopes:
+    - po
+    - containers
+    command: kubectl
+    background: false
+    args:
+    - logs
+    - $POD
+    - -n
+    - $NAMESPACE
+    - \>
+    - ~/Desktop/test.log
+  log-less:
+    shortCut: Shift-L
+    description: "logs|less"
+    scopes:
+    - po
+    command: bash
+    background: false
+    args:
+    - -c
+    - '"$@" | less'
+    - dummy-arg
+    - kubectl
+    - logs
+    - $NAME
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+    - --kubeconfig
+    - $KUBECONFIG
+  log-less-container:
+    shortCut: Shift-L
+    description: "logs|less"
+    scopes:
+    - containers
+    command: bash
+    background: false
+    args:
+    - -c
+    - '"$@" | less'
+    - dummy-arg
+    - kubectl
+    - logs
+    - -c
+    - $NAME
+    - $POD
+    - -n
+    - $NAMESPACE
+    - --context
+    - $CONTEXT
+    - --kubeconfig
+    - $KUBECONFIG
