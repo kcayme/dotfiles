@@ -1,0 +1,11 @@
+*
+!*/
+
+// follow the same pattern
+!tmux/*
+!nvim/*
+!k9s/*
+!ghostty/*
+!fish/*
+
+!.gitignore
