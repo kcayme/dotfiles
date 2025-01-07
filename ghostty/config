@@ -1,0 +1,16 @@
+font-family = "JetBrains Mono"
+font-size = 13
+font-thicken
+
+theme = nord
+background-opacity = 1
+cursor-style = block
+
+keybind = global:cmd+`=toggle_quick_terminal
+keybind = cmd+a=unbind
+keybind = cmd+z=unbind
+
+shell-integration = fish
+command = /usr/local/bin/fish --login --interactive
+
+term = xterm-256color
