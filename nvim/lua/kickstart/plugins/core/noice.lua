@@ -22,7 +22,7 @@ return {
         enabled = true, -- enables the Noice messages UI
         view = "notify", -- default view for messages
         view_error = "virtualtext", -- view for errors
-        view_warn = "notify", -- view for warnings
+        view_warn = "virtualtext", -- view for warnings
         view_history = "messages", -- view for :messages
         view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
       },
@@ -78,6 +78,7 @@ return {
           filter = {
             event = "notify",
             min_height = 10,
+            max_width = 15,
           },
           view = "split",
         },
@@ -91,6 +92,22 @@ return {
         },
       },
     })
+
+    local ok, notify = pcall(require, "notify")
+    if not ok then
+      return
+    end
+
+    notify.setup({
+      timeout = 3000,
+      render = "minimal",
+      stages = "fade_in_slide_out",
+      top_down = false,
+      on_open = function(win)
+        vim.api.nvim_win_set_config(win, { focusable = false })
+      end,
+    })
+
     require("telescope").load_extension("noice")
   end,
 }
