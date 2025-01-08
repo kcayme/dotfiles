@@ -6,6 +6,9 @@ theme = nord
 background-opacity = 1
 cursor-style = block
 
+window-padding-x = 1
+window-padding-y = 1
+
 keybind = global:cmd+`=toggle_quick_terminal
 keybind = cmd+a=unbind
 keybind = cmd+z=unbind
@@ -14,3 +17,5 @@ shell-integration = fish
 command = /usr/local/bin/fish --login --interactive
 
 term = xterm-256color
+
+quick-terminal-animation-duration = 0
