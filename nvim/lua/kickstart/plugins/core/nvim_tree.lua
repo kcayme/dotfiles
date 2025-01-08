@@ -43,7 +43,7 @@ return {
         if api.tree.is_visible() and not api.tree.is_tree_buf() then
           vim.cmd("NvimTreeFocus")
         else
-          vim.cmd("NvimTreeToggle")
+          vim.cmd("NvimTreeFindFileToggle")
         end
       end, {})
     end,

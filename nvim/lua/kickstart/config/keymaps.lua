@@ -1,5 +1,3 @@
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -8,6 +6,14 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 --vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 local map = vim.keymap.set
+
+map("n", "<Esc>", function()
+  -- clear highlights
+  vim.cmd("nohlsearch")
+  -- clear notifications
+  require("notify").dismiss()
+end, { desc = "Trouble Toggle" })
+
 -- ============ DIAGNOSTICS ============
 map("n", "<leader>[", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 map("n", "<leader>]", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
