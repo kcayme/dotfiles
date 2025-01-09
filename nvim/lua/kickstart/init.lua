@@ -15,7 +15,7 @@ require("kickstart.config.options")
 require("kickstart.config.autocmds")
 
 require("lazy").setup({
-  { import = "kickstart.plugins.themes.nordic" },
+  { import = "kickstart.plugins.themes.catpuccin" },
   { import = "kickstart.plugins.lsp" },
   { import = "kickstart.plugins.core" },
 }, {
