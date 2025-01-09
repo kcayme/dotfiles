@@ -7,7 +7,7 @@ background-opacity = 1
 cursor-style = block
 
 window-padding-x = 1
-window-padding-y = 1
+window-padding-y = 0
 
 keybind = global:cmd+`=toggle_quick_terminal
 keybind = cmd+a=unbind
