@@ -38,31 +38,34 @@ return {
       -- you can enable a preset for easier configuration
       presets = {
         bottom_search = false, -- use a classic bottom cmdline for search
-        command_palette = true, -- position the cmdline and popupmenu together
+        command_palette = false, -- position the cmdline and popupmenu together
         long_message_to_split = true, -- long messages will be sent to a split
         lsp_doc_border = true, -- add a border to hover docs and signature help
       },
       views = {
+        cmdline = {
+          enabled = true, -- enables the Noice cmdline UI
+          view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+        },
         cmdline_popup = {
           position = {
-            row = 10,
+            row = 15,
             col = "50%",
           },
           size = {
-            width = 70,
+            width = 65,
             height = "auto",
           },
         },
         popupmenu = {
           relative = "editor",
-          position = "auto",
-          -- {
-          --   row = 17,
-          --   col = "50%",
-          -- },
+          position = {
+            row = 19,
+            col = "50%",
+          },
           size = {
-            width = 60,
-            height = 15,
+            width = 65,
+            height = "auto",
           },
           border = {
             style = "rounded",
