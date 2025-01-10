@@ -52,6 +52,8 @@ map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
 map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
+map({ "n" }, "-", "15<C-W><", { desc = "Decrease buffer width" })
+map({ "n" }, "=", "15<C-W>>", { desc = "Increase buffer width" })
 
 -- ============ MOTIONS AND EDITING ============
 -- save file
