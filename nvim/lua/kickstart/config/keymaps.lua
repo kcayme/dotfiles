@@ -50,6 +50,8 @@ map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
 -- buffers
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertial split" })
+map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
+map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
 
 -- ============ MOTIONS AND EDITING ============
 -- save file
