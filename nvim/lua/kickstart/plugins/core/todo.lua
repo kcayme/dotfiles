@@ -1,9 +1,11 @@
 return {
-  -- Highlight todo, notes, etc in comments
   {
     "folke/todo-comments.nvim",
-    event = "VimEnter",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = { signs = false },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
   },
 }
