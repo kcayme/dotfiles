@@ -32,7 +32,7 @@ return {
           side = "right",
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
         },
       })
 
