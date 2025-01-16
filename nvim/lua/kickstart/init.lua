@@ -1,3 +1,6 @@
+-- nvchad base46 plugin cache
+vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -15,13 +18,11 @@ require("kickstart.config.options")
 require("kickstart.config.autocmds")
 
 require("lazy").setup({
-  { import = "kickstart.plugins.themes.catpuccin" },
   { import = "kickstart.plugins.lsp" },
   { import = "kickstart.plugins.core" },
+  { import = "kickstart.plugins.themes.catpuccin" },
 }, {
   ui = {
-    -- If you have a Nerd Font, set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
       cmd = "⌘",
       config = "🛠",
@@ -40,5 +41,10 @@ require("lazy").setup({
     lazy = false,
   },
 })
+
+-- apply nvchad base46
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+  dofile(vim.g.base46_cache .. v)
+end
 
 require("kickstart.config.keymaps")
