@@ -3,7 +3,7 @@
 
 // follow the same pattern
 !tmux/*
-!nvim/*
+!nvim/**/*
 !k9s/*
 !ghostty/*
 !fish/*
