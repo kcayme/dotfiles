@@ -32,7 +32,8 @@ return {
           side = "right",
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
+          git_ignored = false,
         },
       })
 

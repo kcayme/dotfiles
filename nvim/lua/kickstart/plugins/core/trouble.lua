@@ -2,6 +2,7 @@ return {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
     opts = {
       position = "bottom", -- position of the list can be: bottom, top, left, right
       height = 10, -- height of the trouble list when position is top or bottom
@@ -47,15 +48,29 @@ return {
       auto_fold = false, -- automatically fold a file trouble list at creation
       auto_jump = { "lsp_definitions" }, -- for the given modes, automatically jump if there is only a single result
       include_declaration = { "lsp_references", "lsp_implementations", "lsp_definitions" }, -- for the given modes, include the declaration of the current symbol in the results
-      signs = {
-        -- icons / text used for a diagnostic
-        error = "",
-        warning = "",
-        hint = "",
-        information = "",
-        other = "",
-      },
+      -- signs = {
+      --   -- icons / text used for a diagnostic
+      --   error = "",
+      --   warning = "",
+      --   hint = "",
+      --   information = "",
+      --   other = "",
+      -- },
       use_diagnostic_signs = false, -- enabling this will use the signs defined in your lsp client
     },
+    config = function()
+      local map = vim.keymap.set
+
+      map({ "n" }, "<leader>tx", "<cmd>Trouble diagnostics toggle<cr>", { desc = "Trouble Toggle" })
+      -- map({ "n" }, "<leader>tw", function()
+      --   require("trouble").toggle("diagnostics")
+      -- end, { desc = "Trouble Workspace Diagnostics" })
+      -- map({ "n" }, "<leader>td", function()
+      --   require("trouble").toggle("document_diagnostics")
+      -- end, { desc = "Trouble Document Diagnostics" })
+      map({ "n" }, "<leader>tq", "<cmd>Trouble quickfix toggle<cr>", { desc = "Trouble Quickfix" })
+      map({ "n" }, "<leader>tl", "<cmd>Trouble lsp toggle<cr>", { desc = "Trouble Loclist" })
+      map({ "n" }, "tR", "<cmd>Trouble lsp_references toggle<cr>", { desc = "Trouble LSP References" })
+    end,
   },
 }

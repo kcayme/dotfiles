@@ -12,32 +12,13 @@ map("n", "<Esc>", function()
   vim.cmd("nohlsearch")
   -- clear notifications
   require("notify").dismiss()
-end, { desc = "Trouble Toggle" })
+end, { desc = "Clear" })
 
 -- ============ DIAGNOSTICS ============
 map("n", "<leader>[", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 map("n", "<leader>]", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
-map("n", "<leader>tx", function()
-  require("trouble").toggle()
-end, { desc = "Trouble Toggle" })
-map("n", "<leader>tw", function()
-  require("trouble").toggle("workspace_diagnostics")
-end, { desc = "Trouble Workspace Diagnostics" })
-map("n", "<leader>td", function()
-  require("trouble").toggle("document_diagnostics")
-end, { desc = "Trouble Document Diagnostics" })
-map("n", "<leader>tq", function()
-  require("trouble").toggle("quickfix")
-end, { desc = "Trouble Quickfix" })
-map("n", "<leader>tl", function()
-  require("trouble").toggle("loclist")
-end, { desc = "Trouble Loclist" })
-map("n", "tR", function()
-  require("trouble").toggle("lsp_references")
-end, { desc = "Trouble LSP References" })
 
 -- ============ NAVIGATIONS ============
 -- bufferline
@@ -48,6 +29,7 @@ map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buff
 map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
 
 -- buffers
+map({ "n" }, "<Leader>bb", "b#", { desc = "Go to previous buffer" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
