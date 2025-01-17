@@ -21,10 +21,10 @@ return {
         -- This is a current Neovim limitation.
         enabled = true, -- enables the Noice messages UI
         view = "notify", -- default view for messages
-        view_error = "virtualtext", -- view for errors
-        view_warn = "virtualtext", -- view for warnings
+        view_error = "messages", -- view for errors
+        view_warn = "notify", -- view for warnings
         view_history = "messages", -- view for :messages
-        view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+        view_search = "messages", -- view for search count messages. Set to `false` to disable
       },
       lsp = {
         progress = { enabled = false },
@@ -81,7 +81,7 @@ return {
           filter = {
             event = "notify",
             min_height = 10,
-            max_width = 15,
+            max_width = 10,
           },
           view = "split",
         },
@@ -89,6 +89,14 @@ return {
         {
           filter = {
             event = "lsp",
+            kind = "message",
+          },
+          opts = { skip = true },
+        },
+        {
+          view = "messages",
+          filter = {
+            event = "msg_show",
             kind = "message",
           },
           opts = { skip = true },
@@ -104,7 +112,7 @@ return {
     notify.setup({
       timeout = 3000,
       render = "minimal",
-      stages = "fade_in_slide_out",
+      stages = "fade",
       top_down = false,
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { focusable = false })

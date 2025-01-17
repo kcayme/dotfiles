@@ -12,7 +12,7 @@ map("n", "<Esc>", function()
   vim.cmd("nohlsearch")
   -- clear notifications
   require("notify").dismiss()
-end, { desc = "Clear" })
+end, { desc = "Clear notifs and highlights" })
 
 -- ============ DIAGNOSTICS ============
 map("n", "<leader>[", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
@@ -27,7 +27,7 @@ map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
 map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Close buffer" })
 map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
 map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
-
+map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 -- buffers
 map({ "n" }, "<Leader>bb", "b#", { desc = "Go to previous buffer" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
