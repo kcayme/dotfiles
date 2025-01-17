@@ -1,11 +1,11 @@
 return {
-  -- { "nvim-tree/nvim-web-devicons", lazy = true },
-  -- {
-  --   "nvchad/ui",
-  --   config = function()
-  --     require("nvchad")
-  --   end,
-  -- },
+  { "nvim-tree/nvim-web-devicons", lazy = true },
+  {
+    "nvchad/ui",
+    config = function()
+      require("nvchad")
+    end,
+  },
   {
     "nvchad/base46",
     lazy = false,
