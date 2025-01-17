@@ -11,6 +11,7 @@ M.ui = {
   statusline = {
     enabled = false,
   },
+  telescope = { style = "bordered" },
 }
 
 return M
