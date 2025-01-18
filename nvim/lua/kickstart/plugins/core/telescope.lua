@@ -37,13 +37,8 @@ return {
       },
     },
     config = function()
-      -- [[ Configure Telescope ]]
-      -- See `:help telescope` and `:help telescope.setup()`
       local actions = require("telescope.actions")
       require("telescope").setup({
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
         defaults = {
           mappings = {
             i = {
@@ -100,7 +95,7 @@ return {
       end, { desc = "[S]earch [/] in Open Files" })
 
       -- Shortcut for searching your neovim configuration files
-      vim.keymap.set("n", "<leader>sn", function()
+      vim.keymap.set("n", "<leader>fn", function()
         builtin.find_files({ cwd = vim.fn.stdpath("config") })
       end, { desc = "[S]earch [N]eovim files" })
     end,
@@ -109,16 +104,6 @@ return {
   {
     "nvim-telescope/telescope-ui-select.nvim",
     config = function()
-      -- This is your opts table
-      --require("telescope").setup({
-      --  extensions = {
-      --    ["ui-select"] = {
-      --      require("telescope.themes").get_dropdown({
-      --        -- even more opts
-      --      }),
-      --    },
-      --  },
-      --})
       -- To get ui-select loaded and working with telescope, you need to call
       -- load_extension, somewhere after setup function:
       require("telescope").load_extension("ui-select")
