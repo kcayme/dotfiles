@@ -21,8 +21,7 @@ require("lazy").setup({
     -- version = false, -- always use the latest git commit
     version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  --install = { colorscheme = { "nightfly" } },
-  checker = { enabled = true }, -- automatically check for plugin updates
+  -- checker = { enabled = true }, -- automatically check for plugin updates
 })
 
 -- setup keymaps
