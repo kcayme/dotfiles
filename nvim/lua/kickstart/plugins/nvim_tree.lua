@@ -46,6 +46,7 @@ return {
         else
           vim.cmd("NvimTreeFindFileToggle")
         end
+        vim.cmd("NvimTreeRefresh")
       end, {})
     end,
   },
