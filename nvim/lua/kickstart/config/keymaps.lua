@@ -57,21 +57,10 @@ vim.api.nvim_set_keymap("n", "k", "gk", { silent = true, noremap = false })
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", { silent = true, noremap = false })
 map("n", "<C-s>", "<cmd>w<cr>", { silent = false, desc = "Save File" })
 
--- Hop.vim bindings
-local hop = require("hop")
-local hop_position = require("hop.hint").HintPosition
-map("n", "<Leader>hb", "<cmd>HopWordBC<CR>", { noremap = true, desc = "Hop prev words" })
-map("n", "<Leader>hw", "<cmd>HopWordAC<CR>", { noremap = true, desc = "Hop next words" })
-map("n", "<Leader>hj", "<cmd>HopLineStart<CR>", { noremap = true, desc = "Hop next line" })
--- map("n", "<Leader>hk", "<cmd>HopLineStartBC<CR>", { noremap = true, desc = "Hop prev lines" })
---map("n", "<Leader>hf", "<cmd>HopPattern<CR>", { noremap = false })
-map({ "n", "v" }, "<Leader>he", function()
-  hop.hint_words({ hint_position = hop_position.END })
-end, { noremap = true })
--- visual mode (easymotion-like)
-vim.api.nvim_set_keymap("v", "<Leader>hw", "<cmd>HopWordAC<CR>", { noremap = true })
-vim.api.nvim_set_keymap("v", "<Leader>hb", "<cmd>HopWordBC<CR>", { noremap = true })
-vim.api.nvim_set_keymap("v", "<Leader>hj", "<cmd>HopLineStart<CR>", { noremap = true })
+-- Comment
+-- map("n", "<C-_>", "gcc", { noremap = true, desc = "Linewise comment" })
+vim.api.nvim_set_keymap("n", "<C-_>", "gcc", { noremap = false, desc = "Linewise comment toggle" })
+vim.api.nvim_set_keymap("v", "<C-_>", "gc", { noremap = false, desc = "Linewise comment toggle" })
 
 -- nvim-surround
 vim.api.nvim_set_keymap("n", "<Leader>lw", "ysiw", { noremap = false, desc = "Surround [w]ord" })
@@ -97,8 +86,3 @@ map("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
 map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
   desc = "Search on current file",
 })
-
--- Comment
--- map("n", "<C-_>", "gcc", { noremap = true, desc = "Linewise comment" })
-vim.api.nvim_set_keymap("n", "<C-_>", "gcc", { noremap = false, desc = "Linewise comment toggle" })
-vim.api.nvim_set_keymap("v", "<C-_>", "gc", { noremap = false, desc = "Linewise comment toggle" })
