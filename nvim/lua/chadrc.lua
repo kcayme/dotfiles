@@ -1,3 +1,4 @@
+-- configs for base46.lua
 local M = {}
 
 M.base46 = {
@@ -11,6 +12,7 @@ M.ui = {
   statusline = {
     enabled = false,
   },
+  telescope = { style = "bordered" },
 }
 
 return M
