@@ -1,3 +1,4 @@
+-- configs for base46.lua
 local M = {}
 
 M.base46 = {
