@@ -9,6 +9,9 @@ fzf --fish | source
 # environment variables
 set -x XDG_CONFIG_HOME "$HOME/.config"
 
+# remove welcome message
+set fish_greeting
+
 # start ssh-agent
 fish_ssh_agent
 ssh-add ~/.ssh/id_amihan
