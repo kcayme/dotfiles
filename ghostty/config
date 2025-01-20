@@ -1,3 +1,6 @@
+shell-integration = fish
+command = /usr/local/bin/fish --login --interactive
+
 font-family = "JetBrains Mono NL"
 font-size = 13
 font-thicken
@@ -13,8 +16,6 @@ keybind = global:cmd+`=toggle_quick_terminal
 keybind = cmd+a=unbind
 keybind = cmd+z=unbind
 
-shell-integration = fish
-command = /usr/local/bin/fish --login --interactive
 
 term = xterm-256color
 
