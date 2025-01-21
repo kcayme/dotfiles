@@ -21,6 +21,8 @@ return {
         -- vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
         vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
         vim.keymap.set("n", "<C-e>", api.tree.close, opts("Close Tree"))
+        vim.keymap.set("n", "<C-[>", api.tree.change_root_to_parent, opts("Up"))
+        vim.keymap.set("n", "<C-]>", api.tree.change_root_to_node, opts("CD"))
       end
 
       -- local tree_cb = require("nvim-tree.config.nvim_tree_callback")
