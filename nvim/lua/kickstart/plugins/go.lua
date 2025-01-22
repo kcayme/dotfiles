@@ -9,7 +9,7 @@ return {
     },
     config = function()
       require("go").setup({
-        trouble = true,
+        trouble = false,
         -- verbose = false,
         -- diagnostic = false,
         -- diagnostic = { -- set diagnostic to false to disable vim.diagnostic.config setup,
