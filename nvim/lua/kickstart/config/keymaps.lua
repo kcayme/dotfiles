@@ -21,15 +21,8 @@ map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rr
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- ============ NAVIGATIONS ============
--- bufferline
-map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
-map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
-map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Close buffer" })
-map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
-map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
-map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 -- buffers
-map({ "n" }, "<Leader>bb", "b#", { desc = "Go to previous buffer" })
+map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertial split" })
 map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
