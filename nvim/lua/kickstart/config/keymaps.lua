@@ -29,6 +29,8 @@ map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" 
 map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
 map({ "n" }, "-", "15<C-W><", { desc = "Decrease buffer width" })
 map({ "n" }, "=", "15<C-W>>", { desc = "Increase buffer width" })
+map({ "n" }, "+", "5<C-W>+", { desc = "Increase buffer height" })
+map({ "n" }, "_", "5<C-W>-", { desc = "Decrease buffer height" })
 
 -- ============ MOTIONS AND EDITING ============
 -- save file
