@@ -34,6 +34,11 @@ return {
         "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },
+      {
+        "<leader>tt",
+        "<cmd>Trouble todo toggle<cr>",
+        desc = "Todo List (Trouble)",
+      },
     },
     -- config = function()
     -- map("n", "<leader>tx", function()
