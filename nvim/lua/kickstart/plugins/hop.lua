@@ -22,11 +22,6 @@ return {
         -- hop.hint_words({ hint_position = hop_position.END })
         hop.hint_camel_case({ hint_position = hop_position.END })
       end, { noremap = true })
-
-      -- visual mode (easymotion-like)
-      vim.api.nvim_set_keymap("v", "<Leader>hw", "<cmd>HopWordAC<CR>", { noremap = true })
-      vim.api.nvim_set_keymap("v", "<Leader>hb", "<cmd>HopWordBC<CR>", { noremap = true })
-      vim.api.nvim_set_keymap("v", "<Leader>hj", "<cmd>HopLineStart<CR>", { noremap = true })
     end,
   },
 }
