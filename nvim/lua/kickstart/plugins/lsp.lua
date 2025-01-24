@@ -19,10 +19,6 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself
-          -- many times.
-          --
           -- In this case, we create a function that lets us more easily define mappings specific
           -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc)
@@ -60,7 +56,6 @@ return {
 
           -- Rename the variable under your cursor
           --  Most Language Servers support renaming across files, etc.
-          --map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
           map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
 
           -- Execute a code action, usually your cursor needs to be on top of an error
@@ -74,9 +69,6 @@ return {
           map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
           map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-          --vim.keymap.set("n", "gd", function()
-          --  vim.lsp.buf.definition()
-          --end, { desc = "[G]oto [D]efinition" })
 
           vim.keymap.set("n", "<leader>gs", function()
             vim.lsp.buf.workspace_symbol()
@@ -91,7 +83,6 @@ return {
           end, { desc = "[G]oto [R]eferences" })
           --vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, {})
           --vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, {})
-          --vim.keymap.set("n", "<leader>gn", function() vim.lsp.buf.rename() end, {desc="[G]oto [R]eferences"})
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -125,7 +116,7 @@ return {
         gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
-        -- tsserver = {},
+        tsserver = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes { ...},
@@ -170,6 +161,7 @@ return {
 
       require("mason-lspconfig").setup({
         automatic_installation = true,
+        ensure_installed = {},
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
