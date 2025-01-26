@@ -37,8 +37,8 @@ map({ "n" }, "_", "5<C-W>-", { desc = "Decrease buffer height" })
 map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", {})
 
 -- indent on visual and normal mode
-map({ "n", "v" }, "<tab>", ">")
-map({ "n", "v" }, "<s-tab>", "<")
+map({ "n", "v" }, "<tab>", ">>")
+map({ "n", "v" }, "<s-tab>", "<<")
 
 -- fold
 map({ "n" }, "zx", "za", { desc = "Toggle fold under cursor" })
