@@ -3,7 +3,7 @@ if status is-interactive
 end
 
 set fish_greeting
-
+set -x XDG_CONFIG_HOME "$HOME/.config"
 switch (uname)
     case 'Linux'
         # Check if it's specifically Ubuntu
@@ -11,7 +11,6 @@ switch (uname)
             if string match -q "ID=ubuntu" (cat /etc/os-release)
                 set -gx PATH /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $PATH
                 # environment variables
-                set -x XDG_CONFIG_HOME "$HOME/.config"
                 set -gx PATH $PATH:/usr/local/go/bin
                 # Set GOPATH
                 set -gx GOPATH $HOME/go
