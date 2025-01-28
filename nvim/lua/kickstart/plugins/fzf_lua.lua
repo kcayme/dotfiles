@@ -223,6 +223,20 @@ return {
           prompt = "History❯ ",
           include_current_session = true,
         },
+        previewers = {
+          codeaction = {
+            diff_opts = { ctxlen = 3 },
+          },
+          -- codeaction_native = {
+          -- diff_opts = { ctxlen = 3 },
+          -- },
+        },
+        lsp = {
+          code_actions = {
+            previewer = "codeaction_native",
+            preview_pager = "delta --side-by-side --width=$FZF_PREVIEW_COLUMNS",
+          },
+        },
       })
 
       local map = vim.keymap.set
