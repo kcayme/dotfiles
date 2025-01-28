@@ -26,34 +26,24 @@ return {
             vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          -- Jump to the definition of the word under your cursor.
-          --  This is where a variable was first declared, or where a function is defined, etc.
-          --  To jump back, press <C-T>.
-          --map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-
-          -- Find references for the word under your cursor.
-          --map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+          local fzf = require("fzf-lua")
 
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map("<leader>gi", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+          map("<leader>gi", fzf.lsp_implementations, "[G]oto [I]mplementation")
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map("<leader>gt", require("telescope.builtin").lsp_type_definitions, "[G]o [T]ype Definition")
+          map("<leader>gt", fzf.lsp_typedefs, "[G]o [T]ype Definition")
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map("<leader>@", function()
-            require("telescope.builtin").lsp_document_symbols({
-              symbol_width = 50,
-            })
-          end, "[D]ocument [S]ymbols")
+          map("<leader>@", fzf.lsp_document_symbols, "[D]ocument [S]ymbols")
 
           -- Fuzzy find all the symbols in your current workspace
           --  Similar to document symbols, except searches over your whole project.
-          map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+          map("<leader>ws", fzf.lsp_live_workspace_symbols, "[W]orkspace [S]ymbols")
 
           -- Rename the variable under your cursor
           --  Most Language Servers support renaming across files, etc.
@@ -105,19 +95,6 @@ return {
         end,
       })
 
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP Specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
-      capabilities = vim.tbl_deep_extend(
-        "force",
-        capabilities,
-        require("cmp_nvim_lsp").default_capabilities(),
-        require("blink.cmp").get_lsp_capabilities()
-      )
-
       local servers = {
         -- clangd = {},
         gopls = {},
@@ -138,8 +115,6 @@ return {
                   "${3rd}/luv/library",
                   unpack(vim.api.nvim_get_runtime_file("", true)),
                 },
-                -- If lua_ls is really slow on your computer, you can try this instead:
-                -- library = { vim.env.VIMRUNTIME },
               },
               completion = {
                 callSnippet = "Replace",
@@ -161,6 +136,14 @@ return {
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+      capabilities = vim.tbl_deep_extend(
+        "force",
+        capabilities,
+        require("cmp_nvim_lsp").default_capabilities(capabilities),
+        require("blink.cmp").get_lsp_capabilities(capabilities)
+      )
       require("mason-lspconfig").setup({
         automatic_installation = true,
         ensure_installed = {},
@@ -204,9 +187,9 @@ return {
   --   config = function()
   --     -- See `:help cmp`
   --     local cmp = require("cmp")
-  --     -- local luasnip = require("luasnip")
-  --     -- luasnip.config.setup({})
-  --     -- require("luasnip.loaders.from_vscode").lazy_load()
+  --     local luasnip = require("luasnip")
+  --     luasnip.config.setup({})
+  --     require("luasnip.loaders.from_vscode").lazy_load()
   --     local has_words_before = function()
   --       unpack = unpack or table.unpack
   --       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -277,6 +260,7 @@ return {
   --         { name = "nvim_lsp" },
   --         { name = "luasnip" },
   --         { name = "path" },
+  --         { name = "buffer" },
   --       },
   --     })
   --   end,
@@ -296,9 +280,9 @@ return {
         "saghen/blink.compat",
         opts = {},
         version = "*",
-        lazy = true,
+        lazy = false,
       },
-      "saadparwaiz1/cmp_luasnip",
+      -- "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
     },
@@ -357,7 +341,7 @@ return {
       },
 
       snippets = {
-        preset = "luasnip",
+        preset = "default",
         expand = function(args)
           return require("luasnip").lsp_expand(args)
         end,
@@ -373,13 +357,13 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer", "nvim_lsp" },
         providers = {
           lsp = {
             name = "lsp",
             enabled = true,
             module = "blink.cmp.sources.lsp",
-            score_offset = 1000,
+            score_offset = 100,
           },
           snippets = {
             name = "snippets",
@@ -390,7 +374,8 @@ return {
           path = {
             name = "Path",
             module = "blink.cmp.sources.path",
-            score_offset = 25,
+            score_offset = 500,
+            enabled = true,
             fallbacks = { "snippets", "buffer" },
             opts = {
               trailing_slash = false,
@@ -406,13 +391,14 @@ return {
             enabled = true,
             max_items = 3,
             module = "blink.cmp.sources.buffer",
-            score_offset = 15, -- the higher the number, the higher the priority
+            score_offset = 600, -- the higher the number, the higher the priority
           },
-          -- cmp_lsp = {
-          --   name = "nvim_lsp",
-          --   enabled = true,
-          --   module = "blink.compat.source.cmp_nvim_lsp",
-          -- },
+          nvim_lsp = {
+            name = "cmp_nvim_lsp",
+            enabled = true,
+            module = "blink.compat.source",
+            score_offset = 950,
+          },
           -- cmp_path = {
           --   name = "path",
           --   enabled = true,
