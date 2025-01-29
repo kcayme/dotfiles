@@ -14,9 +14,6 @@ return {
     },
     config = function()
       --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd("LspAttach", {
         group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
         callback = function(event)
@@ -42,7 +39,7 @@ return {
 
           -- Fuzzy find all the symbols in your current workspace
           --  Similar to document symbols, except searches over your whole project.
-          map("<leader>ws", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
+          map("<leader>gs", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
           -- Rename the variable under your cursor
           --  Most Language Servers support renaming across files, etc.
@@ -50,30 +47,23 @@ return {
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
           map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap
           map(",", vim.lsp.buf.hover, "Hover Documentation")
 
-          map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+          -- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+          map("gD", picker.lsp_definitions, "[G]oto [D]eclaration")
 
-          map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-
-          vim.keymap.set("n", "<leader>gs", function()
-            vim.lsp.buf.workspace_symbol()
-          end, { desc = "[G]oto [S]ymbol" })
+          -- map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+          map("gd", picker.lsp_definitions, "[G]oto [D]efinition")
 
           vim.keymap.set("i", "<C-h>", function()
             vim.lsp.buf.signature_help()
           end, { desc = "Signature Help" })
 
-          vim.keymap.set("n", "gr", function()
-            vim.lsp.buf.references()
-          end, { desc = "[G]oto [R]eferences" })
-          --vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, {})
-          --vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, {})
+          map("gr", picker.lsp_references, "[G]oto [R]eferences")
 
           -- The following two autocommands are used to highlight references of the
           -- word under your cursor when your cursor rests there for a little while.
@@ -331,7 +321,7 @@ return {
         },
       },
 
-      signature = { enabled = false },
+      signature = { enabled = true },
       appearance = {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
         -- Useful for when your theme doesn't support blink.cmp
