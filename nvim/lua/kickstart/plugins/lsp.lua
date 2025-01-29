@@ -26,24 +26,23 @@ return {
             vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
           end
 
-          local fzf = require("fzf-lua")
-
+          local picker = require("snacks").picker
           -- Jump to the implementation of the word under your cursor.
           --  Useful when your language has ways of declaring types without an actual implementation.
-          map("<leader>gi", fzf.lsp_implementations, "[G]oto [I]mplementation")
+          map("<leader>gi", picker.lsp_implementations, "[G]oto [I]mplementation")
 
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map("<leader>gt", fzf.lsp_typedefs, "[G]o [T]ype Definition")
+          map("<leader>gt", picker.lsp_type_definitions, "[G]o [T]ype Definition")
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map("<leader>@", fzf.lsp_document_symbols, "[D]ocument [S]ymbols")
+          map("<leader>@", picker.lsp_symbols, "[D]ocument [S]ymbols")
 
           -- Fuzzy find all the symbols in your current workspace
           --  Similar to document symbols, except searches over your whole project.
-          map("<leader>ws", fzf.lsp_live_workspace_symbols, "[W]orkspace [S]ymbols")
+          map("<leader>ws", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
           -- Rename the variable under your cursor
           --  Most Language Servers support renaming across files, etc.
@@ -52,7 +51,7 @@ return {
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
-          map("<leader>ca", fzf.lsp_code_actions, "[C]ode [A]ction")
+          map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
           -- Opens a popup that displays documentation about the word under your cursor
           --  See `:help K` for why this keymap
