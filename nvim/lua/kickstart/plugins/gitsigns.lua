@@ -4,15 +4,31 @@ return {
     config = function()
       require("gitsigns").setup({
         signs = {
-          add = { text = "+" },
+          add = { text = "┃" },
           change = { text = "~" },
           delete = { text = "_" },
           topdelete = { text = "‾" },
           changedelete = { text = "~" },
           untracked = { text = "U" },
         },
+        signs_staged = {
+          add = { text = "┃" },
+          change = { text = "~" },
+          delete = { text = "_" },
+          topdelete = { text = "‾" },
+          changedelete = { text = "~" },
+          untracked = { text = "U" },
+        },
+        -- signs = {
+        --   add = { text = "+" },
+        --   change = { text = "~" },
+        --   delete = { text = "_" },
+        --   topdelete = { text = "‾" },
+        --   changedelete = { text = "~" },
+        --   untracked = { text = "U" },
+        -- },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+        numhl = true, -- Toggle with `:Gitsigns toggle_numhl`
         linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
         word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
         watch_gitdir = {
@@ -43,6 +59,9 @@ return {
           col = 1,
         },
       })
+
+      local map = vim.keymap.set
+      map("n", "<leader>bl", "<cmd>Gitsigns blame<cr>", { desc = "Git Blame" })
     end,
   },
 }
