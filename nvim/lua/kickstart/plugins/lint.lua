@@ -42,7 +42,6 @@ return {
       vim.keymap.set("n", "<leader>lt", function()
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
         lint.try_lint()
-        lint.try_lint("cspell")
       end, { desc = "Trigger linting for current file" })
     end,
   },

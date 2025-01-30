@@ -118,7 +118,5 @@ return {
         vim.api.nvim_win_set_config(win, { focusable = false })
       end,
     })
-
-    -- require("telescope").load_extension("noice")
   end,
 }
