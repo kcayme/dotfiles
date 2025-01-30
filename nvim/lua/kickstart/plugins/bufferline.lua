@@ -15,7 +15,8 @@ return {
           end,
           --separator_style = "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
           indicator = {
-            style = "underline",
+            icon = "▎", -- this should be omitted if indicator style is not 'icon'
+            style = "icon",
           },
         },
       })
