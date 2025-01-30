@@ -35,10 +35,14 @@ return {
           },
         },
 
-        --sections = { lualine_x = { }, },
         sections = {
           lualine_a = { "mode" },
-          lualine_b = { "FugitiveHead", "branch", "diff", "diagnostics" },
+          lualine_b = {
+            "FugitiveHead",
+            "branch",
+            "diff",
+            "diagnostics",
+          },
           lualine_c = {
             "filename",
             {
@@ -47,17 +51,17 @@ return {
             },
           },
           lualine_x = {
+            "searchcount",
             "encoding",
+          },
+          lualine_y = {
             "fileformat",
             "filetype",
-            {
-              require("noice").api.statusline.mode.get,
-              cond = require("noice").api.statusline.mode.has,
-              color = { fg = "#ff9e64" },
-            },
+            "progress",
           },
-          lualine_y = { "progress" },
-          lualine_z = { "location" },
+          lualine_z = {
+            "location",
+          },
         },
         inactive_sections = {
           lualine_a = {},

@@ -77,13 +77,13 @@ return {
         desc = "Git Browse",
         mode = { "n", "v" },
       },
-      {
-        "<leader>gb",
-        function()
-          Snacks.git.blame_line()
-        end,
-        desc = "Git Blame Line",
-      },
+      -- {
+      --   "<leader>gb",
+      --   function()
+      --     Snacks.git.blame_line()
+      --   end,
+      --   desc = "Git Blame Line",
+      -- },
       {
         "<leader>gf",
         function()
