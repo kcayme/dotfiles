@@ -1,12 +1,13 @@
 shell-integration = fish
 command = /usr/local/bin/fish --login --interactive
 
-font-family = "JetBrains Mono NL"
-font-size = 13
+font-family = "GeistMono NFM"
+font-size = 14
 font-thicken
 
 theme = nord
 background-opacity = 1
+shell-integration-features = no-cursor
 cursor-style = block
 
 window-padding-x = 1
