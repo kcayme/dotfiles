@@ -23,8 +23,8 @@ map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]ui
 -- ============ NAVIGATIONS ============
 -- buffers
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
-map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertial split" })
-map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertial split" })
+map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertical split" })
+map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Vertical split" })
 map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
 map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
 map({ "n" }, "-", "15<C-W><", { desc = "Decrease buffer width" })
