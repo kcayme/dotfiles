@@ -52,11 +52,6 @@ vim.api.nvim_set_keymap("n", "k", "gk", { silent = true, noremap = false })
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", { silent = true, noremap = false })
 map("n", "<C-s>", "<cmd>w<cr>", { silent = false, desc = "Save File" })
 
--- Comment
--- map("n", "<C-_>", "gcc", { noremap = true, desc = "Linewise comment" })
-vim.api.nvim_set_keymap("n", "<C-_>", "gcc", { noremap = false, desc = "Linewise comment toggle" })
-vim.api.nvim_set_keymap("v", "<C-_>", "gc", { noremap = false, desc = "Linewise comment toggle" })
-
 -- nvim-surround
 vim.api.nvim_set_keymap("n", "<Leader>lw", "ysiw", { noremap = false, desc = "Surround [w]ord" })
 vim.api.nvim_set_keymap("n", "<Leader>lW", "ysiW", { noremap = false, desc = "Surround [W]ord" })
