@@ -18,6 +18,6 @@ keybind = cmd+a=unbind
 keybind = cmd+z=unbind
 
 
-term = xterm-256color
+#term = xterm-256color
 
 quick-terminal-animation-duration = 0
