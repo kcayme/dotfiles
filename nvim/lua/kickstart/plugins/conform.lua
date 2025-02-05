@@ -17,6 +17,7 @@ return {
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         css = { "prettierd", stop_after_first = true },
         yaml = { "prettierd", stop_after_first = true },
+        sql = { "sql_formatter", stop_after_first = true },
       },
     },
   },
