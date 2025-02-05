@@ -2,6 +2,7 @@ shell-integration = fish
 command = /usr/local/bin/fish --login --interactive
 
 font-family = "GeistMono NFM"
+font-feature = -calt, -liga
 font-size = 14
 font-thicken
 
