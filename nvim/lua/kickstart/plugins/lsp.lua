@@ -1,4 +1,10 @@
 return {
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  },
   { -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -115,8 +121,6 @@ return {
           },
         },
       }
-
-      require("mason").setup()
 
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
