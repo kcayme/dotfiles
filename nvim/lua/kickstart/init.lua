@@ -18,10 +18,9 @@ require("kickstart.config.options")
 require("kickstart.config.autocmds")
 
 require("lazy").setup({
-  { import = "kickstart.plugins" },
-  --{ import = "kickstart.themes.catpuccin" },
   { import = "kickstart.themes.tokyonight" },
   { import = "kickstart.themes.base46" },
+  { import = "kickstart.plugins" },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {
