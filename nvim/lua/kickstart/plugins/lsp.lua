@@ -202,6 +202,7 @@ return {
 
       -- Toggle linting
       vim.keymap.set("n", "<leader>lt", function()
+        vim.diagnostic.config({ virtual_text = false })
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
         lint.try_lint()
       end, { desc = "Trigger linting for current file" })
