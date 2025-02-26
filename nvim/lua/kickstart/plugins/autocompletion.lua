@@ -89,6 +89,10 @@ return {
         end,
       },
 
+      cmdline = {
+        enabled = false,
+      },
+
       sources = {
         default = { "lsp", "path", "snippets", "buffer", "nvim_lsp" },
         providers = {
@@ -138,7 +142,7 @@ return {
           --   module = "blink.compat.source",
           -- },
         },
-        cmdline = {},
+        -- cmdline = {},
       },
     },
     opts_extend = { "sources.default", "sources.compat" },
