@@ -82,3 +82,5 @@ vim.o.smartindent = true
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
+
+vim.diagnostic.config({ virtual_text = false })
