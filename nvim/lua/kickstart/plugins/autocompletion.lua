@@ -44,7 +44,7 @@ return {
       },
 
       completion = {
-        list = { selection = { preselect = true, auto_insert = true } },
+        list = { selection = { preselect = true, auto_insert = false } },
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
         ghost_text = { enabled = false },
         accept = {
@@ -146,6 +146,7 @@ return {
       },
     },
     opts_extend = { "sources.default", "sources.compat" },
+    fuzzy = { implementation = "prefer_rust_with_warning" },
   },
 
   -- { -- Autocompletion
