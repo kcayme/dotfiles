@@ -21,6 +21,9 @@ map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rr
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- ============ NAVIGATIONS ============
+map("n", "gh", "^", { desc = "Go to start of line" })
+map("n", "gl", "$", { desc = "Go to end of line" })
+
 -- buffers
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertical split" })
