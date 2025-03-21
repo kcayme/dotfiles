@@ -69,14 +69,14 @@ return {
         end,
         desc = "Rename File",
       },
-      {
-        "<leader>gB",
-        function()
-          Snacks.gitbrowse()
-        end,
-        desc = "Git Browse",
-        mode = { "n", "v" },
-      },
+      -- {
+      --   "<leader>gB",
+      --   function()
+      --     Snacks.gitbrowse()
+      --   end,
+      --   desc = "Git Browse",
+      --   mode = { "n", "v" },
+      -- },
       -- {
       --   "<leader>gb",
       --   function()
