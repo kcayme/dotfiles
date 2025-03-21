@@ -1,4 +1,22 @@
+-- git-related plugins
 return {
+  "kdheepak/lazygit.nvim",
+  cmd = {
+    "LazyGit",
+    -- "LazyGitConfig",
+    -- "LazyGitCurrentFile",
+    -- "LazyGitFilter",
+    -- "LazyGitFilterCurrentFile",
+  },
+  -- optional for floating window border decoration
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+  },
+  -- setting the keybinding for LazyGit with 'keys' is recommended in
+  -- order to load the plugin when the command is run for the first time
+  keys = {
+    { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+  },
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
     config = function()
@@ -63,5 +81,9 @@ return {
       local map = vim.keymap.set
       map("n", "<leader>bl", "<cmd>Gitsigns blame<cr>", { desc = "Git Blame" })
     end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
   },
 }
