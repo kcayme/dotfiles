@@ -64,6 +64,8 @@ return {
             keys = {
               ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
               ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
+              ["<c-l>"] = { "edit_vsplit", mode = { "i", "n" } },
+              ["<c-h>"] = { "edit_split", mode = { "i", "n" } },
             },
           },
         },
