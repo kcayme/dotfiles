@@ -5,7 +5,7 @@ return {
       require("bufferline").setup({
         options = {
           themable = true,
-          numbers = "ordinal",
+          numbers = "buffer_id",
           always_show_bufferline = true,
           separator_style = "slant",
           diagnostics = "nvim_lsp",
