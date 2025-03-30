@@ -52,7 +52,7 @@ return {
       completion = {
         list = { selection = { preselect = true, auto_insert = false } },
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
-        ghost_text = { enabled = false },
+        ghost_text = { enabled = true, show_with_menu = false },
         accept = {
           auto_brackets = {
             enabled = true,
