@@ -3,7 +3,13 @@ return {
     "saghen/blink.cmp",
     event = "InsertEnter",
     dependencies = {
-      "rafamadriz/friendly-snippets",
+      {
+        "rafamadriz/friendly-snippets",
+        config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
+        end,
+      },
       {
         "L3MON4D3/LuaSnip",
         version = "v2.*",
@@ -16,8 +22,8 @@ return {
         lazy = false,
       },
       -- "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-path",
+      -- "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-path",
     },
 
     version = "*",
@@ -94,7 +100,7 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "nvim_lsp" },
+        default = { "lsp", "path", "snippets", "buffer" },
         providers = {
           lsp = {
             name = "lsp",
@@ -130,12 +136,12 @@ return {
             module = "blink.cmp.sources.buffer",
             score_offset = 600, -- the higher the number, the higher the priority
           },
-          nvim_lsp = {
-            name = "cmp_nvim_lsp",
-            enabled = true,
-            module = "blink.compat.source",
-            score_offset = 950,
-          },
+          -- nvim_lsp = {
+          --   name = "cmp_nvim_lsp",
+          --   enabled = true,
+          --   module = "blink.compat.source",
+          --   score_offset = 950,
+          -- },
           -- cmp_path = {
           --   name = "path",
           --   enabled = true,
