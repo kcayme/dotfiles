@@ -15,8 +15,6 @@ map("n", "<Esc>", function()
 end, { desc = "Clear notifs and highlights" })
 
 -- ============ DIAGNOSTICS ============
--- map("n", "<leader>[", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
--- map("n", "<leader>]", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
 ---@param jumpCount number
 local function jumpWithVirtLineDiags(jumpCount)
   pcall(vim.api.nvim_del_augroup_by_name, "jumpWithVirtLineDiags") -- prevent autocmd for repeated jumps
