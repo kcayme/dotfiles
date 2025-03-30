@@ -18,6 +18,9 @@ return {
             icon = "▎", -- this should be omitted if indicator style is not 'icon'
             style = "icon",
           },
+          pick = {
+            alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
+          },
         },
       })
 
@@ -31,6 +34,14 @@ return {
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bC", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
+      for i = 1, 5, 1 do
+        map(
+          "n",
+          string.format("<leader>%d", i),
+          string.format("<cmd>BufferLineGoToBuffer %d<cr>", i),
+          { desc = "Pick buffer by visible position" }
+        )
+      end
     end,
   },
 }
