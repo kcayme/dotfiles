@@ -17,13 +17,43 @@ end, { desc = "Clear notifs and highlights" })
 -- ============ DIAGNOSTICS ============
 -- map("n", "<leader>[", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 -- map("n", "<leader>]", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
-map("n", "<leader>[", function()
-  vim.diagnostic.jump({ count = 1, float = true })
-end, { desc = "Go to previous [D]iagnostic message" })
+---@param jumpCount number
+local function jumpWithVirtLineDiags(jumpCount)
+  pcall(vim.api.nvim_del_augroup_by_name, "jumpWithVirtLineDiags") -- prevent autocmd for repeated jumps
 
-map("n", "<leader>]", function()
-  vim.diagnostic.jump({ count = -1, float = true })
-end, { desc = "Go to next [D]iagnostic message" })
+  vim.diagnostic.jump({ count = jumpCount })
+
+  local initialVirtTextConf = vim.diagnostic.config().virtual_text
+  vim.diagnostic.config({
+    virtual_text = false,
+    virtual_lines = { current_line = true },
+  })
+
+  vim.defer_fn(function() -- deferred to not trigger by jump itself
+    vim.api.nvim_create_autocmd("CursorMoved", {
+      desc = "User(once): Reset diagnostics virtual lines",
+      once = true,
+      group = vim.api.nvim_create_augroup("jumpWithVirtLineDiags", {}),
+      callback = function()
+        vim.diagnostic.config({ virtual_lines = false, virtual_text = initialVirtTextConf })
+      end,
+    })
+  end, 1)
+end
+
+vim.keymap.set("n", "<leader>]", function()
+  jumpWithVirtLineDiags(1)
+end, { desc = "󰒕 Next diagnostic" })
+vim.keymap.set("n", "<leader>[", function()
+  jumpWithVirtLineDiags(-1)
+end, { desc = "󰒕 Prev diagnostic" })
+-- map("n", "<leader>[", function()
+--   vim.diagnostic.jump({ count = 1, float = true })
+-- end, { desc = "Go to previous [D]iagnostic message" })
+--
+-- map("n", "<leader>]", function()
+--   vim.diagnostic.jump({ count = -1, float = true })
+-- end, { desc = "Go to next [D]iagnostic message" })
 
 map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
