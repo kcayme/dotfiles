@@ -77,6 +77,9 @@ map({ "n" }, "_", "5<C-W>-", { desc = "Decrease buffer height" })
 -- save file
 map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", {})
 
+-- keep previously yanked word
+map({ "v" }, "p", '"_dP', { noremap = false })
+
 -- indent on visual and normal mode
 map({ "n", "v" }, "<tab>", ">>")
 map({ "n", "v" }, "<s-tab>", "<<")
