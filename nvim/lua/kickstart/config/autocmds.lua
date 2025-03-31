@@ -44,7 +44,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>gs", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
     -- Rename the variable under your cursor
-    --  Most Language Servers support renaming across files, etc.
     map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
 
     -- Execute a code action, usually your cursor needs to be on top of an error
