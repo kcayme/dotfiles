@@ -106,7 +106,7 @@ return {
             name = "lsp",
             enabled = true,
             module = "blink.cmp.sources.lsp",
-            score_offset = 100,
+            score_offset = 1000,
           },
           snippets = {
             name = "snippets",
