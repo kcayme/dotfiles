@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map(",", vim.lsp.buf.hover, "Hover Documentation")
 
     -- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-    map("gD", picker.lsp_definitions, "[G]oto [D]eclaration")
+    map("gD", picker.lsp_declarations, "[G]oto [D]eclaration")
 
     -- map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
     map("gd", picker.lsp_definitions, "[G]oto [D]efinition")
