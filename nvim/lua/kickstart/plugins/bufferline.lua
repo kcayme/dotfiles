@@ -44,7 +44,7 @@ return {
       map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Close buffer" })
       map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
-      map("n", "<leader>bC", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
+      map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
       for i = 1, 5, 1 do
         map(
