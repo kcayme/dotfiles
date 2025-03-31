@@ -56,7 +56,7 @@ return {
           { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
         },
         lsp_progress_done = {
-          { "✔ ", hl_group = "NoiceLspProgressSpinner" },
+          { "✅ ", hl_group = "NoiceLspProgressSpinner" },
           { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
           { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
         },
