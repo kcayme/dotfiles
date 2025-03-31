@@ -19,13 +19,6 @@ vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
   callback = function(event)
-    -- Prefer LSP folding if client supports it
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client and client:supports_method("textDocument/foldingRange") then
-      local win = vim.api.nvim_get_current_win()
-      vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
-    end
-
     -- In this case, we create a function that lets us more easily define mappings specific
     -- for LSP related items. It sets the mode, buffer and description for us each time.
     local map = function(keys, func, desc)
@@ -90,6 +83,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
         buffer = event.buf,
         callback = vim.lsp.buf.clear_references,
       })
+    end
+
+    -- Prefer LSP folding if client supports it
+    if client and client:supports_method("textDocument/foldingRange") then
+      local win = vim.api.nvim_get_current_win()
+      vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
     end
   end,
 })
