@@ -27,12 +27,38 @@ return {
         view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
       },
       lsp = {
-        progress = { enabled = false },
+        progress = {
+          enabled = true,
+          format = "lsp_progress",
+          format_done = "lsp_progress_done",
+          throttle = 1000 / 30, -- frequency to update lsp progress message
+          view = "mini",
+        },
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
           ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+        },
+      },
+      format = {
+        lsp_progress = {
+          -- {
+          --   "{progress} ",
+          --   key = "progress.percentage",
+          --   contents = {
+          --     { "{data.progress.message} " },
+          --   },
+          -- },
+          "({data.progress.percentage}%) ",
+          { "{spinner} ", hl_group = "NoiceLspProgressSpinner" },
+          { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+          { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
+        },
+        lsp_progress_done = {
+          { "✔ ", hl_group = "NoiceLspProgressSpinner" },
+          { "{data.progress.title} ", hl_group = "NoiceLspProgressTitle" },
+          { "{data.progress.client} ", hl_group = "NoiceLspProgressClient" },
         },
       },
       -- you can enable a preset for easier configuration
@@ -43,6 +69,9 @@ return {
         lsp_doc_border = true, -- add a border to hover docs and signature help
       },
       views = {
+        notify = {
+          replace = true,
+        },
         cmdline = {
           enabled = true, -- enables the Noice cmdline UI
           view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
