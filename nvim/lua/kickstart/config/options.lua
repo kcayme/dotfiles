@@ -65,6 +65,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 999
 
 vim.g.autoformat = true
+vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 vim.g.lazygit_config = true
 
