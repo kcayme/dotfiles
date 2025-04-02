@@ -1,13 +1,16 @@
 return {
   {
     "akinsho/bufferline.nvim",
+    dependencies = {
+      "famiu/bufdelete.nvim",
+    },
     config = function()
       require("bufferline").setup({
         options = {
           themable = true,
           -- numbers = "both",
           numbers = function(opts)
-            return string.format("%s  %s", opts.ordinal, opts.id)
+            return string.format("%s %s", opts.ordinal, opts.raise(opts.id))
           end,
           always_show_bufferline = true,
           separator_style = "slant",
@@ -33,6 +36,7 @@ return {
           pick = {
             alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
           },
+          close_command = ":Bdelete",
         },
       })
 
@@ -41,7 +45,7 @@ return {
       map("n", "(", "<cmd>BufferLineMovePrev<cr>", {})
       map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
       map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
-      map("n", "<leader>bd", "<cmd>bd<cr>", { desc = "Close buffer" })
+      map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
       map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
