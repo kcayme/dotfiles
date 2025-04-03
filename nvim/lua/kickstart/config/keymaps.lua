@@ -52,6 +52,8 @@ map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]ui
 -- ============ NAVIGATIONS ============
 map("n", "gh", "^", { desc = "Go to start of line" })
 map("n", "gl", "$", { desc = "Go to end of line" })
+map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up with scrolloff" })
+map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
 
 -- buffers
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
@@ -84,8 +86,8 @@ map({ "n" }, "zcu", "zo", { desc = "Recursive unfold under cursor" })
 map({ "n" }, "zf", "zM", { desc = "Fold all" })
 map({ "n" }, "zu", "zR", { desc = "Unfold all" })
 
-vim.api.nvim_set_keymap("n", "j", "gj", { silent = true, noremap = false })
-vim.api.nvim_set_keymap("n", "k", "gk", { silent = true, noremap = false })
+vim.api.nvim_set_keymap("n", "j", "gjzz", { silent = true, noremap = false })
+vim.api.nvim_set_keymap("n", "k", "gkzz", { silent = true, noremap = false })
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", { silent = true, noremap = false })
 map("n", "<C-s>", "<cmd>w<cr>", { silent = false, desc = "Save File" })
 
