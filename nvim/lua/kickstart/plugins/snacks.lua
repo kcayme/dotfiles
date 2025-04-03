@@ -24,6 +24,12 @@ return {
         },
       },
       statuscolumn = { enabled = true },
+      scroll = {
+        animate = {
+          duration = { step = 100, total = 50 },
+          easing = "linear",
+        },
+      },
       picker = {
         files = {},
         smart = {},
