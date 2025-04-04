@@ -86,8 +86,8 @@ map({ "n" }, "zcu", "zo", { desc = "Recursive unfold under cursor" })
 map({ "n" }, "zf", "zM", { desc = "Fold all" })
 map({ "n" }, "zu", "zR", { desc = "Unfold all" })
 
-vim.api.nvim_set_keymap("n", "j", "gjzz", { silent = true, noremap = false })
-vim.api.nvim_set_keymap("n", "k", "gkzz", { silent = true, noremap = false })
+vim.api.nvim_set_keymap("n", "j", "jzz", { silent = true, noremap = false })
+vim.api.nvim_set_keymap("n", "k", "kzz", { silent = true, noremap = false })
 vim.api.nvim_set_keymap("i", "jj", "<Esc>", { silent = true, noremap = false })
 map("n", "<C-s>", "<cmd>w<cr>", { silent = false, desc = "Save File" })
 
