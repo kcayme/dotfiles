@@ -58,7 +58,6 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
 -- buffers
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertical window split" })
-map({ "n" }, "<Leader>x", "<cmd>close<cr>", { desc = "Close vertical window split" })
 -- map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
 -- map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
 map({ "n" }, "<Leader><tab>", "<cmd>tabnext<cr>", { desc = "Go to next tab" })
