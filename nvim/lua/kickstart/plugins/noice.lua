@@ -70,7 +70,7 @@ return {
       },
       views = {
         notify = {
-          replace = true,
+          replace = false,
         },
         cmdline = {
           enabled = true, -- enables the Noice cmdline UI
@@ -121,6 +121,24 @@ return {
             kind = "message",
           },
           opts = { skip = true },
+        },
+
+        {
+          view = "mini",
+          filter = {
+            event = "notify",
+            -- event = "msg_show",
+            -- kind = "message",
+            any = {
+              {
+                find = "Buffer closed",
+              },
+              {
+                find = "Window closed",
+              },
+            },
+          },
+          opts = { stop = true },
         },
         -- {
         -- view = "messages",
