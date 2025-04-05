@@ -3,6 +3,7 @@ return {
     "akinsho/bufferline.nvim",
     dependencies = {
       "famiu/bufdelete.nvim",
+      "folke/noice.nvim",
     },
     config = function()
       require("bufferline").setup({
@@ -50,6 +51,25 @@ return {
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
+
+      -- close buffer if it is in bufferline; else, close window
+      map({ "n" }, "<Leader>x", function()
+        local noice = require("noice")
+        local buffers = require("bufferline").get_elements().elements
+        local currentBufferId = vim.api.nvim_get_current_buf()
+
+        for _, buf in ipairs(buffers) do
+          if buf.id == currentBufferId then
+            noice.notify("Buffer closed")
+            vim.cmd("Bdelete")
+            return
+          end
+        end
+
+        noice.notify("Window closed")
+        vim.cmd("close")
+      end, { desc = "Close vertical window split" })
+
       for i = 1, 5, 1 do
         map(
           "n",
