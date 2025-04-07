@@ -46,7 +46,7 @@ return {
       map("n", "(", "<cmd>BufferLineMovePrev<cr>", {})
       map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
       map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
-      map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
+      -- map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
       map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
@@ -70,14 +70,14 @@ return {
         vim.cmd("close")
       end, { desc = "Close vertical window split" })
 
-      for i = 1, 5, 1 do
-        map(
-          "n",
-          string.format("<leader>%d", i),
-          string.format("<cmd>BufferLineGoToBuffer %d<cr>", i),
-          { desc = "Pick buffer by visible position" }
-        )
-      end
+      -- for i = 1, 5, 1 do
+      --   map(
+      --     "n",
+      --     string.format("<leader>%d", i),
+      --     string.format("<cmd>BufferLineGoToBuffer %d<cr>", i),
+      --     { desc = "Pick buffer by visible position" }
+      --   )
+      -- end
     end,
   },
 }
