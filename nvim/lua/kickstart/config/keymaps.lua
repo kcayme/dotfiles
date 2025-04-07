@@ -114,3 +114,92 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 -- map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
 --   desc = "Search on current file",
 -- })
+
+-- ============== MARKS ====================
+for i = 1, 9 do
+  local mark_char = string.char(64 + i) -- A=65, B=66, etc.
+  vim.keymap.set("n", "<leader>" .. i, function()
+    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+    local notify = require("notify")
+    if mark_pos[1] == 0 then
+      vim.cmd("normal! gg")
+      vim.cmd("mark " .. mark_char)
+      vim.cmd("normal! ``") -- Jump back to where we were
+      notify("buffer marked as " .. i, "info")
+    else
+      vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
+      vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
+      notify("jump to mark " .. i, "info")
+    end
+    vim.cmd("BufferLineTogglePin")
+  end, { desc = "Toggle mark " .. mark_char })
+end
+
+-- Delete mark from current buffer
+vim.keymap.set("n", "<leader>bx", function()
+  for i = 1, 9 do
+    local mark_char = string.char(64 + i)
+    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+    local notify = require("notify")
+
+    -- Check if mark is in current buffer
+    if mark_pos[1] ~= 0 and vim.api.nvim_get_current_buf() == mark_pos[3] then
+      vim.cmd("delmarks " .. mark_char)
+      vim.cmd("BufferLineTogglePin")
+      notify("deleted mark in " .. i, "info")
+    end
+  end
+end, { desc = "Delete mark" })
+
+-- List bookmarks
+-- local function list_bookmarks()
+--   local snacks = require("snacks")
+--   return snacks.picker.marks({ filter_marks = "A-I" })
+-- end
+--
+-- vim.keymap.set("n", "<leader>bk", list_bookmarks, { desc = "List bookmarks" })
+
+-- Populate and open quickfix list with all bookmarks
+-- vim.keymap.set("n", "<leader>bq", function()
+--   -- Refresh the bookmark cache to ensure it's up-to-date
+--   refresh_bookmark_cache()
+--
+--   -- Create a list to hold quickfix items
+--   local qf_list = {}
+--
+--   -- Loop through all possible marks (A-I)
+--   for i = 1, 9 do
+--     local mark_char = string.char(64 + i) -- A=65, B=66, etc.
+--     local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+--
+--     -- Check if the mark exists
+--     if mark_pos[1] ~= 0 then
+--       -- Get the buffer number
+--       local buf_nr = mark_pos[3]
+--       -- Get the buffer name
+--       local buf_name = vim.api.nvim_buf_get_name(buf_nr)
+--       if buf_nr == 0 then
+--         buf_name = mark_pos[4]
+--       end
+--
+--       -- Add to quickfix list
+--       table.insert(qf_list, {
+--         bufnr = buf_nr,
+--         filename = buf_name,
+--         lnum = mark_pos[1],
+--         col = mark_pos[2],
+--         text = i,
+--       })
+--     end
+--   end
+--
+--   -- Set the quickfix list
+--   vim.fn.setqflist(qf_list)
+--
+--   -- Open the quickfix window if there are bookmarks
+--   if #qf_list > 0 then
+--     vim.cmd("copen")
+--   else
+--     vim.cmd("cclose")
+--   end
+-- end, { desc = "List all bookmarks" })

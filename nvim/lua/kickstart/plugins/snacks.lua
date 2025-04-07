@@ -215,6 +215,13 @@ return {
         end,
         desc = "Quickfix List",
       },
+      {
+        "<leader>fm",
+        function()
+          Snacks.picker.marks({ filter_marks = "A-I" })
+        end,
+        desc = "Grep",
+      },
     },
   },
 }
