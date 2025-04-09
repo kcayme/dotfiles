@@ -55,8 +55,9 @@ map("n", "gl", "$", { desc = "Go to end of line" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up with scrolloff" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
 
--- buffers
+-- buffers and windows
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
+map({ "n" }, "<Leader>X", "<cmd>close<cr>", { desc = "Close window" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertical window split" })
 -- map({ "n" }, "<Leader><S-l>", "<C-W>L", { desc = "Move current buffer to right" })
 -- map({ "n" }, "<Leader><S-h>", "<C-W>H", { desc = "Move current buffer to left" })
@@ -125,13 +126,13 @@ for i = 1, 9 do
       vim.cmd("normal! gg")
       vim.cmd("mark " .. mark_char)
       vim.cmd("normal! ``") -- Jump back to where we were
+      vim.cmd("BufferLineTogglePin")
       notify("buffer marked as " .. i, "info")
     else
       vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
       vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
       notify("jump to mark " .. i, "info")
     end
-    vim.cmd("BufferLineTogglePin")
   end, { desc = "Toggle mark " .. mark_char })
 end
 
