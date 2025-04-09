@@ -47,10 +47,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Rename the variable under your cursor
     map("<F2>", function()
-      -- TODO: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous
-      -- temporary solution
       if client and client.server_capabilities.renameProvider then
+        -- FIXME: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous.
+        -- can't await it like typescript
         vim.lsp.buf.rename()
+        -- INFO: temporary solution
         vim.defer_fn(function()
           vim.cmd("silent! wa")
         end, 2000)
