@@ -49,7 +49,7 @@ return {
       -- map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
       map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
-      map("n", "<leader>bX", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
+      map("n", "<leader>bC", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
 
       -- close buffer if it is in bufferline; else, close window
