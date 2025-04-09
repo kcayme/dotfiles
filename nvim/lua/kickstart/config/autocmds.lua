@@ -25,6 +25,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
     end
 
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
     local picker = require("snacks").picker
     -- Jump to the implementation of the word under your cursor.
     --  Useful when your language has ways of declaring types without an actual implementation.
@@ -44,7 +46,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>gs", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
     -- Rename the variable under your cursor
-    map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
+    map("<F2>", function()
+      -- TODO: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous
+      -- temporary solution
+      if client and client.server_capabilities.renameProvider then
+        vim.lsp.buf.rename()
+        vim.defer_fn(function()
+          vim.cmd("silent! wa")
+        end, 2000)
+      end
+    end, "[F2] Rename")
 
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
@@ -71,7 +82,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     --    See `:help CursorHold` for information about when this is executed
     --
     -- When you move your cursor, the highlights will be cleared (the second autocommand).
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client.server_capabilities.documentHighlightProvider then
       vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
         buffer = event.buf,
