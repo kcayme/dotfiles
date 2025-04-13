@@ -16,7 +16,9 @@ switch (uname)
                 set -gx GOPATH $HOME/go
                 # Add GOPATH/bin to PATH
                 set -gx PATH $PATH:$GOPATH/bin
-                echo "Ubuntu detected"
+                # echo "Ubuntu detected"
+                set os_name (grep '^PRETTY_NAME=' /etc/os-release | string replace -r 'PRETTY_NAME="(.*)"' '$1')
+                echo $os_name
             end
         end
 end
