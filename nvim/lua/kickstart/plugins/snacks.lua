@@ -111,7 +111,9 @@ return {
       {
         "<leader>fb",
         function()
-          Snacks.picker.buffers()
+          Snacks.picker.buffers({
+            filter = { cwd = true },
+          })
         end,
         desc = "Buffers",
       },
@@ -125,7 +127,9 @@ return {
       {
         "<leader><leader>",
         function()
-          Snacks.picker.smart()
+          Snacks.picker.smart({
+            filter = { cwd = true },
+          })
         end,
         desc = "Smart Find Files",
       },
@@ -220,7 +224,7 @@ return {
         function()
           Snacks.picker.marks({ filter_marks = "A-I" })
         end,
-        desc = "Grep",
+        desc = "Marks",
       },
     },
   },
