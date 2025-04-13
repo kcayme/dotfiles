@@ -34,6 +34,7 @@ return {
         view = {
           width = 45,
           side = "right",
+          relativenumber = true,
         },
         filters = {
           dotfiles = false,
