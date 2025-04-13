@@ -32,10 +32,10 @@ local function jumpWithVirtLineDiags(jumpCount)
   end, 1)
 end
 
-vim.keymap.set("n", "<leader>]", function()
+map("n", "<leader>]", function()
   jumpWithVirtLineDiags(1)
 end, { desc = "󰒕 Next diagnostic" })
-vim.keymap.set("n", "<leader>[", function()
+map("n", "<leader>[", function()
   jumpWithVirtLineDiags(-1)
 end, { desc = "󰒕 Prev diagnostic" })
 -- map("n", "<leader>[", function()
@@ -50,10 +50,27 @@ map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rr
 map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
 -- ============ NAVIGATIONS ============
-map("n", "gh", "^", { desc = "Go to start of line" })
-map("n", "gl", "$", { desc = "Go to end of line" })
+map({ "n", "v" }, "gh", "^", { desc = "Go to start of line" })
+map({ "n", "v" }, "gl", "$", { desc = "Go to end of line" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up with scrolloff" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
+map("n", "j", function()
+  local api = require("nvim-tree.api")
+  if api.tree.is_tree_buf() then
+    vim.api.nvim_feedkeys("j", "n", false)
+  else
+    vim.api.nvim_feedkeys("jzz", "n", false)
+  end
+end, { silent = true, noremap = false })
+
+map("n", "k", function()
+  local api = require("nvim-tree.api")
+  if api.tree.is_tree_buf() then
+    vim.api.nvim_feedkeys("k", "n", false)
+  else
+    vim.api.nvim_feedkeys("kzz", "n", false)
+  end
+end, { silent = true, noremap = false })
 
 -- buffers and windows
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
@@ -86,9 +103,7 @@ map({ "n" }, "zcu", "zo", { desc = "Recursive unfold under cursor" })
 map({ "n" }, "zf", "zM", { desc = "Fold all" })
 map({ "n" }, "zu", "zR", { desc = "Unfold all" })
 
-vim.api.nvim_set_keymap("n", "j", "jzz", { silent = true, noremap = false })
-vim.api.nvim_set_keymap("n", "k", "kzz", { silent = true, noremap = false })
-vim.api.nvim_set_keymap("i", "jj", "<Esc>", { silent = true, noremap = false })
+map("i", "jj", "<Esc>", { silent = true, noremap = false })
 map("n", "<C-s>", "<cmd>w<cr>", { silent = false, desc = "Save File" })
 
 -- nvim-surround
