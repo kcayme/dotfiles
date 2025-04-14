@@ -19,6 +19,9 @@ return {
       local servers = {
         -- clangd = {},
         gopls = {},
+        cssmodules_ls = {
+          filetypes = { "css" },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         lua_ls = {
