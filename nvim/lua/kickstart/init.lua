@@ -18,7 +18,6 @@ require("kickstart.config.options")
 require("kickstart.config.autocmds")
 
 require("lazy").setup({
-  { import = "kickstart.themes.tokyonight" },
   { import = "kickstart.themes.base46" },
   { import = "kickstart.plugins" },
 }, {
