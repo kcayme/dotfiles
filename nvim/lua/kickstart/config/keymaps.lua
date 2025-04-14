@@ -57,20 +57,20 @@ map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
 map("n", "j", function()
   local api = require("nvim-tree.api")
   if api.tree.is_tree_buf() then
-    vim.api.nvim_feedkeys("j", "n", false)
+    return "j"
   else
-    vim.api.nvim_feedkeys("jzz", "n", false)
+    return "jzz"
   end
-end, { silent = true, noremap = false })
+end, { silent = true, expr = true, noremap = true })
 
 map("n", "k", function()
   local api = require("nvim-tree.api")
   if api.tree.is_tree_buf() then
-    vim.api.nvim_feedkeys("k", "n", false)
+    return "k"
   else
-    vim.api.nvim_feedkeys("kzz", "n", false)
+    return "kzz"
   end
-end, { silent = true, noremap = false })
+end, { silent = true, expr = true, noremap = true })
 
 -- buffers and windows
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
