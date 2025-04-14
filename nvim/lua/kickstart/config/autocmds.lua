@@ -46,16 +46,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>gs", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
     -- Rename the variable under your cursor
+    -- map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
     map("<F2>", function()
-      if client and client.server_capabilities.renameProvider then
-        -- FIXME: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous.
-        -- can't await it like typescript
-        vim.lsp.buf.rename()
-        -- INFO: temporary solution
-        vim.defer_fn(function()
-          vim.cmd("silent! wa")
-        end, 2000)
-      end
+      -- if client and client.server_capabilities.renameProvider then
+      vim.lsp.buf.rename()
+      -- FIXME: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous.
+      -- can't await it like typescript
+      -- INFO: temporary solution. preferably a callback
+      vim.defer_fn(function()
+        vim.cmd("silent! wa")
+      end, 5000)
+      -- end
     end, "[F2] Rename")
 
     -- Execute a code action, usually your cursor needs to be on top of an error
