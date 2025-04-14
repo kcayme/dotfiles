@@ -73,6 +73,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
     map("gd", picker.lsp_definitions, "[G]oto [D]efinition")
 
+    map("<leader>gd", function()
+      vim.cmd("vsplit")
+      picker.lsp_definitions()
+    end, "[G]oto [D]efinition")
+
     vim.keymap.set("i", "<C-h>", function()
       vim.lsp.buf.signature_help()
     end, { desc = "Signature Help" })
