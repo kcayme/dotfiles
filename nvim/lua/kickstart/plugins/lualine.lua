@@ -43,7 +43,6 @@ return {
             { "diagnostics" },
           },
           lualine_c = {
-            "filename",
             {
               symbols.get,
               cond = symbols.has,
@@ -51,11 +50,12 @@ return {
           },
           lualine_x = {
             "encoding",
+            "filename",
             "searchcount",
           },
           lualine_y = {
-            "lsp_status",
             "fileformat",
+            "lsp_status",
             "filetype",
             -- "progress",
           },
