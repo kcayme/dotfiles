@@ -4,21 +4,46 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       local trouble = require("trouble")
-      local symbols = trouble.statusline({
-        mode = "lsp_document_symbols",
-        groups = {},
-        title = false,
-        filter = { range = true },
-        format = "{kind_icon}{symbol.name:Normal}",
-        -- The following line is needed to fix the background color
-        -- Set it to the lualine section you want to use
-        hl_group = "lualine_c_normal",
-      })
+      -- local symbols = trouble.statusline({
+      --   mode = "lsp_document_symbols",
+      --   groups = {},
+      --   title = false,
+      --   filter = { range = true },
+      --   format = "{kind_icon}{symbol.name:Normal}",
+      --   -- The following line is needed to fix the background color
+      --   -- Set it to the lualine section you want to use
+      --   hl_group = "lualine_c_normal",
+      -- })
+      local colors = require("base46").get_theme_tb("base_30")
 
+      local custom_theme = {
+        normal = {
+          a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+          b = { bg = colors.one_bg, fg = colors.white },
+          c = { bg = colors.darker_black, fg = colors.grey },
+        },
+        insert = {
+          a = { bg = colors.green, fg = colors.black, gui = "bold" },
+        },
+        visual = {
+          a = { bg = colors.purple, fg = colors.black, gui = "bold" },
+        },
+        replace = {
+          a = { bg = colors.red, fg = colors.black, gui = "bold" },
+        },
+        command = {
+          a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+        },
+        inactive = {
+          a = { bg = colors.darker_black, fg = colors.grey },
+          b = { bg = colors.darker_black, fg = colors.grey },
+          c = { bg = colors.darker_black },
+        },
+      }
       require("lualine").setup({
         options = {
           icons_enabled = true,
-          theme = "jellybeans",
+          theme = custom_theme,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
           disabled_filetypes = {
