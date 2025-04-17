@@ -18,8 +18,8 @@ require("kickstart.config.options")
 require("kickstart.config.autocmds")
 
 require("lazy").setup({
-  { import = "kickstart.themes.tokyonight" },
-  -- { import = "kickstart.themes.base46" },
+  -- { import = "kickstart.themes.tokyonight" },
+  { import = "kickstart.themes.base46" },
   { import = "kickstart.plugins" },
 }, {
   ui = {
@@ -43,8 +43,8 @@ require("lazy").setup({
 })
 
 -- apply nvchad base46
--- for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
---   dofile(vim.g.base46_cache .. v)
--- end
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+  dofile(vim.g.base46_cache .. v)
+end
 
 require("kickstart.config.keymaps")
