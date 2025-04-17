@@ -58,18 +58,16 @@ map("n", "j", function()
   local api = require("nvim-tree.api")
   if api.tree.is_tree_buf() then
     return "j"
-  else
-    return "jzz"
   end
+  return "jzz"
 end, { silent = true, expr = true, noremap = true })
 
 map("n", "k", function()
   local api = require("nvim-tree.api")
   if api.tree.is_tree_buf() then
     return "k"
-  else
-    return "kzz"
   end
+  return "kzz"
 end, { silent = true, expr = true, noremap = true })
 
 -- buffers and windows
