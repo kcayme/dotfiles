@@ -19,8 +19,8 @@ return {
       local custom_theme = {
         normal = {
           a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-          b = { bg = colors.one_bg, fg = colors.white },
-          c = { bg = colors.darker_black, fg = colors.grey },
+          b = { bg = colors.statusline_bg, fg = colors.white },
+          c = { bg = colors.darker_black, fg = colors.white },
         },
         insert = {
           a = { bg = colors.green, fg = colors.black, gui = "bold" },
@@ -40,12 +40,14 @@ return {
           c = { bg = colors.darker_black },
         },
       }
+
       require("lualine").setup({
         options = {
           icons_enabled = true,
           theme = custom_theme,
-          component_separators = { left = "", right = "" },
-          section_separators = { left = "", right = "" },
+          -- component_separators = { left = "", right = "" },
+          component_separators = { left = "", right = "" },
+          -- section_separators = { left = "", right = "" },
           disabled_filetypes = {
             statusline = {},
             winbar = {},
@@ -63,11 +65,15 @@ return {
         sections = {
           lualine_a = { "mode" },
           lualine_b = {
-            "branch",
-            "diff",
-            { "diagnostics" },
+            { "branch", icon = "" },
           },
           lualine_c = {
+            { "diff", symbols = { added = " ", modified = " ", removed = " " } },
+            {
+              "diagnostics",
+              symbols = { error = " ", warn = " ", info = " ", hint = " " },
+            },
+            "filename",
             -- {
             --   symbols.get,
             --   cond = symbols.has,
@@ -75,13 +81,12 @@ return {
           },
           lualine_x = {
             "encoding",
-            "filename",
             "searchcount",
           },
           lualine_y = {
-            "fileformat",
-            "lsp_status",
+            { "lsp_status", icon = " " },
             "filetype",
+            "fileformat",
             -- "progress",
           },
           lualine_z = {
