@@ -2,8 +2,9 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    event = "VeryLazy",
     config = function()
-      local trouble = require("trouble")
+      -- local trouble = require("trouble")
       -- local symbols = trouble.statusline({
       --   mode = "lsp_document_symbols",
       --   groups = {},
@@ -57,9 +58,9 @@ return {
           always_divide_middle = true,
           globalstatus = false,
           refresh = {
-            statusline = 1000,
-            tabline = 1000,
-            winbar = 1000,
+            statusline = 100,
+            -- tabline = 1000,
+            -- winbar = 1000,
           },
         },
 
