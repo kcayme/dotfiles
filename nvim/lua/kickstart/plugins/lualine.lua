@@ -16,6 +16,7 @@ return {
       -- })
       local colors = require("base46").get_theme_tb("base_30")
 
+      -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
       local custom_theme = {
         normal = {
           a = { bg = colors.blue, fg = colors.black, gui = "bold" },
