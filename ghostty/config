@@ -22,3 +22,26 @@ keybind = cmd+z=unbind
 #term = xterm-256color
 
 quick-terminal-animation-duration = 0
+
+# bearded-arc theme
+palette = 0=#1c2433
+palette = 1=#FF738A
+palette = 2=#3CEC85
+palette = 3=#EACD61
+palette = 4=#69C3FF
+palette = 5=#22ECDB
+palette = 6=#77aed7
+palette = 7=#c3cfd9
+palette = 8=#444c5b
+palette = 9=#FF738A
+palette = 10=#3CEC85
+palette = 11=#EACD61
+palette = 12=#69C3FF
+palette = 13=#22ECDB
+palette = 14=#77aed7
+palette = 15=#ABB7C1
+background = #1c2433
+foreground = #c3cfd9
+cursor-color = #69C3FF
+selection-background = #444c5b
+selection-foreground = #c3cfd9
