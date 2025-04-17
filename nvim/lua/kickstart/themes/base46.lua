@@ -8,10 +8,10 @@ return {
   },
   {
     "nvchad/base46",
-    lazy = false,
+    lazy = true,
     priority = 1000,
     build = function()
-      require("base46").compile()
+      -- require("base46").compile()
       require("base46").load_all_highlights()
       vim.cmd.colorscheme("nvchad")
     end,
