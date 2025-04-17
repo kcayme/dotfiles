@@ -13,13 +13,13 @@ require("code.config.autocmds")
 require("lazy").setup({
   { import = "code.plugins.surround" },
   { import = "code.plugins.hop" },
-  { import = "code.plugins.neoscroll" },
+  -- { import = "code.plugins.neoscroll" },
   { import = "code.plugins.spider" },
 
   defaults = {
-    lazy = false,
+    -- lazy = false,
     -- version = false, -- always use the latest git commit
-    version = "*", -- try installing the latest stable version for plugins that support semver
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
   -- checker = { enabled = true }, -- automatically check for plugin updates
 })
