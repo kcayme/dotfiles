@@ -69,9 +69,6 @@ return {
           vim.cmd("NvimTreeFindFileToggle")
         end
         vim.cmd("NvimTreeRefresh")
-
-        local nodes = api.tree.get_nodes()
-        print(#nodes)
       end, {})
     end,
   },
