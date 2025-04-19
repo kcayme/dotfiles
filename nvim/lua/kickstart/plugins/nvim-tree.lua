@@ -35,10 +35,14 @@ return {
           width = 45,
           side = "right",
           relativenumber = true,
+          preserve_window_proportions = true,
         },
         filters = {
           dotfiles = false,
           git_ignored = false,
+        },
+        renderer = {
+          hidden_display = "all",
         },
       })
 
