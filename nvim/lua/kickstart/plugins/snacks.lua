@@ -164,9 +164,11 @@ return {
       {
         "<leader>ft",
         function()
-          Snacks.picker.git_files()
+          -- Snacks.picker.git_files()
+          Snacks.picker.todo_comments()
         end,
-        desc = "Find Git Files",
+        -- desc = "Find Git Files",
+        desc = "Find TODO comments",
       },
       {
         "<leader>fr",
