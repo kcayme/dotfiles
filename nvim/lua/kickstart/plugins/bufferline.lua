@@ -38,6 +38,17 @@ return {
             alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
           },
           close_command = ":Bdelete",
+          offsets = {
+            {
+              filetype = "NvimTree",
+              -- text = "File Explorer",
+              text_align = "left",
+              text = function()
+                return "Directory: " .. vim.fn.getcwd()
+              end,
+              separator = true, -- use a "true" to enable the default, or set your own character
+            },
+          },
         },
       })
 
@@ -78,6 +89,34 @@ return {
       --     { desc = "Pick buffer by visible position" }
       --   )
       -- end
+
+      -- map("n", "<leader>w", function()
+      --   local items = {}
+      --   local longest_name = 0
+      --   for i, workspace in ipairs(require("workspaces").get()) do
+      --     table.insert(items, {
+      --       idx = i,
+      --       score = i,
+      --       text = workspace.path,
+      --       name = workspace.name,
+      --     })
+      --     longest_name = math.max(longest_name, #workspace.name)
+      --   end
+      --   longest_name = longest_name + 2
+      --   return Snacks.picker({
+      --     items = items,
+      --     format = function(item)
+      --       local ret = {}
+      --       ret[#ret + 1] = { ("%-" .. longest_name .. "s"):format(item.name), "SnacksPickerLabel" }
+      --       ret[#ret + 1] = { item.text, "SnacksPickerComment" }
+      --       return ret
+      --     end,
+      --     confirm = function(picker, item)
+      --       picker:close()
+      --       vim.cmd(("WorkspacesOpen %s"):format(item.name))
+      --     end,
+      --   })
+      -- end, {})
     end,
   },
 }
