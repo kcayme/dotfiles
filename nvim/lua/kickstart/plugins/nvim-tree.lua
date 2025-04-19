@@ -14,17 +14,30 @@ return {
           return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
         end
 
+        function _G.ToggleNvimTreeExpandCollapse()
+          if _G.NvimTreeExpanded then
+            api.tree.collapse_all()
+            _G.NvimTreeExpanded = false
+          else
+            api.tree.expand_all()
+            _G.NvimTreeExpanded = true
+          end
+        end
+
         -- default mappings
         api.config.mappings.default_on_attach(bufnr)
 
         -- custom mappings
         -- vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
-        vim.keymap.set("n", "<ESC>", api.tree.close, opts("Close"))
+        vim.keymap.set("n", "<ESC>", function()
+          require("notify").dismiss()
+        end, opts("Close"))
         vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
         vim.keymap.set("n", "<C-e>", api.tree.close, opts("Close Tree"))
         vim.keymap.set("n", "<C-[>", api.tree.change_root_to_parent, opts("Up"))
         vim.keymap.set("n", "<C-]>", api.tree.change_root_to_node, opts("CD"))
         vim.keymap.set("n", "L", api.node.open.vertical, opts("Open:Vertical Split"))
+        vim.keymap.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggel Expand/Collapse All"))
       end
 
       -- local tree_cb = require("nvim-tree.config.nvim_tree_callback")
@@ -56,6 +69,9 @@ return {
           vim.cmd("NvimTreeFindFileToggle")
         end
         vim.cmd("NvimTreeRefresh")
+
+        local nodes = api.tree.get_nodes()
+        print(#nodes)
       end, {})
     end,
   },
