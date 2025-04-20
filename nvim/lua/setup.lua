@@ -2,7 +2,7 @@
 if vim.g.vscode then
   require("code.config.options")
 else
-  require("kickstart.config.options")
+  require("core.config.options")
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -23,15 +23,15 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- { import = "kickstart.themes.tokyonight" },
+    -- { import = "core.themes.tokyonight" },
     {
-      import = "kickstart.themes.base46",
+      import = "core.themes.base46",
       cond = function()
         return not vim.g.vscode
       end,
     },
     {
-      import = "kickstart.plugins",
+      import = "core.plugins",
       cond = function()
         return not vim.g.vscode
       end,
@@ -69,9 +69,9 @@ if vim.g.vscode then
   require("code.config.autocmds")
   print("vscode config loaded")
 else
-  require("kickstart.config.options")
-  require("kickstart.config.autocmds")
-  require("kickstart.config.highlights")
-  require("kickstart.config.keymaps")
+  require("core.config.options")
+  require("core.config.autocmds")
+  require("core.config.highlights")
+  require("core.config.keymaps")
   print("default config loaded")
 end
