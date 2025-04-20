@@ -3,10 +3,10 @@ command = /usr/local/bin/fish --login --interactive
 
 font-family = "GeistMono NFM"
 font-feature = -calt, -liga
-font-size = 14
+font-size = 16
 font-thicken
 
-theme = nord
+theme = bearded-arc
 background-opacity = 1
 shell-integration-features = no-cursor
 cursor-style = block
@@ -24,24 +24,25 @@ keybind = cmd+z=unbind
 quick-terminal-animation-duration = 0
 
 # bearded-arc theme
-palette = 0=#1c2433
-palette = 1=#FF738A
-palette = 2=#3CEC85
-palette = 3=#EACD61
-palette = 4=#69C3FF
-palette = 5=#22ECDB
-palette = 6=#77aed7
-palette = 7=#c3cfd9
-palette = 8=#444c5b
-palette = 9=#FF738A
-palette = 10=#3CEC85
-palette = 11=#EACD61
-palette = 12=#69C3FF
-palette = 13=#22ECDB
-palette = 14=#77aed7
-palette = 15=#ABB7C1
-background = #1c2433
-foreground = #c3cfd9
-cursor-color = #69C3FF
-selection-background = #444c5b
-selection-foreground = #c3cfd9
+#palette = 0=#1c2433
+#palette = 1=#FF738A
+#palette = 2=#3CEC85
+#palette = 3=#EACD61
+#palette = 4=#69C3FF
+#palette = 5=#B78AFF
+#palette = 6=#22ECDB
+#palette = 7=#626a79
+#palette = 8=#444c5b
+#palette = 9=#FF738A
+#palette = 10=#3CEC85
+#palette = 11=#EACD61
+#palette = 12=#6DA4CD
+#palette = 13=#B78AFF
+#palette = 14=#22ECDB
+#palette = 15=#ABB7C1
+#background = #1c2433
+#foreground = #c3cfd9
+#cursor-color = #EACD61
+#cursor-text = #1c2433
+#selection-background = #444c5b
+#selection-foreground = #c3cfd9
