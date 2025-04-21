@@ -2,8 +2,8 @@ return {
   {
     "akinsho/bufferline.nvim",
     dependencies = {
-      "famiu/bufdelete.nvim",
       "folke/noice.nvim",
+      "folke/snacks.nvim",
     },
     config = function()
       require("bufferline").setup({
@@ -37,7 +37,9 @@ return {
           pick = {
             alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
           },
-          close_command = ":Bdelete",
+          close_command = function()
+            Snacks.bufdelete()
+          end,
           offsets = {
             {
               filetype = "NvimTree",
@@ -60,7 +62,9 @@ return {
       -- map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
       map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
-      map("n", "<leader>bC", "<cmd>BufferLineCloseOthers<cr>", { desc = "Pick Close others" })
+      map("n", "<leader>bC", function()
+        Snacks.bufdelete.other()
+      end, { desc = "Pick Close others" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
 
       -- close buffer if it is in bufferline; else, close window
@@ -72,7 +76,7 @@ return {
         for _, buf in ipairs(buffers) do
           if buf.id == currentBufferId then
             noice.notify("Buffer closed")
-            vim.cmd("Bdelete")
+            Snacks.bufdelete()
             return
           end
         end
