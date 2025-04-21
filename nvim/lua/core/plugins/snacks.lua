@@ -76,6 +76,7 @@ return {
           },
         },
       },
+      bufdelete = {},
     },
     keys = {
       {
