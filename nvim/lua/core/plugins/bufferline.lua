@@ -64,7 +64,7 @@ return {
       map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
       map("n", "<leader>bC", function()
         Snacks.bufdelete.other()
-      end, { desc = "Pick Close others" })
+      end, { desc = "Close other buffers" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
 
       -- close buffer if it is in bufferline; else, close window
