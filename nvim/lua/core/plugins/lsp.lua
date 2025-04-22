@@ -22,6 +22,12 @@ return {
         cssmodules_ls = {
           filetypes = { "css" },
         },
+        jsonls = {
+          filetypes = { "json", "jsonc" },
+        },
+        yamlls = {
+          filetypes = { "yaml", "yml" },
+        },
         -- pyright = {},
         -- rust_analyzer = {},
         lua_ls = {
@@ -68,7 +74,17 @@ return {
       )
       require("mason-lspconfig").setup({
         automatic_installation = true,
-        ensure_installed = {},
+        ensure_installed = {
+          "ts_ls",
+          "gopls",
+          "jsonls",
+          "lua_ls",
+          "vacuum",
+          "yamlls",
+          "typos_lsp",
+          "cssls",
+          "dockerls",
+        },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
