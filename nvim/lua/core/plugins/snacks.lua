@@ -119,6 +119,15 @@ return {
         desc = "Buffers",
       },
       {
+        "<leader>fj",
+        function()
+          Snacks.picker.jumps({
+            filter = { cwd = true },
+          })
+        end,
+        desc = "Marks",
+      },
+      {
         "<leader>fg",
         function()
           Snacks.picker.grep()
