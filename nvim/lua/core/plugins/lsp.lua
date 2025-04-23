@@ -94,6 +94,22 @@ return {
             server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
             require("lspconfig")[server_name].setup(server)
           end,
+
+          ["vacuum"] = function()
+            vim.filetype.add({
+              pattern = {
+                ["openapi.*%.ya?ml"] = "yaml.openapi",
+                ["openapi.*%.json"] = "json.openapi",
+                ["openapi-*%.ya?ml"] = "yaml.openapi",
+                ["openapi-*%.json"] = "json.openapi",
+              },
+            })
+            -- require("lspconfig").vacuum.setup({
+            --   cmd = { "vacuum", "language-server" },
+            --   filetypes = { "yaml.openapi", "json.openapi" },
+            --   root_markser = { ".git" },
+            -- })
+          end,
         },
       })
     end,
