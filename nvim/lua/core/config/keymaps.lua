@@ -91,8 +91,10 @@ map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", {})
 map({ "v" }, "p", '"_dP', { noremap = false })
 
 -- indent on visual and normal mode
-map({ "n", "v" }, "<tab>", ">>")
-map({ "n", "v" }, "<s-tab>", "<<")
+map({ "n" }, "<tab>", ">>")
+map({ "n" }, "<s-tab>", "<<")
+map({ "v" }, "<tab>", ">gv", { noremap = true })
+map({ "v" }, "<s-tab>", "<gv", { noremap = true })
 
 -- fold
 map({ "n" }, "zx", "za", { desc = "Toggle fold under cursor" })
