@@ -49,14 +49,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
     map("<F2>", function()
       -- if client and client.server_capabilities.renameProvider then
-      vim.lsp.buf.rename()
-      -- FIXME: look for alternatives how to autosave after lsp rename since vim.lsp.buf.rename is asynchronous.
-      -- can't await it like typescript
-      -- INFO: temporary solution. preferably a callback
-      vim.defer_fn(function()
-        vim.cmd("silent! wa")
-      end, 5000)
-      -- end
+      -- wrap rename input to have on_confirm callback
+      local curr_name = vim.fn.expand("<cword>")
+      vim.ui.input({ prompt = "Rename to: ", default = curr_name }, function(input)
+        vim.lsp.buf.rename(input)
+        vim.defer_fn(function()
+          vim.cmd("wa")
+        end, 1000)
+      end)
     end, "[F2] Rename")
 
     -- Execute a code action, usually your cursor needs to be on top of an error
