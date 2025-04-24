@@ -4,12 +4,12 @@ return {
     "nvim-treesitter/nvim-treesitter",
   }, -- if you install parsers with `nvim-treesitter`
   config = function()
-    require("treesj").setup({--[[ your config ]]
+    require("treesj").setup({
       use_default_keymaps = false,
       max_join_length = 500,
     })
 
     local map = vim.keymap.set
-    map("n", "J", "<cmd>TSJToggle<cr>", {})
+    map("n", "<leader>J", "<cmd>TSJToggle<cr>", {})
   end,
 }
