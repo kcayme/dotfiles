@@ -172,3 +172,25 @@ vim.api.nvim_create_autocmd({ "BufEnter", "QuitPre" }, {
     end
   end,
 })
+
+-- related to lualine macro recording component
+vim.api.nvim_create_autocmd("RecordingEnter", {
+  callback = function()
+    require("lualine").refresh({ place = { "statusline" } })
+  end,
+})
+
+-- The register does not clean up immediately after
+-- recording stops, so we wait a bit (50ms) before refreshing.
+vim.api.nvim_create_autocmd("RecordingLeave", {
+  callback = function()
+    local timer = vim.loop.new_timer()
+    timer:start(
+      50,
+      0,
+      vim.schedule_wrap(function()
+        require("lualine").refresh({ place = { "statusline" } })
+      end)
+    )
+  end,
+})

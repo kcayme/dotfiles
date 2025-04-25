@@ -76,6 +76,18 @@ return {
               symbols = { error = " ", warn = " ", info = " ", hint = " " },
             },
             "filename",
+            {
+              "macro",
+              fmt = function()
+                local reg = vim.fn.reg_recording()
+                if reg ~= "" then
+                  return "Recording @" .. reg
+                end
+                return nil
+              end,
+              color = { fg = colors.yellow },
+              draw_empty = false,
+            },
             -- {
             --   symbols.get,
             --   cond = symbols.has,
