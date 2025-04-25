@@ -79,7 +79,7 @@ return {
           "gopls",
           "jsonls",
           "lua_ls",
-          "vacuum",
+          -- "vacuum",
           "yamlls",
           "typos_lsp",
           "cssls",
@@ -95,21 +95,21 @@ return {
             require("lspconfig")[server_name].setup(server)
           end,
 
-          ["vacuum"] = function()
-            vim.filetype.add({
-              pattern = {
-                ["openapi.*%.ya?ml"] = "yaml.openapi",
-                ["openapi.*%.json"] = "json.openapi",
-                ["openapi-*%.ya?ml"] = "yaml.openapi",
-                ["openapi-*%.json"] = "json.openapi",
-              },
-            })
-            -- require("lspconfig").vacuum.setup({
-            --   cmd = { "vacuum", "language-server" },
-            --   filetypes = { "yaml.openapi", "json.openapi" },
-            --   root_markser = { ".git" },
-            -- })
-          end,
+          -- ["vacuum"] = function()
+          --   vim.filetype.add({
+          --     pattern = {
+          --       ["openapi.*%.ya?ml"] = "yaml.openapi",
+          --       ["openapi.*%.json"] = "json.openapi",
+          --       ["openapi-*%.ya?ml"] = "yaml.openapi",
+          --       ["openapi-*%.json"] = "json.openapi",
+          --     },
+          --   })
+          --   require("lspconfig").vacuum.setup({
+          --     cmd = { "vacuum", "language-server" },
+          --     filetypes = { "yaml.openapi", "json.openapi" },
+          --     root_markser = { ".git" },
+          --   })
+          -- end,
         },
       })
     end,
