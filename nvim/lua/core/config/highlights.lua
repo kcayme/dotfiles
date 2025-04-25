@@ -26,3 +26,7 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
   undercurl = true,
   sp = colors.purple,
 })
+
+vim.api.nvim_set_hl(0, "BlinkCmpGhostText", {
+  fg = "#4e5665",
+})
