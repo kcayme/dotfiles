@@ -86,7 +86,7 @@ return {
             "searchcount",
           },
           lualine_y = {
-            { "lsp_status", icon = " " },
+            { "lsp_status", icon = "" },
             "filetype",
             "fileformat",
             -- "progress",
