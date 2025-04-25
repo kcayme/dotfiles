@@ -6,7 +6,9 @@ return {
       {
         "rafamadriz/friendly-snippets",
         config = function()
+          -- INFO: vscode snippets
           require("luasnip.loaders.from_vscode").lazy_load()
+          -- INFO: custom snippets
           require("luasnip.loaders.from_vscode").lazy_load({ paths = { vim.fn.stdpath("config") .. "/snippets" } })
         end,
       },
@@ -48,7 +50,7 @@ return {
       },
 
       completion = {
-        list = { selection = { preselect = true, auto_insert = false } },
+        list = { selection = { preselect = false, auto_insert = false } },
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
         ghost_text = { enabled = true, show_with_menu = false },
         accept = {
