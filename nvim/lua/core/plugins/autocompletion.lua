@@ -109,7 +109,8 @@ return {
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
         -- Useful for when your theme doesn't support blink.cmp
         -- Will be removed in a future release
-        use_nvim_cmp_as_default = true,
+        -- INFO: set to true if colors dont look right
+        use_nvim_cmp_as_default = false,
         nerd_font_variant = "mono",
       },
 
