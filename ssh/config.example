@@ -1,0 +1,22 @@
+# Amihan GitHub 
+Host git-work
+  HostName github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_amihan
+  IdentitiesOnly yes
+  User git
+
+# Personal GitHub 
+Host git-perso
+  HostName github.com
+  AddKeysToAgent yes
+  IdentitiesOnly yes
+  IdentityFile ~/.ssh/id_here_1
+  User git
+
+Host *
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_here_2
+  User git
+  IdentitiesOnly yes
+  PreferredAuthentications publickey

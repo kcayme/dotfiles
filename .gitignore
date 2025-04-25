@@ -7,5 +7,6 @@
 !k9s/*
 !ghostty/*
 !fish/*
+!ssh/*
 
 !.gitignore
