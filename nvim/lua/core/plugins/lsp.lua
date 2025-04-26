@@ -81,6 +81,7 @@ return {
           "lua_ls",
           -- "vacuum",
           "yamlls",
+          "eslint",
           "typos_lsp",
           "cssls",
           "dockerls",
@@ -125,10 +126,10 @@ return {
     config = function()
       local lint = require("lint")
       lint.linters_by_ft = {
-        --[[ javascript = { "eslint_d" },
-        typescript = { "eslint_d" },
-        javascriptreact = { "eslint_d" },
-        typescriptreact = { "eslint_d" }, ]]
+        -- javascript = { "eslint_d" },
+        -- typescript = { "eslint_d" },
+        -- javascriptreact = { "eslint_d" },
+        -- typescriptreact = { "eslint_d" },
         lua = { "luacheck" },
         go = { "golangcilint" },
         python = { "pylint" },
@@ -162,8 +163,8 @@ return {
 
       -- Toggle linting
       vim.keymap.set("n", "<leader>lt", function()
-        vim.diagnostic.config({ virtual_text = false })
-        vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+        -- vim.diagnostic.config({ virtual_text = false })
+        -- vim.diagnostic.enable(not vim.diagnostic.is_enabled())
         lint.try_lint()
       end, { desc = "Trigger linting for current file" })
     end,
@@ -181,7 +182,12 @@ return {
         -- This setting has no relation with the `automatic_installation` setting.
         -- Names of linters should be taken from the mason's registry.
         ---@type string[]
-        ensure_installed = { "eslint_d", "luacheck", "golangci-lint", "pylint" },
+        ensure_installed = {
+          -- "eslint_d",
+          -- "luacheck",
+          -- "golangci-lint",
+          -- "pylint",
+        },
 
         -- Whether linters that are set up (via nvim-lint) should be automatically installed if they're not already installed.
         -- It tries to find the specified linters in the mason's registry to proceed with installation.
