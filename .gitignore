@@ -8,5 +8,6 @@
 !ghostty/*
 !fish/*
 !ssh/*
+!lazygit/*
 
 !.gitignore
