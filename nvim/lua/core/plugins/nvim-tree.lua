@@ -37,7 +37,7 @@ return {
         vim.keymap.set("n", "<C-[>", api.tree.change_root_to_parent, opts("Up"))
         vim.keymap.set("n", "<C-]>", api.tree.change_root_to_node, opts("CD"))
         vim.keymap.set("n", "L", api.node.open.vertical, opts("Open:Vertical Split"))
-        vim.keymap.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggel Expand/Collapse All"))
+        vim.keymap.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggle Expand/Collapse All"))
       end
 
       -- local tree_cb = require("nvim-tree.config.nvim_tree_callback")
