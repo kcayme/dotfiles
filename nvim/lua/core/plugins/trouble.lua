@@ -4,21 +4,21 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       modes = {
-        test = {
+        diagnostics = {
           mode = "diagnostics",
           preview = {
             type = "split",
             relative = "win",
             position = "right",
-            size = 0.3,
+            size = 0.5,
           },
         },
       },
     },
     keys = {
       {
-        "<leader>tx",
-        "<cmd>Trouble diagnostics toggle<cr>",
+        "<leader>tX",
+        "<cmd>Trouble diagnostics toggle focus=true<cr>",
         desc = "Diagnostics (Trouble)",
       },
       {
@@ -27,30 +27,30 @@ return {
         desc = "Buffer Diagnostics (Trouble)",
       },
       {
-        "<leader>ts",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>tl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>tL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>tq",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-      {
         "<leader>tt",
         "<cmd>Trouble todo toggle<cr>",
         desc = "Todo List (Trouble)",
       },
+      -- {
+      --   "<leader>ts",
+      --   "<cmd>Trouble symbols toggle focus=false<cr>",
+      --   desc = "Symbols (Trouble)",
+      -- },
+      -- {
+      --   "<leader>tl",
+      --   "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+      --   desc = "LSP Definitions / references / ... (Trouble)",
+      -- },
+      -- {
+      --   "<leader>tL",
+      --   "<cmd>Trouble loclist toggle<cr>",
+      --   desc = "Location List (Trouble)",
+      -- },
+      -- {
+      --   "<leader>tq",
+      --   "<cmd>Trouble qflist toggle<cr>",
+      --   desc = "Quickfix List (Trouble)",
+      -- },
     },
     -- config = function()
     -- map("n", "<leader>tx", function()
