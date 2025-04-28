@@ -1,0 +1,23 @@
+{
+  "background": "#1C2433",
+  "black": "#1C2433",
+  "blue": "#6DA4CD",
+  "brightBlack": "#444C5B",
+  "brightBlue": "#69C3FF",
+  "brightCyan": "#22ECDB",
+  "brightGreen": "#3CEC85",
+  "brightPurple": "#B78AFF",
+  "brightRed": "#FF738A",
+  "brightWhite": "#C3CFD9",
+  "brightYellow": "#EACD61",
+  "cursorColor": "#EACD61",
+  "cyan": "#22ECDB",
+  "foreground": "#C3CFD9",
+  "green": "#3CEC85",
+  "name": "bearded-arc",
+  "purple": "#B78AFF",
+  "red": "#FF738A",
+  "selectionBackground": "#444C5B",
+  "white": "#C3CFD9",
+  "yellow": "#EACD61"
+}
