@@ -9,5 +9,6 @@
 !fish/*
 !ssh/*
 !lazygit/*
+!windows/*
 
 !.gitignore
