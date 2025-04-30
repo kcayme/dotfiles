@@ -7,26 +7,29 @@ end
 -- support undercurl on diagnostic highlights
 local colors = require("base46").get_theme_tb("base_30")
 
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", {
-  undercurl = true,
-  sp = colors.red,
-})
+local hl_color_map = {
+  {
+    group_name = "DiagnosticUnderlineError",
+    opts = { sp = colors.red },
+  },
+  {
+    group_name = "DiagnosticUnderlineWarn",
+    opts = { sp = colors.red },
+  },
+  {
+    group_name = "DiagnosticUnderlineInfo",
+    opts = { sp = colors.red },
+  },
+  {
+    group_name = "DiagnosticUnderlineHint",
+    opts = { sp = colors.red },
+  },
+  {
+    group_name = "BlinkCmpGhostText",
+    opts = { fg = "#4e5665" },
+  },
+}
 
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", {
-  undercurl = true,
-  sp = colors.yellow,
-})
-
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", {
-  undercurl = true,
-  sp = colors.blue,
-})
-
-vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", {
-  undercurl = true,
-  sp = colors.purple,
-})
-
-vim.api.nvim_set_hl(0, "BlinkCmpGhostText", {
-  fg = "#4e5665",
-})
+for _, value in ipairs(hl_color_map) do
+  vim.api.nvim_set_hl(0, value.group_name, value.opts)
+end
