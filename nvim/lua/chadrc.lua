@@ -3,13 +3,13 @@ local M = {}
 
 M.base46 = {
   theme = "bearded-arc", -- default theme
-  -- hl_override = {
-  --   DiagnosticUnderlineError = { sp = "red", undercurl = true },
-  --   DiagnosticUnderlineWarn = { sp = "yellow", undercurl = true },
-  --   DiagnosticUnderlineInfo = { sp = "blue", undercurl = true },
-  --   DiagnosticUnderlineHint = { sp = "purple", undercurl = true },
-  --   BlinkCmpGhostText = { fg = "#4e5665" },
-  -- },
+  hl_override = {
+    DiagnosticUnderlineError = { sp = "red", undercurl = true },
+    DiagnosticUnderlineWarn = { sp = "yellow", undercurl = true },
+    DiagnosticUnderlineInfo = { sp = "blue", undercurl = true },
+    DiagnosticUnderlineHint = { sp = "purple", undercurl = true },
+    BlinkCmpGhostText = { fg = "#4e5665" },
+  },
   hl_add = {
     DiagnosticUnderlineError = { sp = "red", undercurl = true },
     DiagnosticUnderlineWarn = { sp = "yellow", undercurl = true },
