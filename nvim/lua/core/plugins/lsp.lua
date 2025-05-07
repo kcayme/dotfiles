@@ -59,8 +59,21 @@ return {
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+      local ensure_installed_lsp = {
+        "ts_ls",
+        "gopls",
+        "jsonls",
+        "lua_ls",
+        -- "vacuum",
+        "yamlls",
+        "eslint",
+        "typos_lsp",
+        "cssls",
+        "dockerls",
+      }
       vim.list_extend(ensure_installed, {
         "stylua", -- Used to format lua code
+        ensure_installed_lsp,
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -74,18 +87,7 @@ return {
       )
       require("mason-lspconfig").setup({
         automatic_installation = true,
-        ensure_installed = {
-          "ts_ls",
-          "gopls",
-          "jsonls",
-          "lua_ls",
-          -- "vacuum",
-          "yamlls",
-          "eslint",
-          "typos_lsp",
-          "cssls",
-          "dockerls",
-        },
+        ensure_installed = ensure_installed_lsp,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
