@@ -178,13 +178,6 @@ return {
         end,
         desc = "Find TODO comments",
       },
-      -- {
-      --   "<leader>flg",
-      --   function()
-      --     Snacks.picker.git_files()
-      --   end,
-      --   desc = "Find Git Files",
-      -- },
       {
         "<leader>flg",
         function()
@@ -192,13 +185,13 @@ return {
         end,
         desc = "Git Diff (Hunks)",
       },
-      {
-        "<leader>fr",
-        function()
-          Snacks.picker.recent()
-        end,
-        desc = "Recent",
-      },
+      -- {
+      --   "<leader>fr",
+      --   function()
+      --     Snacks.picker.recent()
+      --   end,
+      --   desc = "Recent",
+      -- },
       -- Grep
       {
         "<leader>fl",
