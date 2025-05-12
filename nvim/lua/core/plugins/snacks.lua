@@ -169,16 +169,28 @@ return {
         function()
           Snacks.picker.search_history()
         end,
-        desc = "Find Git Files",
+        desc = "Find Search History",
       },
       {
         "<leader>ft",
         function()
-          -- Snacks.picker.git_files()
           Snacks.picker.todo_comments()
         end,
-        -- desc = "Find Git Files",
         desc = "Find TODO comments",
+      },
+      -- {
+      --   "<leader>flg",
+      --   function()
+      --     Snacks.picker.git_files()
+      --   end,
+      --   desc = "Find Git Files",
+      -- },
+      {
+        "<leader>flg",
+        function()
+          Snacks.picker.git_diff()
+        end,
+        desc = "Git Diff (Hunks)",
       },
       {
         "<leader>fr",
