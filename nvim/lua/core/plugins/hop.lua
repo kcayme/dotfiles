@@ -15,7 +15,7 @@ return {
       local hop_position = require("hop.hint").HintPosition
 
       map("n", "<Leader>hb", "<cmd>HopWordBC<CR>", { noremap = true, desc = "Hop prev words" })
-      map("n", "<Leader>w", "<cmd>HopCamelCase<CR>", { noremap = true, desc = "Hop next words" })
+      map({ "n", "v" }, "<Leader>w", "<cmd>HopCamelCase<CR>", { noremap = true, desc = "Hop next words" })
       map("n", "<Leader>j", "<cmd>HopLineStart<CR>", { noremap = true, desc = "Hop next line" })
       map("n", "<Leader>hp", "<cmd>HopPattern<CR>", { noremap = true, desc = "Hop pattern" })
       map({ "n", "v" }, "<Leader>e", function()
