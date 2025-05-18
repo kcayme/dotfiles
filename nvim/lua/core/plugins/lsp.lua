@@ -19,9 +19,9 @@ return {
       local servers = {
         -- clangd = {},
         gopls = {},
-        cssmodules_ls = {
-          filetypes = { "css" },
-        },
+        -- cssmodules_ls = {
+        --   filetypes = { "css" },
+        -- },
         jsonls = {
           filetypes = { "json", "jsonc" },
         },
