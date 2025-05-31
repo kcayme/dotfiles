@@ -135,20 +135,20 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 for i = 1, 9 do
   local mark_char = string.char(64 + i) -- A=65, B=66, etc.
   vim.keymap.set("n", "<leader>" .. i, function()
-    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
     local notify = require("notify")
-    if mark_pos[1] == 0 then
-      vim.cmd("normal! gg")
-      vim.cmd("mark " .. mark_char)
-      vim.cmd("normal! ``") -- Jump back to where we were
-      vim.cmd("BufferLineTogglePin")
-      notify("buffer marked as " .. i, "info")
-    else
-      vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
-      vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
-      notify("jump to mark " .. i, "info")
-    end
+    vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
+    vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
+    notify("jump to mark " .. i, "info")
+    -- end
   end, { desc = "Toggle mark " .. mark_char })
+
+  vim.keymap.set("n", "<leader>m" .. i, function()
+    local notify = require("notify")
+    vim.cmd("normal! gg")
+    vim.cmd("mark " .. mark_char)
+    vim.cmd("normal! ``") -- Jump back to where we were
+    notify("buffer marked as " .. i, "info")
+  end, { desc = "Set mark as" .. mark_char })
 end
 
 -- Delete mark from current buffer
