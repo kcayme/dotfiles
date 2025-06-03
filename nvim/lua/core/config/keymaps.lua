@@ -132,40 +132,40 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 -- })
 
 -- ============== MARKS ====================
-for i = 1, 9 do
-  local mark_char = string.char(64 + i) -- A=65, B=66, etc.
-  vim.keymap.set("n", "<leader>" .. i, function()
-    local notify = require("notify")
-    vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
-    vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
-    notify("jump to mark " .. i, "info")
-    -- end
-  end, { desc = "Toggle mark " .. mark_char })
-
-  vim.keymap.set("n", "<leader>m" .. i, function()
-    local notify = require("notify")
-    vim.cmd("normal! gg")
-    vim.cmd("mark " .. mark_char)
-    vim.cmd("normal! ``") -- Jump back to where we were
-    notify("buffer marked as " .. i, "info")
-  end, { desc = "Set mark as" .. mark_char })
-end
-
--- Delete mark from current buffer
-vim.keymap.set("n", "<leader>bx", function()
-  for i = 1, 9 do
-    local mark_char = string.char(64 + i)
-    local mark_pos = vim.api.nvim_get_mark(mark_char, {})
-    local notify = require("notify")
-
-    -- Check if mark is in current buffer
-    if mark_pos[1] ~= 0 and vim.api.nvim_get_current_buf() == mark_pos[3] then
-      vim.cmd("delmarks " .. mark_char)
-      vim.cmd("BufferLineTogglePin")
-      notify("deleted mark in " .. i, "info")
-    end
-  end
-end, { desc = "Delete mark" })
+-- for i = 1, 9 do
+--   local mark_char = string.char(64 + i) -- A=65, B=66, etc.
+--   vim.keymap.set("n", "<leader>" .. i, function()
+--     local notify = require("notify")
+--     vim.cmd("normal! `" .. mark_char) -- Jump to the bookmark
+--     vim.cmd('normal! `"') -- Jump to the last cursor position before leaving
+--     notify("jump to mark " .. i, "info")
+--     -- end
+--   end, { desc = "Toggle mark " .. mark_char })
+--
+--   vim.keymap.set("n", "<leader>m" .. i, function()
+--     local notify = require("notify")
+--     vim.cmd("normal! gg")
+--     vim.cmd("mark " .. mark_char)
+--     vim.cmd("normal! ``") -- Jump back to where we were
+--     notify("buffer marked as " .. i, "info")
+--   end, { desc = "Set mark as" .. mark_char })
+-- end
+--
+-- -- Delete mark from current buffer
+-- vim.keymap.set("n", "<leader>bx", function()
+--   for i = 1, 9 do
+--     local mark_char = string.char(64 + i)
+--     local mark_pos = vim.api.nvim_get_mark(mark_char, {})
+--     local notify = require("notify")
+--
+--     -- Check if mark is in current buffer
+--     if mark_pos[1] ~= 0 and vim.api.nvim_get_current_buf() == mark_pos[3] then
+--       vim.cmd("delmarks " .. mark_char)
+--       vim.cmd("BufferLineTogglePin")
+--       notify("deleted mark in " .. i, "info")
+--     end
+--   end
+-- end, { desc = "Delete mark" })
 
 -- List bookmarks
 -- local function list_bookmarks()
