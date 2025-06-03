@@ -17,6 +17,10 @@ return {
       -- })
       local colors = require("base46").get_theme_tb("base_30")
 
+      local statusline = require("arrow.statusline") -- from arrow documentation
+      local function arrow_status() -- from lualine documentation
+        return statusline.text_for_statusline_with_icons()
+      end
       -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
       local custom_theme = {
         normal = {
@@ -76,6 +80,7 @@ return {
               symbols = { error = " ", warn = " ", info = " ", hint = " " },
             },
             "filename",
+            arrow_status,
             {
               "macro",
               fmt = function()
