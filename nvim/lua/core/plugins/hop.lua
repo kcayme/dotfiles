@@ -18,7 +18,6 @@ return {
       map({ "n", "v" }, "<Leader>w", "<cmd>HopCamelCase<CR>", { noremap = true, desc = "Hop next words" })
       -- map("n", "<Leader>j", "<cmd>HopLineStart<CR>", { noremap = true, desc = "Hop next line" })
       map("n", "<Leader>hp", "<cmd>HopPattern<CR>", { noremap = true, desc = "Hop pattern" })
-      -- FIXME: hop end of word
       map({ "n", "v" }, "<Leader>he", function()
         hop.hint_words({ hint_position = hop_position.END })
       end, { noremap = true, desc = "Hop end of word" })
