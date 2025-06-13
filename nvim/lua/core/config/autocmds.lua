@@ -39,7 +39,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Fuzzy find all the symbols in your current document.
     --  Symbols are things like variables, functions, types, etc.
-    map("<leader>@", picker.lsp_symbols, "[D]ocument [S]ymbols")
+    map("<leader>@", function()
+      picker.lsp_symbols({
+        layout = {
+          preset = "vscode",
+        },
+      })
+    end, "[D]ocument [S]ymbols")
 
     -- Fuzzy find all the symbols in your current workspace
     --  Similar to document symbols, except searches over your whole project.
@@ -76,13 +82,17 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>gd", function()
       vim.cmd("vsplit")
       picker.lsp_definitions()
-    end, "[G]oto [D]efinition")
+    end, "[G]oto [D]efinition in new vsplit")
 
     vim.keymap.set("i", "<C-h>", function()
       vim.lsp.buf.signature_help()
     end, { desc = "Signature Help" })
 
     map("gr", picker.lsp_references, "[G]oto [R]eferences")
+
+    map("<leader>gr", function()
+      picker.lsp_references({ filter = { buf = true } })
+    end, "[G]oto [R]eferences in current buffer")
 
     -- The following two autocommands are used to highlight references of the
     -- word under your cursor when your cursor rests there for a little while.
