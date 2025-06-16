@@ -26,11 +26,11 @@ return {
         "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
         desc = "Buffer Diagnostics (Trouble)",
       },
-      {
-        "<leader>tt",
-        "<cmd>Trouble todo toggle<cr>",
-        desc = "Todo List (Trouble)",
-      },
+      -- {
+      --   "<leader>tt",
+      --   "<cmd>Trouble todo toggle<cr>",
+      --   desc = "Todo List (Trouble)",
+      -- },
       -- {
       --   "<leader>ts",
       --   "<cmd>Trouble symbols toggle focus=false<cr>",

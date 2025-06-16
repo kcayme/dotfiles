@@ -3,6 +3,7 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    dependencies = { "folke/todo-comments.nvim" },
     ---@type snacks.Config
     ---@class snacks.indent.Config
     opts = {
@@ -236,6 +237,13 @@ return {
           Snacks.picker.marks({ filter_marks = "A-I" })
         end,
         desc = "Marks",
+      },
+      {
+        "<leader>tt",
+        function()
+          Snacks.picker.todo_comments()
+        end,
+        desc = "Todo",
       },
     },
   },
