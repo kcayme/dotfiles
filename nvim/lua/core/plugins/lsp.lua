@@ -189,8 +189,14 @@ return {
     },
     event = "LspAttach",
     opts = {
-      backend = "diffsofancy",
-      picker = "snacks",
+      backend = "vim",
+      picker = {
+        "snacks",
+        -- opts = {
+        --   hotkeys = true,
+        --   position = "cursor",
+        -- },
+      },
     },
   },
 }
