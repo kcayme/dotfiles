@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
 
-    map("n", "<leader>ca", function()
+    map("<leader>ca", function()
       require("tiny-code-action").code_action()
     end, "[C]ode [A]ction")
     -- map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
