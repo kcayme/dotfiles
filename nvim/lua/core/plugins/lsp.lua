@@ -191,11 +191,13 @@ return {
     opts = {
       backend = "vim",
       picker = {
-        "snacks",
-        -- opts = {
-        --   hotkeys = true,
-        --   position = "cursor",
-        -- },
+        -- "snacks",
+        "buffer",
+        opts = {
+          hotkeys = true,
+          position = "cursor",
+          auto_preview = true,
+        },
       },
     },
   },
