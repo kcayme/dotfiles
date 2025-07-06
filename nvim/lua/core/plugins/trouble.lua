@@ -6,26 +6,26 @@ return {
       modes = {
         diagnostics = {
           mode = "diagnostics",
-          preview = {
-            type = "split",
-            relative = "win",
-            position = "right",
-            size = 0.5,
-          },
+          -- preview = {
+          --   type = "split",
+          --   relative = "win",
+          --   position = "right",
+          --   size = 0.2,
+          -- },
         },
       },
     },
     keys = {
       {
-        "<leader>tX",
+        "<leader>tx",
         "<cmd>Trouble diagnostics toggle focus=true<cr>",
         desc = "Diagnostics (Trouble)",
       },
-      {
-        "<leader>tx",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
+      -- {
+      --   "<leader>tx",
+      --   "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      --   desc = "Buffer Diagnostics (Trouble)",
+      -- },
       -- {
       --   "<leader>tt",
       --   "<cmd>Trouble todo toggle<cr>",
