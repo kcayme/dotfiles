@@ -224,13 +224,13 @@ return {
         end,
         desc = "Keymaps",
       },
-      {
-        "<leader>fq",
-        function()
-          Snacks.picker.qflist()
-        end,
-        desc = "Quickfix List",
-      },
+      -- {
+      --   "<leader>fq",
+      --   function()
+      --     Snacks.picker.qflist()
+      --   end,
+      --   desc = "Quickfix List",
+      -- },
       {
         "<leader>fm",
         function()
