@@ -17,12 +17,6 @@ return {
         version = "v2.*",
         build = "make install_jsregexp",
       },
-      {
-        "saghen/blink.compat",
-        opts = {},
-        version = "*",
-        lazy = false,
-      },
       { "onsails/lspkind.nvim" },
     },
 
@@ -116,18 +110,18 @@ return {
 
       snippets = {
         preset = "luasnip",
-        expand = function(args)
-          return require("luasnip").lsp_expand(args)
-        end,
-        active = function(filter)
-          if filter and filter.direction then
-            return require("luasnip").jumpable(filter.direction)
-          end
-          return require("luasnip").in_snippet()
-        end,
-        jump = function(direction)
-          require("luasnip").jump(direction)
-        end,
+        -- expand = function(args)
+        --   return require("luasnip").lsp_expand(args)
+        -- end,
+        -- active = function(filter)
+        --   if filter and filter.direction then
+        --     return require("luasnip").jumpable(filter.direction)
+        --   end
+        --   return require("luasnip").in_snippet()
+        -- end,
+        -- jump = function(direction)
+        --   require("luasnip").jump(direction)
+        -- end,
       },
 
       cmdline = {
@@ -135,7 +129,7 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "snippets", "path", "buffer" },
         providers = {
           lsp = {
             name = "lsp",
@@ -171,17 +165,6 @@ return {
             module = "blink.cmp.sources.buffer",
             score_offset = 600, -- the higher the number, the higher the priority
           },
-          -- nvim_lsp = {
-          --   name = "cmp_nvim_lsp",
-          --   enabled = true,
-          --   module = "blink.compat.source",
-          --   score_offset = 950,
-          -- },
-          -- cmp_path = {
-          --   name = "path",
-          --   enabled = true,
-          --   module = "blink.compat.source",
-          -- },
         },
         -- cmdline = {},
       },
