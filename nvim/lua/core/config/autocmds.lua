@@ -249,3 +249,19 @@ vim.api.nvim_create_autocmd("User", {
     end)
   end,
 })
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*",
+  callback = function()
+    require("trouble").open({
+      mode = "diagnostics",
+      filter = {
+        buf = 0,
+        {
+          severity = vim.diagnostic.severity.ERROR,
+        },
+      },
+    })
+  end,
+  desc = "Open Trouble diagnostics for current buffer after saving",
+})
