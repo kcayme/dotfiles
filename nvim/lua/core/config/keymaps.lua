@@ -69,6 +69,8 @@ map("n", "k", function()
   end
   return "kzz"
 end, { silent = true, expr = true, noremap = true })
+map("n", ")", "<C-i>", { noremap = true, silent = true, desc = "Jump to Next Position" })
+map("n", "(", "<C-o>", { noremap = true, silent = true, desc = "Jump to Previous Position" })
 
 -- buffers and windows
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
