@@ -10,6 +10,7 @@ return {
     "nvchad/base46",
     lazy = true,
     priority = 1000,
+    branch = "v3.0",
     build = function()
       -- require("base46").compile()
       require("base46").load_all_highlights()
