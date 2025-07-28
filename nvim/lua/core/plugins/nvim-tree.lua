@@ -81,6 +81,18 @@ return {
           indent_markers = {
             enable = true,
           },
+          icons = {
+            glyphs = {
+              folder = {
+                default = "",
+                open = "",
+                empty = "󰷏",
+                empty_open = "󰷏",
+                symlink = "",
+                symlink_open = "",
+              },
+            },
+          },
         },
         diagnostics = {
           enable = true,
