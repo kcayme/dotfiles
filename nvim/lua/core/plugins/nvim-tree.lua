@@ -40,15 +40,37 @@ return {
         vim.keymap.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggle Expand/Collapse All"))
       end
 
-      -- local tree_cb = require("nvim-tree.config.nvim_tree_callback")
+      local function open_win_config_func()
+        local scr_w = vim.opt.columns:get()
+        local scr_h = vim.opt.lines:get()
+        local tree_w = 45
+        -- local tree_h = math.floor(tree_w * scr_h / scr_w)
+        local tree_h = scr_h - 4
+        return {
+          border = "rounded",
+          relative = "editor",
+          width = tree_w,
+          height = tree_h,
+          -- col = (scr_w - tree_w) / 2,
+          col = (scr_w - tree_w),
+          -- row = (scr_h - tree_h) / 2,
+          row = 1,
+        }
+      end
 
       require("nvim-tree").setup({
         on_attach = my_on_attach,
         view = {
-          width = 45,
-          side = "right",
+          -- width = 45,
+          -- side = "right",
+          signcolumn = "yes",
           relativenumber = true,
           preserve_window_proportions = true,
+          float = {
+            enable = true,
+            quit_on_focus_loss = true,
+            open_win_config = open_win_config_func,
+          },
         },
         filters = {
           dotfiles = false,
@@ -56,6 +78,12 @@ return {
         },
         renderer = {
           hidden_display = "all",
+          indent_markers = {
+            enable = true,
+          },
+        },
+        diagnostics = {
+          enable = true,
         },
       })
 
