@@ -74,13 +74,13 @@ return {
       bufdelete = {},
     },
     keys = {
-      {
-        "<leader>br",
-        function()
-          Snacks.rename.rename_file()
-        end,
-        desc = "Rename File",
-      },
+      -- {
+      --   "<leader>br",
+      --   function()
+      --     Snacks.rename.rename_file()
+      --   end,
+      --   desc = "Rename File",
+      -- },
       -- {
       --   "<leader>gB",
       --   function()
@@ -96,13 +96,13 @@ return {
       --   end,
       --   desc = "Git Blame Line",
       -- },
-      {
-        "<leader>gf",
-        function()
-          Snacks.lazygit.log_file()
-        end,
-        desc = "Lazygit Current File History",
-      },
+      -- {
+      --   "<leader>gf",
+      --   function()
+      --     Snacks.lazygit.log_file()
+      --   end,
+      --   desc = "Lazygit Current File History",
+      -- },
       -- pickers
       {
         "<leader>fb",
