@@ -17,7 +17,7 @@ return {
         },
         win_options = {
           wrap = false,
-          signcolumn = "no",
+          signcolumn = "yes:2",
           cursorcolumn = false,
           foldcolumn = "0",
           spell = false,
@@ -52,5 +52,14 @@ return {
       local map = vim.keymap.set
       map("n", "<leader>-", "<cmd>Oil --float<cr>", { desc = "Open parent directory" })
     end,
+  },
+  {
+    "refractalize/oil-git-status.nvim",
+
+    dependencies = {
+      "stevearc/oil.nvim",
+    },
+
+    config = true,
   },
 }
