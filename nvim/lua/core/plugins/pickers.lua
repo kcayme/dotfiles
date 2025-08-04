@@ -129,15 +129,15 @@ return {
         end,
         desc = "Grep",
       },
-      {
-        "<leader><leader>",
-        function()
-          Snacks.picker.smart({
-            filter = { cwd = true },
-          })
-        end,
-        desc = "Smart Find Files",
-      },
+      -- {
+      --   "<leader><leader>",
+      --   function()
+      --     Snacks.picker.smart({
+      --       filter = { cwd = true },
+      --     })
+      --   end,
+      --   desc = "Smart Find Files",
+      -- },
       -- {
       --   "<leader>ff",
       --   function()
@@ -152,20 +152,20 @@ return {
         end,
         desc = "Buffers",
       },
-      {
-        "<leader>fc",
-        function()
-          Snacks.picker.command_history()
-        end,
-        desc = "Find Git Files",
-      },
-      {
-        "<leader>fs",
-        function()
-          Snacks.picker.search_history()
-        end,
-        desc = "Find Search History",
-      },
+      -- {
+      --   "<leader>fc",
+      --   function()
+      --     Snacks.picker.command_history()
+      --   end,
+      --   desc = "Find Git Files",
+      -- },
+      -- {
+      --   "<leader>fs",
+      --   function()
+      --     Snacks.picker.search_history()
+      --   end,
+      --   desc = "Find Search History",
+      -- },
       {
         "<leader>ft",
         function()
@@ -275,5 +275,35 @@ return {
         desc = "FFF Find Files",
       },
     },
+  },
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      {
+        "elanmed/fzf-lua-frecency.nvim",
+        config = function()
+          require("fzf-lua-frecency").setup()
+        end,
+      },
+    },
+    config = function()
+      require("fzf-lua").setup({
+        fzf_colors = true,
+        "telescope",
+      })
+
+      local map = vim.keymap.set
+
+      map("n", "<leader><leader>", function()
+        require("fzf-lua").global({})
+      end, { desc = "Global picker" })
+
+      map("n", "<leader>fc", function()
+        require("fzf-lua").frecency({
+          cwd_only = true,
+        })
+      end, { desc = "Global picker" })
+    end,
   },
 }
