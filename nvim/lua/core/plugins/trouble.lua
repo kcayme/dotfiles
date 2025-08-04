@@ -6,6 +6,14 @@ return {
       modes = {
         diagnostics = {
           mode = "diagnostics",
+          win = {
+            wo = {
+              wrap = true,
+              list = true,
+              number = true,
+              relativenumber = true,
+            },
+          },
           -- preview = {
           --   type = "split",
           --   relative = "win",
