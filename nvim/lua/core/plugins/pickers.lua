@@ -291,6 +291,15 @@ return {
       require("fzf-lua").setup({
         fzf_colors = true,
         "telescope",
+        global = {
+          no_ignore = true,
+        },
+        grep = {
+          prompt = " Grep > ",
+        },
+        frecency = {
+          no_ignore = true,
+        },
       })
     end,
   },
