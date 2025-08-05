@@ -145,13 +145,13 @@ return {
       --   end,
       --   desc = "Find Files",
       -- },
-      {
-        "<leader>fb",
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = "Buffers",
-      },
+      -- {
+      --   "<leader>fb",
+      --   function()
+      --     Snacks.picker.buffers()
+      --   end,
+      --   desc = "Buffers",
+      -- },
       -- {
       --   "<leader>fc",
       --   function()
@@ -173,13 +173,13 @@ return {
         end,
         desc = "Find TODO comments",
       },
-      {
-        "<leader>flg",
-        function()
-          Snacks.picker.git_diff()
-        end,
-        desc = "Git Diff (Hunks)",
-      },
+      -- {
+      --   "<leader>flg",
+      --   function()
+      --     Snacks.picker.git_diff()
+      --   end,
+      --   desc = "Git Diff (Hunks)",
+      -- },
       -- {
       --   "<leader>fr",
       --   function()
@@ -188,13 +188,13 @@ return {
       --   desc = "Recent",
       -- },
       -- Grep
-      {
-        "<leader>fl",
-        function()
-          Snacks.picker.lines()
-        end,
-        desc = "Buffer Lines",
-      },
+      -- {
+      --   "<leader>fl",
+      --   function()
+      --     Snacks.picker.lines()
+      --   end,
+      --   desc = "Buffer Lines",
+      -- },
       {
         "<leader>fw",
         function()
@@ -231,20 +231,20 @@ return {
       --   end,
       --   desc = "Quickfix List",
       -- },
-      {
-        "<leader>fm",
-        function()
-          Snacks.picker.marks({ filter_marks = "A-I" })
-        end,
-        desc = "Marks",
-      },
-      {
-        "<leader>tt",
-        function()
-          Snacks.picker.todo_comments()
-        end,
-        desc = "Todo",
-      },
+      -- {
+      --   "<leader>fm",
+      --   function()
+      --     Snacks.picker.marks({ filter_marks = "A-I" })
+      --   end,
+      --   desc = "Marks",
+      -- },
+      -- {
+      --   "<leader>tt",
+      --   function()
+      --     Snacks.picker.todo_comments()
+      --   end,
+      --   desc = "Todo",
+      -- },
     },
   },
   {
