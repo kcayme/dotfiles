@@ -27,7 +27,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-    local picker = require("snacks").picker
+    local picker = require("core.config.interfaces")
     -- Jump to the implementation of the word under your cursor.
     --  Useful when your language has ways of declaring types without an actual implementation.
     map("<leader>gi", picker.lsp_implementations, "[G]oto [I]mplementation")
