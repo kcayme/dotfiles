@@ -46,9 +46,6 @@ end, { desc = "󰒕 Prev diagnostic" })
 --   vim.diagnostic.jump({ count = -1, float = true })
 -- end, { desc = "Go to next [D]iagnostic message" })
 
--- map("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
--- map("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
-
 -- ============ NAVIGATIONS ============
 map({ "n", "v" }, "gh", "^", { desc = "Go to start of line" })
 map({ "n", "v" }, "gl", "$", { desc = "Go to end of line" })
@@ -132,3 +129,50 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 -- map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
 --   desc = "Search on current file",
 -- })
+
+-- PICKERS
+local Picker = require("core.config.interfaces")
+
+map("n", "<leader>ff", function()
+  Picker.files({ backend = "fff" })
+end, { desc = "Find Files" })
+
+map("n", "<leader>fg", function()
+  Picker.grep({ backend = "fzf" })
+end, { desc = "Live Grep Resume" })
+
+map("n", "<leader>fb", function()
+  Picker.buffers({ backend = "fzf" })
+end, { desc = "Find Buffers" })
+
+map("n", "<leader>fj", function()
+  Picker.jumps({ backend = "fzf" })
+end, { desc = "Find Jumplist" })
+
+map("n", "<leader>ft", function()
+  Picker.todo_comments({ backend = "fzf" })
+end, { desc = "Find Todo List" })
+
+map({ "n", "x" }, "<leader>fw", function()
+  Picker.grep_word({ backend = "fzf" })
+end, { desc = "Grep Word" })
+
+map("n", "<leader>fd", function()
+  Picker.diagnostics({ backend = "fzf" })
+end, { desc = "Find Diagnostics" })
+
+map("n", "<leader>fh", function()
+  Picker.help({ backend = "fzf" })
+end, { desc = "Find Help Pages" })
+
+map("n", "<leader>fk", function()
+  Picker.keymaps({ backend = "fzf" })
+end, { desc = "Find Keymaps" })
+
+map("n", "<leader>fc", function()
+  Picker.smart({ backend = "fzf", cwd_only = true })
+end, { desc = "Find Smart" })
+
+map("n", "<leader><leader>", function()
+  Picker.global({ backend = "fzf" })
+end, { desc = "Global Find" })
