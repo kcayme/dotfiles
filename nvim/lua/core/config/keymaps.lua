@@ -176,3 +176,7 @@ end, { desc = "Find Smart" })
 map("n", "<leader><leader>", function()
   Picker.global({ backend = "fzf" })
 end, { desc = "Global Find" })
+
+map("n", "<leader>fr", function()
+  Picker.registers({ backend = "fzf" })
+end, { desc = "Find Registers" })

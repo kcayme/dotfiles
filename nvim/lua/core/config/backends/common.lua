@@ -18,6 +18,7 @@ local picker_interface_methods = {
   "buffers",
   "smart", -- frecency
   "global", -- fzf-lua specific
+  "registers", -- clipboard
 }
 
 return picker_interface_methods
