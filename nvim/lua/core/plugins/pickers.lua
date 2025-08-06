@@ -290,9 +290,11 @@ return {
     config = function()
       require("fzf-lua").setup({
         fzf_colors = true,
-        "telescope",
+        "borderless-full",
         global = {
           no_ignore = true,
+          -- cwd_prompt = false,
+          cwd_prompt_shorten_len = 10,
         },
         grep = {
           prompt = " > ",
