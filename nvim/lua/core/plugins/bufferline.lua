@@ -55,8 +55,6 @@ return {
       })
 
       local map = vim.keymap.set
-      -- map("n", ")", "<cmd>BufferLineMoveNext<cr>", {})
-      -- map("n", "(", "<cmd>BufferLineMovePrev<cr>", {})
       map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
       map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
       -- map("n", "<leader>bx", "<cmd>Bdelete<cr>", {}) -- bufdelete.nvim command
