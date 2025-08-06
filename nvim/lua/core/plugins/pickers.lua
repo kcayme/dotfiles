@@ -295,7 +295,7 @@ return {
           no_ignore = true,
         },
         grep = {
-          prompt = " Grep > ",
+          prompt = " > ",
         },
         frecency = {
           no_ignore = true,
