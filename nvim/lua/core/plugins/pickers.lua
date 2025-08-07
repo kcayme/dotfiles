@@ -293,8 +293,14 @@ return {
         "borderless-full",
         global = {
           no_ignore = true,
-          -- cwd_prompt = false,
-          cwd_prompt_shorten_len = 10,
+          cwd_prompt = false,
+          winopts = {
+            width = 0.9,
+            preview = {
+              horizontal = "right:55%",
+            },
+          },
+          -- cwd_prompt_shorten_len = 10,
         },
         grep = {
           prompt = " > ",

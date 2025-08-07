@@ -40,10 +40,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Fuzzy find all the symbols in your current document.
     --  Symbols are things like variables, functions, types, etc.
     map("<leader>@", function()
-      picker.lsp_symbols({
-        layout = {
-          preset = "vscode",
-        },
+      picker.global({
+        query = "@",
       })
     end, "[D]ocument [S]ymbols")
 

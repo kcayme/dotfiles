@@ -169,12 +169,12 @@ map("n", "<leader>fk", function()
   Picker.keymaps({ backend = "fzf" })
 end, { desc = "Find Keymaps" })
 
-map("n", "<leader>fc", function()
-  Picker.smart({ backend = "fzf", cwd_only = true })
-end, { desc = "Find Smart" })
+-- map("n", "<leader>fc", function()
+--   Picker.smart({ backend = "fzf", cwd_only = true })
+-- end, { desc = "Find Smart" })
 
 map("n", "<leader><leader>", function()
-  Picker.global({ backend = "fzf" })
+  Picker.smart({ backend = "fzf", cwd_only = true })
 end, { desc = "Global Find" })
 
 map("n", "<leader>fr", function()
