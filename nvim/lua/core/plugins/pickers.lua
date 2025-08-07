@@ -294,6 +294,7 @@ return {
         fzf = {
           match = "NvChHeadyellow",
         },
+        file_icons = "devicon",
         defaults = { formatter = "path.filename_first" },
         hls = {
           title = "NvChHeadblue",
