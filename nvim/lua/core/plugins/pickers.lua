@@ -291,6 +291,27 @@ return {
       require("fzf-lua").setup({
         fzf_colors = true,
         "borderless-full",
+        fzf = {
+          match = "NvChHeadyellow",
+        },
+        hls = {
+          title = "NvChHeadblue",
+          preview_title = "NvChHeadblue",
+          -- cursor = "Cursor",
+          -- cursorline = "CursorLine",
+          -- dir_part = "NvChHeadyellow",
+          -- file_part = "NvChHeadyellow",
+          -- dir_icon = "NvChHeadyellow",
+          -- live_sym = "NvChHeadblue",
+          -- live_prompt = "NvChHeadyellow",
+          -- buf_name = "NvChHeadyellow",
+          -- path_colnr = "BufferLineBackground",
+          -- path_linenr = "BufferLineBackground",
+          -- buf_nr = "NvChHeadyellow",
+          -- buf_name = "Error",
+          -- cursorlinenr = "Error",
+          -- search = "NvChHeadyellow",
+        },
         global = {
           no_ignore = true,
           cwd_prompt = false,
