@@ -12,14 +12,17 @@ end
 
 -- override for fzf-lua-specific methods
 fzf.lsp_type_definitions = function(opts)
+  opts.ignore_current_line = true
   picker.typedefs(opts)
 end
 
 fzf.lsp_symbols = function(opts)
+  opts.ignore_current_line = true
   picker.lsp_document_symbols(opts)
 end
 
 fzf.lsp_workspace_symbols = function(opts)
+  opts.ignore_current_line = true
   picker.lsp_workspace_symbols(opts)
 end
 
