@@ -294,15 +294,15 @@ return {
         global = {
           no_ignore = true,
           cwd_prompt = false,
-          winopts = {
-            width = 0.9,
-            preview = {
-              horizontal = "right:55%",
-            },
-          },
           -- cwd_prompt_shorten_len = 10,
         },
-        winopts = { backdrop = 90 },
+        winopts = {
+          backdrop = 90,
+          width = 0.9,
+          preview = {
+            horizontal = "right:55%",
+          },
+        },
         grep = {
           prompt = " > ",
         },
