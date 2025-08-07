@@ -302,6 +302,7 @@ return {
           },
           -- cwd_prompt_shorten_len = 10,
         },
+        winopts = { backdrop = 90 },
         grep = {
           prompt = " > ",
         },
