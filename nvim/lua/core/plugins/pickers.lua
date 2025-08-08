@@ -294,7 +294,7 @@ return {
         fzf = {
           match = "NvChHeadyellow",
         },
-        defaults = { formatter = "path.filename_first" },
+        defaults = { formatter = "path.dirname_first" },
         hls = {
           title = "NvChHeadblue",
           preview_title = "NvChHeadblue",
