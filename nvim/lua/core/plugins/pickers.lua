@@ -316,7 +316,7 @@ return {
         global = {
           file_icons = "devicons",
           -- defaults = { formatter = "path.filename_first" },
-          no_ignore = true,
+          -- no_ignore = true,
           cwd_prompt = false,
           cwd_prompt_shorten_len = 10,
         },
@@ -331,7 +331,7 @@ return {
           prompt = " > ",
         },
         frecency = {
-          no_ignore = true,
+          display_score = false,
         },
       })
     end,
