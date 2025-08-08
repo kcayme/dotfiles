@@ -294,7 +294,6 @@ return {
         fzf = {
           match = "NvChHeadyellow",
         },
-        file_icons = "devicon",
         defaults = { formatter = "path.filename_first" },
         hls = {
           title = "NvChHeadblue",
@@ -315,15 +314,17 @@ return {
           -- search = "NvChHeadyellow",
         },
         global = {
+          file_icons = "devicons",
+          -- defaults = { formatter = "path.filename_first" },
           no_ignore = true,
           cwd_prompt = false,
-          -- cwd_prompt_shorten_len = 10,
+          cwd_prompt_shorten_len = 10,
         },
         winopts = {
-          backdrop = 90,
+          backdrop = 85,
           width = 0.9,
           preview = {
-            horizontal = "right:55%",
+            horizontal = "right:60%",
           },
         },
         grep = {
