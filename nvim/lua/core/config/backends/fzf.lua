@@ -12,18 +12,24 @@ end
 
 -- override for fzf-lua-specific methods
 fzf.lsp_type_definitions = function(opts)
-  opts.ignore_current_line = true
-  picker.typedefs(opts)
+  local merged = vim.tbl_extend("force", {
+    ignore_current_line = true,
+  }, opts or {})
+  picker.typedefs(merged)
 end
 
 fzf.lsp_symbols = function(opts)
-  opts.ignore_current_line = true
-  picker.lsp_document_symbols(opts)
+  local merged = vim.tbl_extend("force", {
+    ignore_current_line = true,
+  }, opts or {})
+  picker.lsp_document_symbols(merged)
 end
 
 fzf.lsp_workspace_symbols = function(opts)
-  opts.ignore_current_line = true
-  picker.lsp_workspace_symbols(opts)
+  local merged = vim.tbl_extend("force", {
+    ignore_current_line = true,
+  }, opts or {})
+  picker.lsp_workspace_symbols(merged)
 end
 
 fzf.grep = function(opts)

@@ -94,7 +94,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("gr", picker.lsp_references, "[G]oto [R]eferences")
 
     map("<leader>gr", function()
-      picker.lsp_references({ filter = { buf = true } })
+      picker.lsp_references({ ignore_current_line = true })
     end, "[G]oto [R]eferences in current buffer")
 
     -- The following two autocommands are used to highlight references of the
