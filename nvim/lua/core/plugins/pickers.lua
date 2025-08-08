@@ -324,7 +324,7 @@ return {
           backdrop = 85,
           width = 0.9,
           preview = {
-            horizontal = "right:60%",
+            horizontal = "right:50%",
           },
         },
         grep = {
