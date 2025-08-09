@@ -263,7 +263,7 @@ return {
         preview_scroll_down = "<C-d>",
       },
       debug = {
-        show_scores = true, -- We hope for your collaboratio
+        show_scores = false,
       },
     },
     -- keys = {
