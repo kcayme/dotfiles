@@ -11,5 +11,6 @@
 !ssh/*
 !lazygit/*
 !windows/*
+!oh-my-posh/*
 
 !.gitignore
