@@ -1,7 +1,7 @@
 if status is-interactive
-    # enable vim binding
-    fish_vi_key_bindings
     # Commands to run in interactive sessions can go here
+    # enable vim binding
+    fish_vi_key_bindings --no-erase insert
 end
 
 set fish_greeting
@@ -26,7 +26,8 @@ switch (uname)
 end
 
 # remove welcome message
-oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
+# oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
+oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
 zoxide init fish | source
 fzf --fish | source
 
