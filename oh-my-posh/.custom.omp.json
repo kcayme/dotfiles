@@ -40,13 +40,13 @@
           "foreground": "p:black",
           "background": "#F07623",
           "type": "text",
-          "template": "{{ if eq .Env.FISH__BIND_MODE \"default\" }} Normal {{ else if eq .Env.FISH__BIND_MODE \"insert\" }} Insert {{ else if eq .Env.FISH__BIND_MODE \"replace_one\" }} Replace {{ else if eq .Env.FISH__BIND_MODE \"visual\"}} Visual {{ else }} {{.Env.FISH__BIND_MODE}} {{ end }}",
+          "template": " \uf36f{{ if eq .Env.FISH__BIND_MODE \"default\" }} NORMAL {{ else if eq .Env.FISH__BIND_MODE \"insert\" }} INSERT {{ else if eq .Env.FISH__BIND_MODE \"replace_one\" }} REPLACE {{ else if eq .Env.FISH__BIND_MODE \"visual\"}} VISUAL {{ else }} {{.Env.FISH__BIND_MODE}} {{ end }}",
           "style": "plain",
           "background_templates": [
-            "{{if contains \"default\" .Env.FISH__BIND_MODE}}blue{{end}}",
-            "{{if contains \"insert\" .Env.FISH__BIND_MODE}}green{{end}}",
-            "{{if contains \"visual\" .Env.FISH__BIND_MODE}}magenta{{end}}",
-            "{{if contains \"replace\" .Env.FISH__BIND_MODE}}red{{end}}"
+            "{{if eq \"default\" .Env.FISH__BIND_MODE}}blue{{end}}",
+            "{{if eq \"insert\" .Env.FISH__BIND_MODE}}green{{end}}",
+            "{{if eq \"visual\" .Env.FISH__BIND_MODE}}magenta{{end}}",
+            "{{if eq \"replace\" .Env.FISH__BIND_MODE}}red{{end}}"
           ]
         },
         {
