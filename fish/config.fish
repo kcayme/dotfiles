@@ -6,6 +6,7 @@ end
 
 set fish_greeting
 set -x XDG_CONFIG_HOME "$HOME/.config"
+set -x EDITOR "nvim"
 switch (uname)
     case 'Linux'
         # Check if it's specifically Ubuntu
