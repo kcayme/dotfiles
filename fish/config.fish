@@ -31,6 +31,7 @@ oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
 zoxide init fish | source
 fzf --fish | source
 
+rerender_on_bind_mode_change
 # start ssh-agent
 # fish_ssh_agent
 # ssh-add ~/.ssh/id_amihan
