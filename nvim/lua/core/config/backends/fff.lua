@@ -15,4 +15,8 @@ fff.files = function(opts)
   picker.find_files(opts)
 end
 
+fff.smart = function(opts)
+  picker.find_files(opts)
+end
+
 return fff

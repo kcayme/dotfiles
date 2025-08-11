@@ -174,7 +174,7 @@ end, { desc = "Find Keymaps" })
 -- end, { desc = "Find Smart" })
 
 map("n", "<leader><leader>", function()
-  Picker.smart({ backend = "fzf", cwd_only = true })
+  Picker.smart({ backend = "fff" })
 end, { desc = "Global Find" })
 
 map("n", "<leader>fr", function()
