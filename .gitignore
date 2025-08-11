@@ -3,6 +3,7 @@
 
 // follow the same pattern
 !tmux/*
+tmux/plugins
 !nvim/**/*
 !k9s/*
 !ghostty/*
