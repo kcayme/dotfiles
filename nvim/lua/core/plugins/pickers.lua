@@ -265,6 +265,8 @@ return {
       debug = {
         show_scores = false,
       },
+      width = 0.9,
+      height = 0.9, -- Window height as fraction of screen
     },
     -- keys = {
     --   {
