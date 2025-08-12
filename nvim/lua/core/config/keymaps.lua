@@ -134,7 +134,7 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 local Picker = require("core.config.interfaces")
 
 map("n", "<leader>ff", function()
-  Picker.files({ backend = "fff" })
+  Picker.files({ backend = "fzf" })
 end, { desc = "Find Files" })
 
 map("n", "<leader>fg", function()
