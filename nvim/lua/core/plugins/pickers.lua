@@ -30,34 +30,34 @@ return {
         smart = {},
         layouts = {
           default = {
-            reverse = true,
-            layout = {
-              box = "horizontal",
-              width = 0.8,
-              min_width = 120,
-              height = 0.9,
-              {
-                box = "vertical",
-                border = "rounded",
-                title = "{title} {live} {flags}",
-                { win = "list", border = "none" },
-                {
-                  win = "input",
-                  height = 1,
-                  border = "top",
-                  title = "{title} {live} {flags}",
-                  title_pos = "center",
-                },
-              },
-              {
-                win = "preview",
-                title = "{preview:Preview}",
-                width = 0.5,
-                border = "rounded",
-                title_pos = "center",
-              },
-              --   { win = "preview", title = "{preview:Preview}", border = "rounded", width = 0.5 },
-            },
+            -- reverse = true,
+            -- layout = {
+            --   box = "horizontal",
+            width = 0.8,
+            min_width = 120,
+            height = 0.9,
+            --   {
+            --     box = "vertical",
+            --     border = "rounded",
+            --     title = "{title} {live} {flags}",
+            --     { win = "list", border = "none" },
+            --     {
+            --       win = "input",
+            --       height = 1,
+            --       border = "top",
+            --       title = "{title} {live} {flags}",
+            --       title_pos = "center",
+            --     },
+            --   },
+            --   {
+            --     win = "preview",
+            --     title = "{preview:Preview}",
+            --     width = 0.5,
+            --     border = "rounded",
+            --     title_pos = "center",
+            --   },
+            --   --   { win = "preview", title = "{preview:Preview}", border = "rounded", width = 0.5 },
+            -- },
           },
         },
         win = {
@@ -368,7 +368,10 @@ return {
           },
         },
         grep = {
-          prompt = " > ",
+          prompt = "> ",
+        },
+        files = {
+          cwd_prompt = false,
         },
         frecency = {
           display_score = false,
