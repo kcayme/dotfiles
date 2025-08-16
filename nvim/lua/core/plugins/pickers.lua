@@ -282,12 +282,6 @@ return {
     "ibhagwan/fzf-lua",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      {
-        "elanmed/fzf-lua-frecency.nvim",
-        config = function()
-          require("fzf-lua-frecency").setup()
-        end,
-      },
     },
     config = function()
       require("fzf-lua").setup({
