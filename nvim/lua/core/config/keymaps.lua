@@ -134,39 +134,39 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 local Picker = require("core.config.interfaces")
 
 map("n", "<leader>ff", function()
-  Picker.files({ backend = "fzf" })
+  Picker.files({ backend = "snacks" })
 end, { desc = "Find Files" })
 
 map("n", "<leader>fg", function()
-  Picker.grep({ backend = "fzf" })
+  Picker.grep({ backend = "snacks" })
 end, { desc = "Live Grep Resume" })
 
 map("n", "<leader>fb", function()
-  Picker.buffers({ backend = "fzf" })
+  Picker.buffers({ backend = "snacks" })
 end, { desc = "Find Buffers" })
 
 map("n", "<leader>fj", function()
-  Picker.jumps({ backend = "fzf" })
+  Picker.jumps({ backend = "snacks" })
 end, { desc = "Find Jumplist" })
 
 map("n", "<leader>ft", function()
-  Picker.todo_comments({ backend = "fzf" })
+  Picker.todo_comments({ backend = "snacks" })
 end, { desc = "Find Todo List" })
 
 map({ "n", "x" }, "<leader>fw", function()
-  Picker.grep_word({ backend = "fzf" })
+  Picker.grep_word({ backend = "snacks" })
 end, { desc = "Grep Word" })
 
 map("n", "<leader>fd", function()
-  Picker.diagnostics({ backend = "fzf" })
+  Picker.diagnostics({ backend = "snacks" })
 end, { desc = "Find Diagnostics" })
 
 map("n", "<leader>fh", function()
-  Picker.help({ backend = "fzf" })
+  Picker.help({ backend = "snacks" })
 end, { desc = "Find Help Pages" })
 
 map("n", "<leader>fk", function()
-  Picker.keymaps({ backend = "fzf" })
+  Picker.keymaps({ backend = "snacks" })
 end, { desc = "Find Keymaps" })
 
 -- map("n", "<leader>fc", function()
@@ -178,5 +178,5 @@ map("n", "<leader><leader>", function()
 end, { desc = "Global Find" })
 
 map("n", "<leader>fr", function()
-  Picker.registers({ backend = "fzf" })
+  Picker.registers({ backend = "snacks" })
 end, { desc = "Find Registers" })
