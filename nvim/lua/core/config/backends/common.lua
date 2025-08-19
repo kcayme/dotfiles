@@ -19,6 +19,7 @@ local picker_interface_methods = {
   "smart", -- frecency
   "global", -- fzf-lua specific
   "registers", -- clipboard
+  "resume",
 }
 
 return picker_interface_methods
