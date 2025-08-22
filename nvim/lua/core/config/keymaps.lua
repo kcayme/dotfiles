@@ -130,6 +130,38 @@ map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc
 --   desc = "Search on current file",
 -- })
 
+-- search and show results in loclist
+map("n", "<leader>/", function()
+  Snacks.input.input({
+    prompt = "Search",
+    default = "",
+    icon = "",
+    win = {
+      style = "input",
+      border = "rounded",
+      title_pos = "center",
+      noautocmd = true,
+      row = 0.25,
+      width = 65,
+      height = 1,
+    },
+  }, function(input)
+    if not input or input == "" then
+      print("Search aborted")
+      return
+    end
+
+    -- Set the search register so highlights and "n/N" work
+    vim.fn.setreg("/", input)
+    vim.cmd("normal! n")
+
+    -- Run lvimgrep on the current buffer (%)
+    vim.cmd("lvimgrep /" .. vim.fn.escape(input, "/") .. "/ %")
+
+    require("trouble").toggle({ mode = "loclist", focus = true })
+  end)
+end)
+
 -- PICKERS
 local Picker = require("core.config.interfaces")
 
