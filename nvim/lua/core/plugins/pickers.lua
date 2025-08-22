@@ -273,8 +273,10 @@ return {
       debug = {
         show_scores = false,
       },
-      width = 0.9,
-      height = 0.9, -- Window height as fraction of screen
+      layout = {
+        width = 0.9,
+        height = 0.9, -- Window height as fraction of screen
+      },
     },
   },
   {
@@ -338,8 +340,11 @@ return {
           cwd_prompt_shorten_len = 10,
         },
         winopts = {
-          backdrop = 85,
-          width = 0.9,
+          height = 0.80, -- window height
+          width = 0.80, -- window width
+          row = 0.50, -- window row position (0=top, 1=bottom)
+          col = 0.50, -- window col position (0=left, 1=right)
+          backdrop = 60,
           preview = {
             horizontal = "right:50%",
           },
