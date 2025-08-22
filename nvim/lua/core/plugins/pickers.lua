@@ -7,6 +7,14 @@ return {
     ---@type snacks.Config
     ---@class snacks.indent.Config
     opts = {
+      input = {
+        icon = " ",
+        icon_hl = "SnacksInputIcon",
+        icon_pos = "right",
+        prompt_pos = "title",
+        win = { style = "input" },
+        expand = true,
+      },
       indent = {
         enabled = true,
         animate = {
