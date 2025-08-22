@@ -71,6 +71,7 @@ if vim.g.vscode then
 else
   require("core.config.options")
   require("core.config.autocmds")
+  require("core.config.commands")
   require("core.config.highlights")
   require("core.config.keymaps")
   print("default config loaded")
