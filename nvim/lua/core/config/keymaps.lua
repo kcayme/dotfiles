@@ -153,12 +153,13 @@ map("n", "<leader>/", function()
 
     -- Set the search register so highlights and "n/N" work
     vim.fn.setreg("/", input)
-    vim.cmd("normal! n")
 
     -- Run lvimgrep on the current buffer (%)
     vim.cmd("lvimgrep /" .. vim.fn.escape(input, "/") .. "/ %")
 
     require("trouble").toggle({ mode = "loclist", focus = true })
+
+    vim.cmd("normal! n")
   end)
 end)
 
