@@ -276,15 +276,6 @@ return {
       width = 0.9,
       height = 0.9, -- Window height as fraction of screen
     },
-    -- keys = {
-    --   {
-    --     "<leader>ff", -- try it if you didn't it is a banger keybinding for a picker
-    --     function()
-    --       require("fff").find_files()
-    --     end,
-    --     desc = "FFF Find Files",
-    --   },
-    -- },
   },
   {
     "ibhagwan/fzf-lua",
