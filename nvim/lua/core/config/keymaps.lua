@@ -177,9 +177,9 @@ map("n", "<leader>frg", function()
   Picker.resume({ backend = "snacks" })
 end, { desc = "Resume" })
 
-map("n", "<leader>fb", function()
+map("n", "<leader>fo", function()
   Picker.buffers({ backend = "snacks" })
-end, { desc = "Find Buffers" })
+end, { desc = "Find Open Buffers" })
 
 map("n", "<leader>fj", function()
   Picker.jumps({ backend = "snacks" })
