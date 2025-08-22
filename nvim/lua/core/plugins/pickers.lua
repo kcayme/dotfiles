@@ -274,8 +274,8 @@ return {
         show_scores = false,
       },
       layout = {
-        width = 0.9,
-        height = 0.9, -- Window height as fraction of screen
+        width = 0.80,
+        height = 0.80, -- Window height as fraction of screen
       },
     },
   },
