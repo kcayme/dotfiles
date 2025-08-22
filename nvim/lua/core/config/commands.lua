@@ -1,3 +1,12 @@
+vim.api.nvim_create_user_command("LSearch", function()
+  local search = vim.fn.getreg("/")
+  if search == "" then
+    print("No search pattern")
+    return
+  end
+  vim.cmd("lvimgrep /" .. search .. "/ %")
+  vim.cmd("lopen")
+end, {})
 
 vim.api.nvim_create_user_command("FormatToggle", function(args)
   local notify = require("notify")
