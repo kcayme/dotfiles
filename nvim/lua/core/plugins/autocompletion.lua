@@ -110,22 +110,14 @@ return {
 
       snippets = {
         preset = "luasnip",
-        -- expand = function(args)
-        --   return require("luasnip").lsp_expand(args)
-        -- end,
-        -- active = function(filter)
-        --   if filter and filter.direction then
-        --     return require("luasnip").jumpable(filter.direction)
-        --   end
-        --   return require("luasnip").in_snippet()
-        -- end,
-        -- jump = function(direction)
-        --   require("luasnip").jump(direction)
-        -- end,
       },
 
       cmdline = {
-        completion = { ghost_text = { enabled = true } },
+        keymap = { preset = "inherit" },
+        completion = {
+          ghost_text = { enabled = true },
+          menu = { auto_show = true },
+        },
       },
 
       sources = {
@@ -148,7 +140,7 @@ return {
             module = "blink.cmp.sources.path",
             score_offset = 500,
             enabled = true,
-            fallbacks = { "snippets", "buffer" },
+            fallbacks = { "buffer" },
             opts = {
               trailing_slash = false,
               label_trailing_slash = true,
@@ -166,7 +158,6 @@ return {
             score_offset = 600, -- the higher the number, the higher the priority
           },
         },
-        -- cmdline = {},
       },
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
