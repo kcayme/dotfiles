@@ -59,7 +59,6 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       local ensure_installed_lsp = {
         "ts_ls",
-        -- "vacuum",
         "yamlls",
         "eslint",
         "typos_lsp",
@@ -92,22 +91,6 @@ return {
             server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
             require("lspconfig")[server_name].setup(server)
           end,
-
-          -- ["vacuum"] = function()
-          --   vim.filetype.add({
-          --     pattern = {
-          --       ["openapi.*%.ya?ml"] = "yaml.openapi",
-          --       ["openapi.*%.json"] = "json.openapi",
-          --       ["openapi-*%.ya?ml"] = "yaml.openapi",
-          --       ["openapi-*%.json"] = "json.openapi",
-          --     },
-          --   })
-          --   require("lspconfig").vacuum.setup({
-          --     cmd = { "vacuum", "language-server" },
-          --     filetypes = { "yaml.openapi", "json.openapi" },
-          --     root_markser = { ".git" },
-          --   })
-          -- end,
         },
       })
     end,
