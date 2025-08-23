@@ -43,7 +43,7 @@ return {
                 -- for your neovim configuration.
                 library = {
                   "${3rd}/luv/library",
-                  unpack(vim.api.nvim_get_runtime_file("", true)),
+                  table.unpack(vim.api.nvim_get_runtime_file("", true)),
                 },
               },
               completion = {
@@ -66,7 +66,7 @@ return {
       }
       vim.list_extend(ensure_installed, {
         "stylua", -- Used to format lua code
-        ensure_installed_lsp,
+        table.unpack(ensure_installed_lsp),
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
