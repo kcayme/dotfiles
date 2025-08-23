@@ -59,7 +59,6 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       local ensure_installed_lsp = {
         "ts_ls",
-        "yamlls",
         "eslint",
         "typos_lsp",
         "cssls",
