@@ -38,13 +38,6 @@ end, { desc = "󰒕 Next diagnostic" })
 map("n", "<leader>[", function()
   jumpWithVirtLineDiags(-1)
 end, { desc = "󰒕 Prev diagnostic" })
--- map("n", "<leader>[", function()
---   vim.diagnostic.jump({ count = 1, float = true })
--- end, { desc = "Go to previous [D]iagnostic message" })
---
--- map("n", "<leader>]", function()
---   vim.diagnostic.jump({ count = -1, float = true })
--- end, { desc = "Go to next [D]iagnostic message" })
 
 -- ============ NAVIGATIONS ============
 map({ "n", "v" }, "gh", "^", { desc = "Go to start of line" })
