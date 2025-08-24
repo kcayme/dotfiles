@@ -141,7 +141,6 @@ map("n", "<leader>/", function()
   Snacks.input.input({
     prompt = "Search",
     default = "",
-    -- icon = "",
     icon = "",
     win = {
       style = "input",
