@@ -133,26 +133,16 @@ map({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc
 map({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
 map({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
 
--- -- nvim-spectre
--- map("n", "<leader>S", '<cmd>lua require("spectre").toggle()<CR>', {
---   desc = "Toggle Spectre",
--- })
--- map("n", "<leader>sw", '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
---   desc = "Search current word",
--- })
--- map("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
---   desc = "Search current word",
--- })
--- map("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
---   desc = "Search on current file",
--- })
+-- git diff
+map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
 
 -- search and show results in loclist
 map("n", "<leader>/", function()
   Snacks.input.input({
     prompt = "Search",
     default = "",
-    icon = "",
+    -- icon = "",
+    icon = "",
     win = {
       style = "input",
       border = "rounded",
