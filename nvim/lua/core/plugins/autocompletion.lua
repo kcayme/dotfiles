@@ -115,6 +115,12 @@ return {
       cmdline = {
         keymap = { preset = "inherit" },
         completion = {
+          list = {
+            selection = {
+              preselect = false,
+              auto_select = true,
+            },
+          },
           ghost_text = { enabled = true },
           menu = { auto_show = true },
         },
