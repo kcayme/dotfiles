@@ -7,7 +7,75 @@ git:
   branchLogCmd: "git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
   paging:
     colorArg: always
-    pager: diff-so-fancy
-    # pager: delta --dark --plus-style="#ffffff bold "#205115"" --plus-emph-style="#ffffff bold "#509940"" --minus-style="#ffffff bold "#701f1f"" --minus-emph-style="#ffffff bold "#e24646"" --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{f75445}:{line}"
+    # pager: delta --side-by-side --paging=never
+    # pager: delta --dark --paging=never --syntax-theme base16-256 --side-by-side --line-numbers --diff-so-fancy
+    # pager: delta --dark --paging=never --syntax-theme base16-256 --side-by-side --line-numbers
+    pager: delta --dark --paging=never --syntax-theme base16-256 -s
+    # pager: diff-so-fancy
+    # pager: delta --dark --side-by-side --plus-style="#ffffff bold "#205115"" --plus-emph-style="#ffffff bold "#509940"" --minus-style="#ffffff bold "#701f1f"" --minus-emph-style="#ffffff bold "#e24646"" --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{f75445}:{line}"
     #8e2323
     #fc2a2a
+customCommands:
+  - key: "<c-c>"
+    context: "global"
+    description: "Create new conventional commit"
+    prompts:
+      - type: "menu"
+        key: "Type"
+        title: "Type of change"
+        options:
+          - name: "build"
+            description: "Changes that affect the build system or external dependencies"
+            value: "build"
+          - name: "feat"
+            description: "A new feature"
+            value: "feat"
+          - name: "fix"
+            description: "A bug fix"
+            value: "fix"
+          - name: "chore"
+            description: "Other changes that don't modify src or test files"
+            value: "chore"
+          - name: "ci"
+            description: "Changes to CI configuration files and scripts"
+            value: "ci"
+          - name: "docs"
+            description: "Documentation only changes"
+            value: "docs"
+          - name: "perf"
+            description: "A code change that improves performance"
+            value: "perf"
+          - name: "refactor"
+            description: "A code change that neither fixes a bug nor adds a feature"
+            value: "refactor"
+          - name: "revert"
+            description: "Reverts a previous commit"
+            value: "revert"
+          - name: "style"
+            description: "Changes that do not affect the meaning of the code"
+            value: "style"
+          - name: "test"
+            description: "Adding missing tests or correcting existing tests"
+            value: "test"
+      - type: "input"
+        title: "Scope"
+        key: "Scope"
+        initialValue: ""
+      - type: "menu"
+        key: "Breaking"
+        title: "Breaking change"
+        options:
+          - name: "no"
+            value: ""
+          - name: "yes"
+            value: "!"
+      - type: "input"
+        title: "message"
+        key: "Message"
+        initialValue: ""
+      - type: "confirm"
+        key: "Confirm"
+        title: "Commit"
+        body: "Are you sure you want to commit?"
+    command: "git commit --message '{{.Form.Type}}{{ if .Form.Scope }}({{ .Form.Scope }}){{ end }}{{.Form.Breaking}}: {{.Form.Message}}'"
+    loadingText: "Creating conventional commit..."
