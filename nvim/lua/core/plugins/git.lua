@@ -83,7 +83,6 @@ return {
       local map = vim.keymap.set
       map("n", "<leader>bl", "<cmd>Gitsigns blame<cr>", { desc = "Git Blame" })
       map("n", "<leader>gn", "<cmd>Gitsigns next_hunk<cr>", { desc = "Git Next Hunk" })
-      map("n", "<leader>gc", "<cmd>Gitsigns diffthis<cr>", { desc = "Git Diff" })
       map("n", "<leader>gN", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Git Prev Hunk" })
     end,
   },
