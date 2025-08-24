@@ -64,61 +64,6 @@ return {
         Snacks.bufdelete.other()
       end, { desc = "Close other buffers" })
       map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
-
-      -- close buffer if it is in bufferline; else, close window
-      map({ "n" }, "<Leader>x", function()
-        local noice = require("noice")
-        local buffers = require("bufferline").get_elements().elements
-        local currentBufferId = vim.api.nvim_get_current_buf()
-
-        for _, buf in ipairs(buffers) do
-          if buf.id == currentBufferId then
-            noice.notify("Buffer closed")
-            Snacks.bufdelete()
-            return
-          end
-        end
-
-        noice.notify("Window closed")
-        vim.cmd("close")
-      end, { desc = "Close vertical window split" })
-
-      -- for i = 1, 5, 1 do
-      --   map(
-      --     "n",
-      --     string.format("<leader>%d", i),
-      --     string.format("<cmd>BufferLineGoToBuffer %d<cr>", i),
-      --     { desc = "Pick buffer by visible position" }
-      --   )
-      -- end
-
-      -- map("n", "<leader>w", function()
-      --   local items = {}
-      --   local longest_name = 0
-      --   for i, workspace in ipairs(require("workspaces").get()) do
-      --     table.insert(items, {
-      --       idx = i,
-      --       score = i,
-      --       text = workspace.path,
-      --       name = workspace.name,
-      --     })
-      --     longest_name = math.max(longest_name, #workspace.name)
-      --   end
-      --   longest_name = longest_name + 2
-      --   return Snacks.picker({
-      --     items = items,
-      --     format = function(item)
-      --       local ret = {}
-      --       ret[#ret + 1] = { ("%-" .. longest_name .. "s"):format(item.name), "SnacksPickerLabel" }
-      --       ret[#ret + 1] = { item.text, "SnacksPickerComment" }
-      --       return ret
-      --     end,
-      --     confirm = function(picker, item)
-      --       picker:close()
-      --       vim.cmd(("WorkspacesOpen %s"):format(item.name))
-      --     end,
-      --   })
-      -- end, {})
     end,
   },
 }
