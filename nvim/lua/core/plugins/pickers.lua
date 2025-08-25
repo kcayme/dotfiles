@@ -12,7 +12,15 @@ return {
         icon_hl = "SnacksInputIcon",
         icon_pos = "right",
         prompt_pos = "title",
-        win = { style = "input" },
+        win = {
+          style = "input",
+          border = "rounded",
+          title_pos = "center",
+          noautocmd = true,
+          row = 0.25,
+          width = 65,
+          height = 1,
+        },
         expand = true,
       },
       indent = {

@@ -132,15 +132,6 @@ map("n", "<leader>/", function()
     prompt = "Search",
     default = "",
     icon = "",
-    win = {
-      style = "input",
-      border = "rounded",
-      title_pos = "center",
-      noautocmd = true,
-      row = 0.25,
-      width = 65,
-      height = 1,
-    },
   }, function(input)
     if not input or input == "" then
       print("Search aborted")
