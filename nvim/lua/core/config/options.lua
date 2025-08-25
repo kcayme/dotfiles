@@ -72,7 +72,7 @@ vim.g.lazygit_config = true
 vim.opt.wrap = false
 vim.o.smoothscroll = true
 
--- vim.opt.foldlevel = 99
+vim.o.foldlevel = 99
 vim.o.foldenable = true
 -- vim.o.foldmethod = "indent"
 vim.o.foldlevelstart = 99
