@@ -7,7 +7,7 @@ map("n", "<Esc>", function()
   require("notify").dismiss()
 end, { desc = "Clear notifs and highlights" })
 
--- ============ DIAGNOSTICS ============
+-- INFO: DIAGNOSTICS =====================================================================
 ---@param jumpCount number
 local function jumpWithVirtLineDiags(jumpCount)
   pcall(vim.api.nvim_del_augroup_by_name, "jumpWithVirtLineDiags") -- prevent autocmd for repeated jumps
@@ -39,7 +39,7 @@ map("n", "<leader>[", function()
   jumpWithVirtLineDiags(-1)
 end, { desc = "󰒕 Prev diagnostic" })
 
--- ============ NAVIGATIONS ============
+-- INFO: NAVIGATIONS ====================================================================
 map({ "n", "v" }, "gh", "^", { desc = "Go to start of line" })
 map({ "n", "v" }, "gl", "$", { desc = "Go to end of line" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up with scrolloff" })
@@ -62,7 +62,7 @@ end, { silent = true, expr = true, noremap = true })
 map("n", ")", "<C-i>zz", { noremap = true, silent = true, desc = "Jump to Next Position" })
 map("n", "(", "<C-o>zz", { noremap = true, silent = true, desc = "Jump to Previous Position" })
 
--- buffers and windows
+-- INFO: BUFFERS AND WINDOWS =============================================================
 map("n", "<leader>bb", "<cmd>b#<cr>", { desc = "Go to Previous Buffer" })
 map({ "n" }, "<Leader>X", "<cmd>close<cr>", { desc = "Close window" })
 map({ "n" }, "<Leader>|", "<cmd>vsplit<cr>", { desc = "Vertical window split" })
@@ -92,7 +92,7 @@ map({ "n" }, "<Leader>x", function()
   vim.cmd("close")
 end, { desc = "Close vertical window split" })
 
--- ============ MOTIONS AND EDITING ============
+-- INFO: MOTIONS AND EDITING ============
 -- save file
 map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", {})
 
@@ -121,8 +121,6 @@ vim.api.nvim_set_keymap("n", "<Leader>lW", "ysiW", { noremap = false, desc = "Su
 vim.api.nvim_set_keymap("n", "<Leader>la", "ysa", { noremap = false, desc = "Surround delimited" })
 vim.api.nvim_set_keymap("n", "<Leader>ll", "yss", { noremap = false, desc = "Surround line" })
 
--- nvim-spider
-
 -- git diff
 map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
 
@@ -150,7 +148,7 @@ map("n", "<leader>/", function()
   end)
 end)
 
--- PICKERS
+-- INFO: PICKERS =======================================
 local Picker = require("core.config.interfaces")
 
 map("n", "<leader>ff", function()
