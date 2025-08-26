@@ -10,9 +10,9 @@ git:
     # pager: delta --side-by-side --paging=never
     # pager: delta --dark --paging=never --syntax-theme base16-256 --side-by-side --line-numbers --diff-so-fancy
     # pager: delta --dark --paging=never --syntax-theme base16-256 --side-by-side --line-numbers
-    pager: delta --dark --paging=never --syntax-theme base16-256 -s
+    # pager: delta --dark --paging=never --syntax-theme base16-256 -s
     # pager: diff-so-fancy
-    # pager: delta --dark --side-by-side --plus-style="#ffffff bold "#205115"" --plus-emph-style="#ffffff bold "#509940"" --minus-style="#ffffff bold "#701f1f"" --minus-emph-style="#ffffff bold "#e24646"" --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{f75445}:{line}"
+    pager: delta --dark --side-by-side --plus-style="#ffffff bold "#205115"" --plus-emph-style="#ffffff bold "#509940"" --minus-style="#ffffff bold "#701f1f"" --minus-emph-style="#ffffff bold "#e24646"" --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{f75445}:{line}"
     #8e2323
     #fc2a2a
 customCommands:
