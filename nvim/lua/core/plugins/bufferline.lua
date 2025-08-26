@@ -2,7 +2,6 @@ return {
   {
     "akinsho/bufferline.nvim",
     dependencies = {
-      "folke/noice.nvim",
       "folke/snacks.nvim",
     },
     config = function()
