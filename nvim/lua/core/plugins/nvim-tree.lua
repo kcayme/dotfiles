@@ -41,8 +41,9 @@ return {
       end
 
       local function open_win_config_func()
-        local scr_w = vim.opt.columns:get()
-        local scr_h = vim.opt.lines:get()
+        local screen = require("utils.screen")
+        local scr_w = screen.screen_width
+        local scr_h = screen.screen_height
         local tree_w = 45
         -- local tree_h = math.floor(tree_w * scr_h / scr_w)
         local tree_h = scr_h - 4
