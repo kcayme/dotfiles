@@ -5,10 +5,7 @@ return {
     ---@type oil.SetupOpts
     opts = {},
     -- Optional dependencies
-    dependencies = {
-      "echasnovski/mini.icons",
-      "nvim-tree/nvim-web-devicons",
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = false,
     config = function()
       require("oil").setup({
