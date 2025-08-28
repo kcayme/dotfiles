@@ -44,6 +44,8 @@ map({ "n", "v" }, "gh", "^", { desc = "Go to start of line" })
 map({ "n", "v" }, "gl", "$", { desc = "Go to end of line" })
 map("n", "<C-u>", "<C-u>zz", { desc = "Scroll up with scrolloff" })
 map("n", "<C-d>", "<C-d>zz", { desc = "Scroll down with scrolloff" })
+map("n", "N", "Nzzzv", { desc = "Go to Previous search result", noremap = true, silent = true })
+map("n", "n", "nzzzv", { desc = "Go to Next search result", noremap = true, silent = true })
 map("n", "j", function()
   local api = require("nvim-tree.api")
   if api.tree.is_tree_buf() then
