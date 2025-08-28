@@ -80,8 +80,8 @@ return {
               symbols = { error = " ", warn = " ", info = " ", hint = " " },
             },
             "filename",
-            "aerial",
             arrow_status,
+            "aerial",
             {
               "macro",
               fmt = function()
