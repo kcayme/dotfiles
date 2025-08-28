@@ -9,7 +9,7 @@ return {
         useLspFoldsWithTreesitterFallback = true,
         pauseFoldsOnSearch = true,
         foldtext = {
-          enabled = true,
+          enabled = false,
           padding = 3,
           lineCount = {
             template = "%d lines", -- `%d` is replaced with the number of folded lines
