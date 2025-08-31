@@ -1,4 +1,4 @@
-local picker = require("fff")
+-- local picker = require("fff")
 
 local M = {}
 
@@ -157,10 +157,12 @@ end
 -- override for fzf-lua-specific methods
 M.files = function(opts)
   M.fff(opts)
+  -- picker.fff(opts)
 end
 
 M.smart = function(opts)
   M.fff(opts)
+  -- picker.fff(opts)
 end
 
 return M
