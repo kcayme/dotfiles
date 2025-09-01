@@ -5,7 +5,7 @@ local backends = {
 }
 
 local Picker = {
-  default_backend = "fzf", -- fallback
+  default_backend = "snacks", -- fallback
 }
 
 local function get_backend(opts)
