@@ -2,7 +2,7 @@ local picker = require("fzf-lua")
 
 local fzf = {}
 
-local picker_interface_methods = require("core.config.backends.common")
+local picker_interface_methods = require("core.config.backends.common").picker_interface_methods
 
 for _, method in ipairs(picker_interface_methods) do
   fzf[method] = function(opts)

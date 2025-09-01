@@ -2,7 +2,7 @@ local picker = require("snacks").picker
 
 local snacks = {}
 
-local picker_interface_methods = require("core.config.backends.common")
+local picker_interface_methods = require("core.config.backends.common").picker_interface_methods
 
 for _, method in ipairs(picker_interface_methods) do
   snacks[method] = function(opts)
