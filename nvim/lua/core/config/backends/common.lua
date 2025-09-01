@@ -1,5 +1,6 @@
+local M = {}
 -- Common passthrough methods
-local picker_interface_methods = {
+M.picker_interface_methods = {
   "lsp_implementations",
   "lsp_type_definitions",
   "lsp_symbols",
@@ -22,4 +23,4 @@ local picker_interface_methods = {
   "resume",
 }
 
-return picker_interface_methods
+return M
