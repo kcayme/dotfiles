@@ -217,7 +217,8 @@ return {
   },
   {
     "oribarilan/lensline.nvim",
-    tag = "1.0.0",
+    -- tag = "1.0.0",
+    tag = "1.1.0",
     event = "LspAttach",
     config = function()
       require("lensline").setup({
@@ -292,10 +293,13 @@ return {
           --   end,
           -- },
         },
+        render = "focused", -- or "all" for showing lenses in all functions
         style = {
+          placement = "inline",
+          prefix = "",
           separator = " • ", -- separator between all lens attributes
           highlight = "Comment", -- highlight group for lens text
-          prefix = "┃ ", -- prefix before lens content
+          -- prefix = "┃ ", -- prefix before lens content
           use_nerdfont = true, -- enable nerd font icons in built-in providers
         },
         limits = {
