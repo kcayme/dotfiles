@@ -104,7 +104,11 @@ return {
             "searchcount",
           },
           lualine_y = {
-            { "lsp_status", icon = "" },
+            {
+              "lsp_status",
+              icon = "",
+              ignore_lsp = { "typos_lsp" },
+            },
             "filetype",
             "fileformat",
             -- "progress",
