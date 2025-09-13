@@ -23,4 +23,10 @@ snacks.jumps = function(opts)
   picker.jumps(opts)
 end
 
+snacks.global = function(opts)
+  -- opts = opts or {}
+  -- opts.filter = vim.tbl_extend("force", opts.filter or {}, { cwd = true })
+  picker.lsp_symbols(opts)
+end
+
 return snacks

@@ -41,7 +41,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
     --  Symbols are things like variables, functions, types, etc.
     map("<leader>@", function()
       picker.global({
-        query = "@",
+        -- query = "@",
+        backend = "snacks",
       })
     end, "[D]ocument [S]ymbols")
 
