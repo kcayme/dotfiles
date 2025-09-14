@@ -287,86 +287,86 @@ return {
       },
     },
   },
-  {
-    "ibhagwan/fzf-lua",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("fzf-lua").setup({
-        fzf_colors = true,
-        "default",
-        fzf = {
-          match = "NvChHeadyellow",
-        },
-        keymap = {
-          builtin = {
-            ["<M-Esc>"] = "hide", -- hide fzf-lua, `:FzfLua resume` to continue
-            ["<F1>"] = "toggle-help",
-            ["<F2>"] = "toggle-fullscreen",
-            -- Only valid with the 'builtin' previewer
-            ["<F3>"] = "toggle-preview-wrap",
-            ["<F4>"] = "toggle-preview",
-            -- Rotate preview clockwise/counter-clockwise
-            ["<F5>"] = "toggle-preview-ccw",
-            ["<F6>"] = "toggle-preview-cw",
-            -- `ts-ctx` binds require `nvim-treesitter-context`
-            ["<F7>"] = "toggle-preview-ts-ctx",
-            ["<F8>"] = "preview-ts-ctx-dec",
-            ["<F9>"] = "preview-ts-ctx-inc",
-            ["<S-Left>"] = "preview-reset",
-            ["<C-d>"] = "preview-page-down",
-            ["<C-u>"] = "preview-page-up",
-            ["<M-S-down>"] = "preview-down",
-            ["<M-S-up>"] = "preview-up",
-          },
-          fzf = {
-            -- fzf '--bind=' options
-            -- true,        -- uncomment to inherit all the below in your custom config
-            ["ctrl-z"] = "abort",
-            ["ctrl-u"] = "unix-line-discard",
-            ["ctrl-f"] = "half-page-down",
-            ["ctrl-b"] = "half-page-up",
-            ["ctrl-a"] = "beginning-of-line",
-            ["ctrl-e"] = "end-of-line",
-            ["alt-a"] = "toggle-all",
-            ["alt-g"] = "first",
-            ["alt-G"] = "last",
-            -- Only valid with fzf previewers (bat/cat/git/etc)
-            ["f3"] = "toggle-preview-wrap",
-            ["f4"] = "toggle-preview",
-            ["shift-down"] = "preview-page-down",
-            ["shift-up"] = "preview-page-up",
-          },
-        },
-        defaults = { formatter = "path.dirname_first" },
-        global = {
-          file_icons = "devicons",
-          -- defaults = { formatter = "path.filename_first" },
-          -- no_ignore = true,
-          cwd_prompt = false,
-          cwd_prompt_shorten_len = 10,
-        },
-        winopts = {
-          height = 0.80, -- window height
-          width = 0.80, -- window width
-          row = 0.50, -- window row position (0=top, 1=bottom)
-          col = 0.50, -- window col position (0=left, 1=right)
-          backdrop = 60,
-          preview = {
-            horizontal = "right:50%",
-          },
-        },
-        grep = {
-          prompt = "> ",
-        },
-        files = {
-          cwd_prompt = false,
-        },
-        frecency = {
-          display_score = false,
-        },
-      })
-    end,
-  },
+  -- {
+  --   "ibhagwan/fzf-lua",
+  --   dependencies = {
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   config = function()
+  --     require("fzf-lua").setup({
+  --       fzf_colors = true,
+  --       "default",
+  --       fzf = {
+  --         match = "NvChHeadyellow",
+  --       },
+  --       keymap = {
+  --         builtin = {
+  --           ["<M-Esc>"] = "hide", -- hide fzf-lua, `:FzfLua resume` to continue
+  --           ["<F1>"] = "toggle-help",
+  --           ["<F2>"] = "toggle-fullscreen",
+  --           -- Only valid with the 'builtin' previewer
+  --           ["<F3>"] = "toggle-preview-wrap",
+  --           ["<F4>"] = "toggle-preview",
+  --           -- Rotate preview clockwise/counter-clockwise
+  --           ["<F5>"] = "toggle-preview-ccw",
+  --           ["<F6>"] = "toggle-preview-cw",
+  --           -- `ts-ctx` binds require `nvim-treesitter-context`
+  --           ["<F7>"] = "toggle-preview-ts-ctx",
+  --           ["<F8>"] = "preview-ts-ctx-dec",
+  --           ["<F9>"] = "preview-ts-ctx-inc",
+  --           ["<S-Left>"] = "preview-reset",
+  --           ["<C-d>"] = "preview-page-down",
+  --           ["<C-u>"] = "preview-page-up",
+  --           ["<M-S-down>"] = "preview-down",
+  --           ["<M-S-up>"] = "preview-up",
+  --         },
+  --         fzf = {
+  --           -- fzf '--bind=' options
+  --           -- true,        -- uncomment to inherit all the below in your custom config
+  --           ["ctrl-z"] = "abort",
+  --           ["ctrl-u"] = "unix-line-discard",
+  --           ["ctrl-f"] = "half-page-down",
+  --           ["ctrl-b"] = "half-page-up",
+  --           ["ctrl-a"] = "beginning-of-line",
+  --           ["ctrl-e"] = "end-of-line",
+  --           ["alt-a"] = "toggle-all",
+  --           ["alt-g"] = "first",
+  --           ["alt-G"] = "last",
+  --           -- Only valid with fzf previewers (bat/cat/git/etc)
+  --           ["f3"] = "toggle-preview-wrap",
+  --           ["f4"] = "toggle-preview",
+  --           ["shift-down"] = "preview-page-down",
+  --           ["shift-up"] = "preview-page-up",
+  --         },
+  --       },
+  --       defaults = { formatter = "path.dirname_first" },
+  --       global = {
+  --         file_icons = "devicons",
+  --         -- defaults = { formatter = "path.filename_first" },
+  --         -- no_ignore = true,
+  --         cwd_prompt = false,
+  --         cwd_prompt_shorten_len = 10,
+  --       },
+  --       winopts = {
+  --         height = 0.80, -- window height
+  --         width = 0.80, -- window width
+  --         row = 0.50, -- window row position (0=top, 1=bottom)
+  --         col = 0.50, -- window col position (0=left, 1=right)
+  --         backdrop = 60,
+  --         preview = {
+  --           horizontal = "right:50%",
+  --         },
+  --       },
+  --       grep = {
+  --         prompt = "> ",
+  --       },
+  --       files = {
+  --         cwd_prompt = false,
+  --       },
+  --       frecency = {
+  --         display_score = false,
+  --       },
+  --     })
+  --   end,
+  -- },
 }

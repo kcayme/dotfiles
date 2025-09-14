@@ -1,11 +1,11 @@
 local backends = {
   fff = require("core.config.backends.fff"),
   snacks = require("core.config.backends.snacks"),
-  fzf = require("core.config.backends.fzf"),
+  -- fzf = require("core.config.backends.fzf"),
 }
 
 local Picker = {
-  default_backend = "fzf", -- fallback
+  default_backend = "snacks", -- fallback
 }
 
 local function get_backend(opts)
