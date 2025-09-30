@@ -20,7 +20,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "isort", "black", stop_after_first = true },
+        python = { "isort", "yapf", stop_after_first = false },
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         typescript = { "prettierd", "prettier", stop_after_first = true },
