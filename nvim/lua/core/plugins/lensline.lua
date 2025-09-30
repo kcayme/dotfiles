@@ -25,40 +25,46 @@ return {
               enabled = false, -- disabled by default - enable explicitly to use
               min_level = "L", -- only show L (Large) and XL (Extra Large) complexity by default
             },
-
-            -- custom providers
             {
-              name = "references_with_warning",
+              name = "usages",
               enabled = true,
-              event = { "LspAttach", "BufWritePost" },
-              handler = function(bufnr, func_info, provider_config, callback)
-                local utils = require("lensline.utils")
-
-                utils.get_lsp_references(bufnr, func_info, function(references)
-                  if references then
-                    local count = #references
-                    local icon, text
-
-                    if count == 0 then
-                      icon = utils.if_nerdfont_else("⚠️ ", "WARN ")
-                      text = icon .. "No references"
-                    else
-                      icon = utils.if_nerdfont_else("󰌹 ", "")
-                      local suffix = utils.if_nerdfont_else("", " refs")
-                      text = icon .. count .. suffix
-                    end
-
-                    callback({ line = func_info.line, text = text })
-                  else
-                    callback(nil)
-                  end
-                end)
-              end,
+              include = { "refs", "defs", "impls" }, -- Track all usage types
+              breakdown = true, -- Show "5 refs, 2 defs, 1 impls"
+              show_zero = true,
             },
+            -- custom providers
+            -- {
+            --   name = "references_with_warning",
+            --   enabled = true,
+            --   event = { "LspAttach", "BufWritePost" },
+            --   handler = function(bufnr, func_info, provider_config, callback)
+            --     local utils = require("lensline.utils")
+            --
+            --     utils.get_lsp_references(bufnr, func_info, function(references)
+            --       if references then
+            --         local count = #references
+            --         local icon, text
+            --
+            --         if count == 0 then
+            --           icon = utils.if_nerdfont_else("⚠️ ", "WARN ")
+            --           text = icon .. "No references"
+            --         else
+            --           icon = utils.if_nerdfont_else("󰌹 ", "")
+            --           local suffix = utils.if_nerdfont_else("", " refs")
+            --           text = icon .. count .. suffix
+            --         end
+            --
+            --         callback({ line = func_info.line, text = text })
+            --       else
+            --         callback(nil)
+            --       end
+            --     end)
+            --   end,
+            -- },
           },
           style = {
             placement = "inline",
-            render = "focused", -- or "all" for showing lenses in all functions
+            render = "all", -- or "all" for showing lenses in all functions
             prefix = "",
             separator = " • ", -- separator between all lens attributes
             highlight = "Comment", -- highlight group for lens text
