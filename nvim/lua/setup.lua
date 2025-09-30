@@ -63,11 +63,13 @@ require("lazy").setup({
   -- },
 })
 
+local profile = ""
+
 -- Load appropriate plugins, settings, and keymaps
 if vim.g.vscode then
   require("code.config.keymaps")
   require("code.config.autocmds")
-  print("vscode config loaded")
+  profile = "vscode"
 else
   require("core.config.options")
   require("core.config.autocmds")
@@ -75,5 +77,7 @@ else
   require("core.config.highlights")
   require("core.config.keymaps")
   require("core.config.lsp")
-  print("default config loaded")
+  profile = "default"
 end
+
+print("Config loaded: " .. profile)
