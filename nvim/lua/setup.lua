@@ -74,5 +74,6 @@ else
   require("core.config.commands")
   require("core.config.highlights")
   require("core.config.keymaps")
+  require("core.config.lsp")
   print("default config loaded")
 end
