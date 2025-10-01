@@ -72,6 +72,7 @@ return {
         "ts_ls",
         "eslint",
         "typos_lsp",
+        "prettierd",
         "cssls",
         "dockerls",
       }
