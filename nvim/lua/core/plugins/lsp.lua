@@ -38,6 +38,8 @@ return {
         "lua_ls",
         "ts_ls",
         "eslint",
+        "ruff",
+        "ty",
         "typos_lsp",
         "prettierd",
         "cssls",
