@@ -1,6 +1,6 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       -- ui = {
       --   icons = {
@@ -14,21 +14,14 @@ return {
     --   require("mason").setup()
     -- end,
   },
+  { "neovim/nvim-lspconfig" },
   {
     "mason-org/mason-lspconfig.nvim",
     opts = {},
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "neovim/nvim-lspconfig",
-    },
-  },
-  { -- LSP Configuration & Plugins
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for neovim
-      "williamboman/mason.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "saghen/blink.cmp",
     },
     config = function()
       local ensure_installed = {
