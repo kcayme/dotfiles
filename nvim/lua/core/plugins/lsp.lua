@@ -1,9 +1,18 @@
 return {
   {
     "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
+    opts = {
+      -- ui = {
+      --   icons = {
+      --     package_installed = "✓",
+      --     package_pending = "➜",
+      --     package_uninstalled = "✗",
+      --   },
+      -- },
+    },
+    -- config = function()
+    --   require("mason").setup()
+    -- end,
   },
   {
     "mason-org/mason-lspconfig.nvim",
