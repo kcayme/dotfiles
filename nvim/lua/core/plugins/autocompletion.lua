@@ -19,8 +19,7 @@ return {
       },
       { "onsails/lspkind.nvim" },
     },
-
-    version = "*",
+    version = "1.*",
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
