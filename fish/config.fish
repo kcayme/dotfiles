@@ -28,6 +28,7 @@ end
 
 # remove welcome message
 # oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
+source "$HOME/.cargo/env.fish"  # For fish
 oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
 zoxide init fish | source
 fzf --fish | source
