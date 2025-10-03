@@ -6,9 +6,9 @@ end
 
 set fish_greeting
 set -x XDG_CONFIG_HOME "$HOME/.config"
-set -x EDITOR "nvim"
+set -x EDITOR nvim
 switch (uname)
-    case 'Linux'
+    case Linux
         # Check if it's specifically Ubuntu
         if test -f /etc/os-release
             if string match -q "ID=ubuntu" (cat /etc/os-release)
@@ -28,13 +28,13 @@ end
 
 # remove welcome message
 # oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
-source "$HOME/.cargo/env.fish"  # For fish
+source "$HOME/.cargo/env.fish" # For fish
 oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
 zoxide init fish | source
 fzf --fish | source
 
 rerender_on_bind_mode_change
 # start ssh-agent
-# fish_ssh_agent
+fish_ssh_agent
 # ssh-add ~/.ssh/id_amihan
 #ssh-add ~/.ssh/id_personal_2
