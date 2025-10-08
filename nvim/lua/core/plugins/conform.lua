@@ -25,7 +25,7 @@ return {
       },
       formatters_by_ft = {
         lua = { "stylua" },
-        python = { "ruff", "autopep8", "isort", "docformatter", stop_after_first = false },
+        python = { "ruff", "isort", "docformatter", "autopep8", stop_after_first = false },
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         typescript = { "prettierd", "prettier", stop_after_first = true },
