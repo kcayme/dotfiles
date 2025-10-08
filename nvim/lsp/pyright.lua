@@ -2,7 +2,7 @@ return {
   settings = {
     python = {
       analysis = {
-        typeCheckingMode = "strict", -- <-- enable strict mode
+        typeCheckingMode = "standard",
         autoImportCompletions = true,
         diagnosticMode = "workspace",
         useLibraryCodeForTypes = true,

@@ -1,6 +1,6 @@
 return {
   settings = {
-    python = {
+    basedpyright = {
       analysis = {
         typeCheckingMode = "standard",
         autoImportCompletions = true,
@@ -8,6 +8,10 @@ return {
         useLibraryCodeForTypes = true,
         reportMissingImports = "error",
         reportMissingTypeStubs = "warning",
+        diagnosticSeverityOverrides = {
+          reportExplicitAny = "none",
+          reportImplicitOverride = "none",
+        },
       },
     },
   },
