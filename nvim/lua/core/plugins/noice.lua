@@ -122,7 +122,14 @@ return {
           },
           opts = { skip = true },
         },
-
+        {
+          filter = {
+            event = "lsp",
+            kind = "progress",
+            find = "Finding references",
+          },
+          opts = { skip = true },
+        },
         {
           view = "mini",
           filter = {
