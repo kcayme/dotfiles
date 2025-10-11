@@ -41,9 +41,9 @@ return {
       end
 
       local function open_win_config_func()
-        local screen = require("utils.screen")
-        local scr_w = screen.screen_width
-        local scr_h = screen.screen_height
+        local dimensions = require("utils.screen").get_screen_dimensions()
+        local scr_w = dimensions.screen_width
+        local scr_h = dimensions.screen_height
         local tree_w = 45
         -- local tree_h = math.floor(tree_w * scr_h / scr_w)
         local tree_h = scr_h - 4

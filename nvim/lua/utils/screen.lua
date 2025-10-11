@@ -1,6 +1,10 @@
 local M = {}
 
-M.screen_width = vim.opt.columns:get()
-M.screen_height = vim.opt.lines:get()
+M.get_screen_dimensions = function()
+  local dimensions = {}
+  dimensions.screen_width = vim.opt.columns:get()
+  dimensions.screen_height = vim.opt.lines:get()
+  return dimensions
+end
 
 return M
