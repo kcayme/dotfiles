@@ -40,3 +40,17 @@ rerender_on_bind_mode_change
 fish_ssh_agent
 # ssh-add ~/.ssh/id_amihan
 #ssh-add ~/.ssh/id_personal_2
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+if test -f /Users/karlcayme/miniconda3/bin/conda
+    eval /Users/karlcayme/miniconda3/bin/conda "shell.fish" "hook" $argv | source
+else
+    if test -f "/Users/karlcayme/miniconda3/etc/fish/conf.d/conda.fish"
+        . "/Users/karlcayme/miniconda3/etc/fish/conf.d/conda.fish"
+    else
+        set -x PATH "/Users/karlcayme/miniconda3/bin" $PATH
+    end
+end
+# <<< conda initialize <<<
+
