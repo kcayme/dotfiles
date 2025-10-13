@@ -24,6 +24,7 @@ return {
         timeout_ms = 500,
       },
       formatters_by_ft = {
+        toml = { "pyproject-fmt" },
         lua = { "stylua" },
         python = { "ruff", "isort", "docformatter", "autopep8", stop_after_first = false },
         go = { "goimports", "gofmt", stop_after_first = true },
