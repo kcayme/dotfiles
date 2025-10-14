@@ -43,14 +43,13 @@ fish_ssh_agent
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-if test -f /Users/karlcayme/miniforge3/bin/conda
-    eval /Users/karlcayme/miniforge3/bin/conda "shell.fish" "hook" $argv | source
+if test -f /Users/karlcayme/miniconda3/bin/conda
+    eval /Users/karlcayme/miniconda3/bin/conda "shell.fish" "hook" $argv | source
 else
-    if test -f "/Users/karlcayme/miniforge3/etc/fish/conf.d/conda.fish"
-        . "/Users/karlcayme/miniforge3/etc/fish/conf.d/conda.fish"
+    if test -f "/Users/karlcayme/miniconda3/etc/fish/conf.d/conda.fish"
+        . "/Users/karlcayme/miniconda3/etc/fish/conf.d/conda.fish"
     else
-        set -x PATH "/Users/karlcayme/miniforge3/bin" $PATH
+        set -x PATH "/Users/karlcayme/miniconda3/bin" $PATH
     end
 end
 # <<< conda initialize <<<
-
