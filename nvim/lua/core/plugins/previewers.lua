@@ -15,14 +15,11 @@ return {
   },
   -- markdown preview
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.g.mkdp_auto_close = 0
-    end,
-    ft = { "markdown" },
+    "brianhuster/live-preview.nvim",
+    dependencies = {
+      -- You can choose one of the following pickers
+      "folke/snacks.nvim",
+    },
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
