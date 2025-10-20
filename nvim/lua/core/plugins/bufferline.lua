@@ -11,19 +11,23 @@ return {
         local colors = base46.get_theme_tb("base_30")
         highlights = {
           fill = {
-            bg = colors.black,
+            bg = colors.darker_black,
           },
           separator = {
             -- bg = colors.black,
-            fg = colors.black,
+            fg = colors.darker_black,
           },
           separator_visible = {
             -- bg = colors.black,
-            fg = colors.black,
+            fg = colors.darker_black,
           },
           separator_selected = {
             -- bg = colors.black,
-            fg = colors.black,
+            fg = colors.darker_black,
+          },
+          trunc_marker = {
+            bg = colors.darker_black,
+            -- bg = "<colour-value-here>",
           },
         }
       end
