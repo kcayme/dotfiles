@@ -5,7 +5,25 @@ return {
       "folke/snacks.nvim",
     },
     config = function()
+      local colors = require("base46").get_theme_tb("base_30")
       require("bufferline").setup({
+        highlights = {
+          fill = {
+            bg = colors.black,
+          },
+          separator = {
+            -- bg = colors.black,
+            fg = colors.black,
+          },
+          separator_visible = {
+            -- bg = colors.black,
+            fg = colors.black,
+          },
+          separator_selected = {
+            -- bg = colors.black,
+            fg = colors.black,
+          },
+        },
         options = {
           themable = true,
           -- numbers = "both",
