@@ -15,37 +15,43 @@ return {
       --   -- Set it to the lualine section you want to use
       --   hl_group = "lualine_c_normal",
       -- })
-      local colors = require("base46").get_theme_tb("base_30")
 
       local statusline = require("arrow.statusline") -- from arrow documentation
       local function arrow_status() -- from lualine documentation
         return statusline.text_for_statusline_with_icons()
       end
-      -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
-      local custom_theme = {
-        normal = {
-          a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-          b = { bg = colors.statusline_bg, fg = colors.white },
-          c = { bg = colors.darker_black, fg = colors.white },
-        },
-        insert = {
-          a = { bg = colors.green, fg = colors.black, gui = "bold" },
-        },
-        visual = {
-          a = { bg = colors.purple, fg = colors.black, gui = "bold" },
-        },
-        replace = {
-          a = { bg = colors.red, fg = colors.black, gui = "bold" },
-        },
-        command = {
-          a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-        },
-        inactive = {
-          a = { bg = colors.darker_black, fg = colors.grey },
-          b = { bg = colors.darker_black, fg = colors.grey },
-          c = { bg = colors.darker_black },
-        },
-      }
+
+      local custom_theme = nil
+
+      local ok, base46 = pcall(require, "base46")
+      if ok then
+        local colors = base46.get_theme_tb("base_30")
+        -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
+        custom_theme = {
+          normal = {
+            a = { bg = colors.blue, fg = colors.black, gui = "bold" },
+            b = { bg = colors.statusline_bg, fg = colors.white },
+            c = { bg = colors.darker_black, fg = colors.white },
+          },
+          insert = {
+            a = { bg = colors.green, fg = colors.black, gui = "bold" },
+          },
+          visual = {
+            a = { bg = colors.purple, fg = colors.black, gui = "bold" },
+          },
+          replace = {
+            a = { bg = colors.red, fg = colors.black, gui = "bold" },
+          },
+          command = {
+            a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
+          },
+          inactive = {
+            a = { bg = colors.darker_black, fg = colors.grey },
+            b = { bg = colors.darker_black, fg = colors.grey },
+            c = { bg = colors.darker_black },
+          },
+        }
+      end
 
       require("lualine").setup({
         options = {
@@ -91,7 +97,7 @@ return {
                 end
                 return nil
               end,
-              color = { fg = colors.yellow },
+              color = custom_theme and { fg = custom_theme.yellow },
               draw_empty = false,
             },
             -- {

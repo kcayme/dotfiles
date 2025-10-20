@@ -5,8 +5,10 @@ return {
       "folke/snacks.nvim",
     },
     config = function()
-      local colors = require("base46").get_theme_tb("base_30")
-      require("bufferline").setup({
+      local highlights = nil
+      local ok, base46 = pcall(require, "base46")
+      if ok then
+        local colors = base46.get_theme_tb("base_30")
         highlights = {
           fill = {
             bg = colors.black,
@@ -23,7 +25,11 @@ return {
             -- bg = colors.black,
             fg = colors.black,
           },
-        },
+        }
+      end
+
+      require("bufferline").setup({
+        highlights = highlights,
         options = {
           themable = true,
           -- numbers = "both",
