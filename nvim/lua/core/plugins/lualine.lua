@@ -23,9 +23,8 @@ return {
 
       local custom_theme = nil
 
-      local ok, base46 = pcall(require, "base46")
-      if ok then
-        local colors = base46.get_theme_tb("base_30")
+      local colors = require("utils.colors").get_base30_palette()
+      if colors then
         -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
         custom_theme = {
           normal = {

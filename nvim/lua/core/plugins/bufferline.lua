@@ -6,9 +6,8 @@ return {
     },
     config = function()
       local highlights = nil
-      local ok, base46 = pcall(require, "base46")
-      if ok then
-        local colors = base46.get_theme_tb("base_30")
+      local colors = require("utils.colors").get_base30_palette()
+      if colors then
         highlights = {
           fill = {
             bg = colors.darker_black,
