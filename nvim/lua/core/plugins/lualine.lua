@@ -81,11 +81,11 @@ return {
           },
           lualine_c = {
             { "diff", symbols = { added = " ", modified = " ", removed = " " } },
+            "filename",
             {
               "diagnostics",
               symbols = { error = " ", warn = " ", info = " ", hint = " " },
             },
-            "filename",
             arrow_status,
             "aerial",
             {

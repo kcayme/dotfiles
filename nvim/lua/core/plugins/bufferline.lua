@@ -41,17 +41,29 @@ return {
             return string.format("%s %s", opts.ordinal, opts.raise(opts.id))
           end,
           always_show_bufferline = true,
-          separator_style = "slant",
+          separator_style = "thin", -- "slant" | "slope" | "thick" | "thin"
           diagnostics = "nvim_lsp",
+          --- count is an integer representing total count of errors
+          --- level is a string "error" | "warning"
+          --- diagnostics_dict is a dictionary from error level ("error", "warning" or "info")to number of errors for each level.
+          --- this should return a string
           diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            -- local icon = level:match("error") and " " or " "
-            -- return " " .. icon .. count
+            if not context.buffer:current() then
+              return ""
+            end
             local s = " "
-            for e, n in pairs(diagnostics_dict) do
-              local sym = e == "error" and " " or (e == "warning" and " " or " ")
-              s = s .. n .. sym
-              if e == "error" then
-                s = s .. count
+            local order = { "error", "warning", "info", "hint" }
+            local symbols = {
+              error = " ",
+              warning = " ",
+              hint = " ",
+              info = " ",
+            }
+
+            for _, severity in ipairs(order) do
+              local n = diagnostics_dict[severity]
+              if n and n > 0 then
+                s = s .. n .. symbols[severity]
               end
             end
             return s
@@ -77,6 +89,21 @@ return {
               end,
               separator = true, -- use a "true" to enable the default, or set your own character
             },
+          },
+          custom_areas = {
+            left = function()
+              local bufferline = require("bufferline")
+              local buffers = bufferline.get_elements().elements
+              local count = #buffers
+
+              local result = {
+                {
+                  text = " Buffers: " .. tostring(count),
+                  link = "BufferLineInfo",
+                },
+              }
+              return result
+            end,
           },
         },
       })
