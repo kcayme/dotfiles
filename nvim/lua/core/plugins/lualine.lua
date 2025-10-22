@@ -56,7 +56,7 @@ return {
         options = {
           icons_enabled = true,
           theme = custom_theme,
-          -- component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
           component_separators = { left = "", right = "" },
           -- section_separators = { left = "", right = "" },
           disabled_filetypes = {
