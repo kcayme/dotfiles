@@ -98,7 +98,7 @@ return {
 
               local result = {
                 {
-                  text = " Buffers: " .. tostring(count),
+                  text = " Buffers: " .. tostring(count) .. " ",
                   link = "BufferLineInfo",
                 },
               }
