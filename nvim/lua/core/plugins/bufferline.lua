@@ -90,18 +90,16 @@ return {
             },
           },
           custom_areas = {
-            left = function()
+            right = function()
               local bufferline = require("bufferline")
               local buffers = bufferline.get_elements().elements
               local count = #buffers
 
-              local result = {
+              return {
                 {
-                  text = " Buffers: " .. tostring(count) .. " ",
-                  link = "BufferLineInfo",
+                  text = "%#RoundedEdge#%#RoundedInner#  Buffers: " .. tostring(count) .. " %#RoundedEdge#",
                 },
               }
-              return result
             end,
           },
         },
