@@ -48,7 +48,7 @@
   "oil.nvim": { "branch": "master", "commit": "7e1cd7703ff2924d7038476dcbc04b950203b902" },
   "plenary.nvim": { "branch": "master", "commit": "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
   "render-markdown.nvim": { "branch": "main", "commit": "475d3ad8cae486b0df6fc6050cf5b5ea1de42db8" },
-  "snacks.nvim": { "branch": "main", "commit": "0760abd2936550e5c9ec9fb0eb18d68a5ef178bb" },
+  "snacks.nvim": { "branch": "main", "commit": "db3c13c28e0e7231bc3a45cd0db0e6683fc6c2c5" },
   "swagger-preview.nvim": { "branch": "master", "commit": "67e0ea60443922f39689d7002e0a8448fb47b4af" },
   "tiny-code-action.nvim": { "branch": "main", "commit": "0c24efca69645e8dd3623c398b2e55f12b03af54" },
   "todo-comments.nvim": { "branch": "main", "commit": "19d461ddd543e938eb22505fb03fa878800270b6" },
