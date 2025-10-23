@@ -123,14 +123,14 @@ return {
       "nvim-tree/nvim-web-devicons", -- If you want devicons
     },
     config = function()
+      local is_picking_focus = require("cokeline.mappings").is_picking_focus
+      local is_picking_close = require("cokeline.mappings").is_picking_close
+      local colors = require("utils.colors").get_base30_palette()
+
       require("cokeline").setup({
         fill_hl = "RoundedInnerInactive",
 
         components = {
-          {
-            text = " ",
-            highlight = "RoundedInnerInactive",
-          },
           {
             text = function(buffer)
               return buffer.is_focused and "" or " "
@@ -141,12 +141,36 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.devicon.icon
+              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused and buffer.pick_letter .. " "
+                or buffer.devicon.icon
             end,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            fg = function(buffer)
+              return (is_picking_focus() and not buffer.is_focused and (colors and colors.yellow))
+                or (is_picking_close() and not buffer.is_focused and (colors and colors.red))
+                or (buffer.is_focused and (colors and colors.darker_black))
+                or colors and colors.blue
+            end,
+            bg = function(buffer)
+              return (is_picking_focus() and not buffer.is_focused and (colors and colors.darker_black))
+                or (is_picking_close() and not buffer.is_focused and (colors and colors.darker_black))
+                or (buffer.is_focused and (colors and colors.blue))
+                or colors and colors.darker_black
+            end,
+            italic = function(buffer)
+              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
+            end,
+            bold = function(buffer)
+              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
             end,
           },
+          -- {
+          --   text = function(buffer)
+          --     return buffer.devicon.icon
+          --   end,
+          --   highlight = function(buffer)
+          --     return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+          --   end,
+          -- },
           {
             text = " ",
             highlight = function(buffer)
@@ -155,7 +179,7 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.filename .. "  "
+              return buffer.filename .. " "
             end,
             style = function(buffer)
               return buffer.is_focused and "bold" or nil

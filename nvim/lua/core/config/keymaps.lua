@@ -79,19 +79,20 @@ map({ "n" }, "_", "5<C-W>-", { desc = "Decrease buffer height" })
 -- close buffer if it is in bufferline; else, close window
 map({ "n" }, "<Leader>x", function()
   local noice = require("noice")
-  local buffers = require("bufferline").get_elements().elements
-  local currentBufferId = vim.api.nvim_get_current_buf()
+  -- local buffers = require("bufferline").get_elements().elements
+  -- local currentBufferId = vim.api.nvim_get_current_buf()
+  -- FIXME:
+  -- for _, buf in ipairs(buffers) do
+  --   if buf.id == currentBufferId then
+  Snacks.bufdelete()
+  noice.notify("Buffer closed")
 
-  for _, buf in ipairs(buffers) do
-    if buf.id == currentBufferId then
-      noice.notify("Buffer closed")
-      Snacks.bufdelete()
-      return
-    end
-  end
+  --     return
+  --   end
+  -- end
 
-  noice.notify("Window closed")
-  vim.cmd("close")
+  -- noice.notify("Window closed")
+  -- vim.cmd("close")
 end, { desc = "Close vertical window split" })
 
 -- INFO: MOTIONS AND EDITING ============
