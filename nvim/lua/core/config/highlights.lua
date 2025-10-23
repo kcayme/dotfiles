@@ -8,12 +8,32 @@ local colors = require("utils.colors").get_base30_palette()
 
 local custom_hls = {
   {
-    name = "RoundedEdge",
-    opts = { fg = colors and colors.blue or "#000000", bg = "NONE" },
+    name = "RoundedEdgeActive",
+    opts = { fg = colors and colors.blue or "#FFFFFF", bg = colors and colors.darker_black or "#000000" },
   },
   {
-    name = "RoundedInner",
-    opts = { fg = colors and colors.black or "#ffffff", bg = colors and colors.blue or "#000000" },
+    name = "RoundedInnerActive",
+    opts = {
+      fg = colors and colors.darker_black or "#000000",
+      bg = colors and colors.blue or "#ffffff",
+      bold = false,
+    },
+  },
+  {
+    name = "RoundedEdgeInactive",
+    opts = {
+      fg = colors and colors.darker_black or "#000000",
+      bg = colors and colors.darker_black or "None",
+      bold = false,
+    },
+  },
+  {
+    name = "RoundedInnerInactive",
+    opts = {
+      fg = "#FFFFFF",
+      bg = colors and colors.darker_black or "#000000",
+      bold = false,
+    },
   },
   --   {
   --     group_name = "DiagnosticUnderlineError",

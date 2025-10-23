@@ -1,119 +1,196 @@
 return {
+  -- {
+  --   "akinsho/bufferline.nvim",
+  --   dependencies = {
+  --     "folke/snacks.nvim",
+  --   },
+  --   config = function()
+  --     local highlights = nil
+  --     local colors = require("utils.colors").get_base30_palette()
+  --     if colors then
+  --       highlights = {
+  --         fill = {
+  --           bg = colors.darker_black,
+  --         },
+  --         separator = {
+  --           -- bg = colors.black,
+  --           fg = colors.darker_black,
+  --         },
+  --         separator_visible = {
+  --           -- bg = colors.black,
+  --           fg = colors.darker_black,
+  --         },
+  --         separator_selected = {
+  --           -- bg = colors.black,
+  --           fg = colors.darker_black,
+  --         },
+  --         trunc_marker = {
+  --           bg = colors.darker_black,
+  --           -- bg = "<colour-value-here>",
+  --         },
+  --       }
+  --     end
+  --
+  --     require("bufferline").setup({
+  --       highlights = highlights,
+  --       options = {
+  --         themable = true,
+  --         -- numbers = "both",
+  --         numbers = function(opts)
+  --           return string.format("%s %s", opts.ordinal, opts.raise(opts.id))
+  --         end,
+  --         always_show_bufferline = true,
+  --         separator_style = "thin", -- "slant" | "slope" | "thick" | "thin"
+  --         diagnostics = "nvim_lsp",
+  --         --- count is an integer representing total count of errors
+  --         --- level is a string "error" | "warning"
+  --         --- diagnostics_dict is a dictionary from error level ("error", "warning" or "info")to number of errors for each level.
+  --         --- this should return a string
+  --         diagnostics_indicator = function(count, level, diagnostics_dict, context)
+  --           if not context.buffer:current() then
+  --             return ""
+  --           end
+  --           local s = " "
+  --           local order = { "error", "warning", "info", "hint" }
+  --           local symbols = {
+  --             error = " ",
+  --             warning = " ",
+  --             hint = " ",
+  --             info = " ",
+  --           }
+  --
+  --           for _, severity in ipairs(order) do
+  --             local n = diagnostics_dict[severity]
+  --             if n and n > 0 then
+  --               s = s .. n .. symbols[severity]
+  --             end
+  --           end
+  --           return s
+  --         end,
+  --         --separator_style = "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
+  --         indicator = {
+  --           icon = "▎", -- this should be omitted if indicator style is not 'icon'
+  --           style = "icon",
+  --         },
+  --         pick = {
+  --           alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
+  --         },
+  --         close_command = function()
+  --           Snacks.bufdelete()
+  --         end,
+  --         offsets = {
+  --           {
+  --             filetype = "NvimTree",
+  --             -- text = "File Explorer",
+  --             text_align = "left",
+  --             text = function()
+  --               return "Directory: " .. vim.fn.getcwd()
+  --             end,
+  --             separator = true, -- use a "true" to enable the default, or set your own character
+  --           },
+  --         },
+  --         custom_areas = {
+  --           right = function()
+  --             local bufferline = require("bufferline")
+  --             local buffers = bufferline.get_elements().elements
+  --             local count = #buffers
+  --
+  --             return {
+  --               {
+  --                 text = "%#RoundedEdge#%#RoundedInner#  Buffers: " .. tostring(count) .. " %#RoundedEdge#",
+  --               },
+  --             }
+  --           end,
+  --         },
+  --       },
+  --     })
+  --
+  --     local map = vim.keymap.set
+  --     map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
+  --     map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
+  --     map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
+  --     map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
+  --     map("n", "<leader>bC", function()
+  --       Snacks.bufdelete.other()
+  --     end, { desc = "Close other buffers" })
+  --     map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
+  --   end,
+  -- },
   {
-    "akinsho/bufferline.nvim",
+    "willothy/nvim-cokeline",
     dependencies = {
-      "folke/snacks.nvim",
+      "nvim-lua/plenary.nvim", -- Required for v0.4.0+
+      "nvim-tree/nvim-web-devicons", -- If you want devicons
     },
     config = function()
-      local highlights = nil
-      local colors = require("utils.colors").get_base30_palette()
-      if colors then
-        highlights = {
-          fill = {
-            bg = colors.darker_black,
-          },
-          separator = {
-            -- bg = colors.black,
-            fg = colors.darker_black,
-          },
-          separator_visible = {
-            -- bg = colors.black,
-            fg = colors.darker_black,
-          },
-          separator_selected = {
-            -- bg = colors.black,
-            fg = colors.darker_black,
-          },
-          trunc_marker = {
-            bg = colors.darker_black,
-            -- bg = "<colour-value-here>",
-          },
-        }
-      end
+      require("cokeline").setup({
+        fill_hl = "RoundedInnerInactive",
 
-      require("bufferline").setup({
-        highlights = highlights,
-        options = {
-          themable = true,
-          -- numbers = "both",
-          numbers = function(opts)
-            return string.format("%s %s", opts.ordinal, opts.raise(opts.id))
-          end,
-          always_show_bufferline = true,
-          separator_style = "thin", -- "slant" | "slope" | "thick" | "thin"
-          diagnostics = "nvim_lsp",
-          --- count is an integer representing total count of errors
-          --- level is a string "error" | "warning"
-          --- diagnostics_dict is a dictionary from error level ("error", "warning" or "info")to number of errors for each level.
-          --- this should return a string
-          diagnostics_indicator = function(count, level, diagnostics_dict, context)
-            if not context.buffer:current() then
-              return ""
-            end
-            local s = " "
-            local order = { "error", "warning", "info", "hint" }
-            local symbols = {
-              error = " ",
-              warning = " ",
-              hint = " ",
-              info = " ",
-            }
-
-            for _, severity in ipairs(order) do
-              local n = diagnostics_dict[severity]
-              if n and n > 0 then
-                s = s .. n .. symbols[severity]
-              end
-            end
-            return s
-          end,
-          --separator_style = "slant" | "slope" | "thick" | "thin" | { 'any', 'any' },
-          indicator = {
-            icon = "▎", -- this should be omitted if indicator style is not 'icon'
-            style = "icon",
+        components = {
+          {
+            text = " ",
+            highlight = "RoundedInnerInactive",
           },
-          pick = {
-            alphabet = "1234567890abcdefghijklmopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVWXYZ",
+          {
+            text = function(buffer)
+              return buffer.is_focused and "" or " "
+            end,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
+            end,
           },
-          close_command = function()
-            Snacks.bufdelete()
-          end,
-          offsets = {
-            {
-              filetype = "NvimTree",
-              -- text = "File Explorer",
-              text_align = "left",
-              text = function()
-                return "Directory: " .. vim.fn.getcwd()
-              end,
-              separator = true, -- use a "true" to enable the default, or set your own character
-            },
+          {
+            text = function(buffer)
+              return buffer.devicon.icon
+            end,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            end,
           },
-          custom_areas = {
-            right = function()
-              local bufferline = require("bufferline")
-              local buffers = bufferline.get_elements().elements
-              local count = #buffers
-
-              return {
-                {
-                  text = "%#RoundedEdge#%#RoundedInner#  Buffers: " .. tostring(count) .. " %#RoundedEdge#",
-                },
-              }
+          {
+            text = " ",
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.filename .. "  "
+            end,
+            style = function(buffer)
+              return buffer.is_focused and "bold" or nil
+            end,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            end,
+          },
+          {
+            text = "",
+            delete_buffer_on_left_click = true,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.is_focused and "" or " "
+            end,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
             end,
           },
         },
       })
 
       local map = vim.keymap.set
-      map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", {})
-      map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", {})
-      map("n", "<leader>bc", "<cmd>BufferLinePickClose<cr>", { desc = "Pick Close buffer" })
-      map("n", "<leader>bp", "<cmd>BufferLineTogglePin<cr>", { desc = "Pick Close buffer" })
+      map("n", "<S-h>", "<Plug>(cokeline-focus-prev)", {})
+      map("n", "<S-l>", "<Plug>(cokeline-focus-next)", {})
       map("n", "<leader>bC", function()
         Snacks.bufdelete.other()
       end, { desc = "Close other buffers" })
-      map("n", "<leader>bs", "<cmd>BufferLinePick<cr>", {})
+      map("n", "<leader>bs", function()
+        require("cokeline.mappings").pick("focus") -- FIXME:
+      end, {})
     end,
   },
 }
