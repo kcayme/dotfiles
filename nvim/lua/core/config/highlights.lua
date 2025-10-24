@@ -53,6 +53,14 @@ local custom_hls = {
       italic = true,
     },
   },
+  -- customize flash.nvim hl
+  {
+    name = "FlashLabel",
+    opts = {
+      fg = colors and colors.black,
+      bg = colors and colors.vibrant_green,
+    },
+  },
   --   {
   --     group_name = "DiagnosticUnderlineError",
   --     opts = { sp = colors.red },
