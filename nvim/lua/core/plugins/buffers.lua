@@ -141,14 +141,17 @@ return {
           },
           {
             text = function(buffer)
-              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused and buffer.pick_letter .. " "
-                or buffer.devicon.icon
+              return ""
+                .. (
+                  (is_picking_focus() or is_picking_close()) and not buffer.is_focused and buffer.pick_letter .. " "
+                  or buffer.devicon.icon
+                )
             end,
             fg = function(buffer)
               return (is_picking_focus() and not buffer.is_focused and (colors and colors.yellow))
                 or (is_picking_close() and not buffer.is_focused and (colors and colors.red))
                 or (buffer.is_focused and (colors and colors.darker_black))
-                or colors and colors.blue
+                or buffer.devicon.color
             end,
             bg = function(buffer)
               return (is_picking_focus() and not buffer.is_focused and (colors and colors.darker_black))
@@ -173,25 +176,10 @@ return {
           -- },
           {
             text = function(buffer)
-              return buffer.index .. " "
-            end,
-
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
-            end,
-          },
-          {
-            text = function(buffer)
-              -- local shortened_prefix = require("utils.path").shorten_path(buffer.unique_prefix)
               return buffer.unique_prefix
             end,
-            style = function(buffer)
-              return buffer.is_focused and "bold" or nil
-            end,
-            -- fg = colors and colors.white,
-            -- bg = colors and colors.darker_black,
             highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactiveSecondary"
+              return buffer.is_focused and "RoundedInnerActiveSecondary" or "RoundedInnerInactiveSecondary"
             end,
           },
           {
@@ -224,7 +212,7 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.is_modified and "" or " "
+              return buffer.is_modified and "" or ""
             end,
             fg = function(buffer)
               return buffer.is_modified and colors and colors.green or colors and colors.darker_black
@@ -234,8 +222,8 @@ return {
             end,
           },
           {
-            text = " ",
-            fg = colors and colors.grey,
+            text = "  ",
+            fg = colors and colors.statusline_bg,
             bg = colors and colors.darker_black,
           },
         },

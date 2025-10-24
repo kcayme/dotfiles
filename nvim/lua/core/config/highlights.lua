@@ -35,6 +35,24 @@ local custom_hls = {
       bold = false,
     },
   },
+  {
+    name = "RoundedInnerActiveSecondary",
+    opts = {
+      fg = colors and colors.darker_black or "#000000",
+      bg = colors and colors.blue or "#ffffff",
+      bold = false,
+      italic = true,
+    },
+  },
+  {
+    name = "RoundedInnerInactiveSecondary",
+    opts = {
+      fg = colors and colors.white,
+      bg = colors and colors.darker_black or "#000000",
+      bold = false,
+      italic = true,
+    },
+  },
   --   {
   --     group_name = "DiagnosticUnderlineError",
   --     opts = { sp = colors.red },
