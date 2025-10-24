@@ -271,7 +271,7 @@ return {
         Snacks.bufdelete.other()
       end, { desc = "Close other buffers" })
       map("n", "<leader>bs", function()
-        require("cokeline.mappings").pick("focus") -- FIXME:
+        require("cokeline.mappings").pick("focus")
       end, {})
     end,
   },
