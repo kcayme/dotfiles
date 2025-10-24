@@ -124,7 +124,7 @@ return {
       },
 
       sources = {
-        default = { "lsp", "snippets", "path", "buffer" },
+        default = { "lsp", "snippets", "path", "buffer", "lazydev" },
         providers = {
           lsp = {
             name = "lsp",
@@ -159,6 +159,11 @@ return {
             max_items = 3,
             module = "blink.cmp.sources.buffer",
             score_offset = 600, -- the higher the number, the higher the priority
+          },
+          lazydev = {
+            name = "LazyDev",
+            module = "lazydev.integrations.blink",
+            score_offset = 100,
           },
         },
       },
