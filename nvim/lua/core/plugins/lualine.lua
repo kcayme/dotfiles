@@ -96,7 +96,7 @@ return {
                 end
                 return nil
               end,
-              color = custom_theme and { fg = custom_theme.yellow },
+              color = colors and { fg = colors.yellow },
               draw_empty = false,
             },
             -- {
