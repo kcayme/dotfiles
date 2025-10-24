@@ -172,9 +172,26 @@ return {
           --   end,
           -- },
           {
-            text = " ",
+            text = function(buffer)
+              return buffer.index .. " "
+            end,
+
             highlight = function(buffer)
               return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+            end,
+          },
+          {
+            text = function(buffer)
+              -- local shortened_prefix = require("utils.path").shorten_path(buffer.unique_prefix)
+              return buffer.unique_prefix
+            end,
+            style = function(buffer)
+              return buffer.is_focused and "bold" or nil
+            end,
+            -- fg = colors and colors.white,
+            -- bg = colors and colors.darker_black,
+            highlight = function(buffer)
+              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactiveSecondary"
             end,
           },
           {
@@ -189,7 +206,9 @@ return {
             end,
           },
           {
-            text = "",
+            text = function(buffer)
+              return ""
+            end,
             delete_buffer_on_left_click = true,
             highlight = function(buffer)
               return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
@@ -197,11 +216,27 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.is_focused and "" or " "
+              return buffer.is_focused and "" or ""
             end,
             highlight = function(buffer)
               return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
             end,
+          },
+          {
+            text = function(buffer)
+              return buffer.is_modified and "" or " "
+            end,
+            fg = function(buffer)
+              return buffer.is_modified and colors and colors.green or colors and colors.darker_black
+            end,
+            bg = function(buffer)
+              return buffer.is_modified and colors and colors.darker_black or colors and colors.darker_black
+            end,
+          },
+          {
+            text = " ",
+            fg = colors and colors.grey,
+            bg = colors and colors.darker_black,
           },
         },
       })
