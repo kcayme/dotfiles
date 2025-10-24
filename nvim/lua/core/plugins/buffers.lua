@@ -126,6 +126,7 @@ return {
       local is_picking_focus = require("cokeline.mappings").is_picking_focus
       local is_picking_close = require("cokeline.mappings").is_picking_close
       local colors = require("utils.colors").get_base30_palette()
+      local custom_sigs = require("core.themes.signs")
 
       require("cokeline").setup({
         fill_hl = "RoundedInnerInactive",
@@ -166,14 +167,6 @@ return {
               return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
             end,
           },
-          -- {
-          --   text = function(buffer)
-          --     return buffer.devicon.icon
-          --   end,
-          --   highlight = function(buffer)
-          --     return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
-          --   end,
-          -- },
           {
             text = function(buffer)
               return buffer.unique_prefix
@@ -204,7 +197,7 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.is_focused and " " or " "
+              return buffer.is_focused and "" or " "
             end,
             highlight = function(buffer)
               return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
@@ -213,7 +206,7 @@ return {
           {
             text = function(buffer)
               if buffer.diagnostics.errors > 0 then
-                return "  " .. buffer.diagnostics.errors
+                return " " .. custom_sigs.error .. buffer.diagnostics.errors
               end
               return ""
             end,
@@ -227,7 +220,7 @@ return {
           {
             text = function(buffer)
               if buffer.diagnostics.warnings > 0 then
-                return "  " .. buffer.diagnostics.warnings
+                return " " .. custom_sigs.warn .. buffer.diagnostics.warnings
               end
               return ""
             end,
@@ -241,7 +234,7 @@ return {
           {
             text = function(buffer)
               if buffer.diagnostics.infos > 0 then
-                return "  " .. buffer.diagnostics.infos
+                return " " .. custom_sigs.info .. buffer.diagnostics.infos
               end
               return ""
             end,
