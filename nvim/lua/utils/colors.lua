@@ -3,9 +3,15 @@ local M = {
 }
 
 M.get_base30_palette = function()
+  if M.colors then
+    return M.colors
+  end
+
   local ok, base46 = pcall(require, "base46")
   if ok then
-    return base46.get_theme_tb("base_30")
+    M.colors = base46.get_theme_tb("base_30")
+
+    return M.colors
   end
 
   return nil
