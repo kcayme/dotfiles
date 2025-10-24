@@ -37,7 +37,7 @@ require("lazy").setup({
       end,
     },
     {
-      import = "code.plugins46",
+      import = "code.plugins",
       cond = function()
         return vim.g.vscode
       end,
