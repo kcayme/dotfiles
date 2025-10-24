@@ -194,7 +194,7 @@ return {
             end,
           },
           {
-            text = function(buffer)
+            text = function()
               return ""
             end,
             delete_buffer_on_left_click = true,
@@ -204,7 +204,7 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.is_focused and "" or ""
+              return buffer.is_focused and " " or " "
             end,
             highlight = function(buffer)
               return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
@@ -212,7 +212,49 @@ return {
           },
           {
             text = function(buffer)
-              return buffer.is_modified and "" or ""
+              if buffer.diagnostics.errors > 0 then
+                return "  " .. buffer.diagnostics.errors
+              end
+              return ""
+            end,
+            fg = function()
+              return colors and colors.red
+            end,
+            bg = function()
+              return colors and colors.darker_black
+            end,
+          },
+          {
+            text = function(buffer)
+              if buffer.diagnostics.warnings > 0 then
+                return "  " .. buffer.diagnostics.warnings
+              end
+              return ""
+            end,
+            fg = function()
+              return colors and colors.yellow
+            end,
+            bg = function()
+              return colors and colors.darker_black
+            end,
+          },
+          {
+            text = function(buffer)
+              if buffer.diagnostics.infos > 0 then
+                return "  " .. buffer.diagnostics.infos
+              end
+              return ""
+            end,
+            fg = function(_)
+              return colors and colors.green
+            end,
+            bg = function(_)
+              return colors and colors.darker_black
+            end,
+          },
+          {
+            text = function(buffer)
+              return buffer.is_modified and " " or ""
             end,
             fg = function(buffer)
               return buffer.is_modified and colors and colors.green or colors and colors.darker_black
