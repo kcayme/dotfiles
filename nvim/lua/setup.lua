@@ -72,6 +72,7 @@ if vim.g.vscode then
   profile = "vscode"
 else
   require("core.config.options")
+  require("core.config.diagnostics")
   require("core.config.autocmds")
   require("core.config.commands")
   require("core.config.highlights")

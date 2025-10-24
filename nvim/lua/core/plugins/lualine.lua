@@ -52,6 +52,8 @@ return {
         }
       end
 
+      local custom_signs = require("core.themes.signs")
+
       require("lualine").setup({
         options = {
           icons_enabled = true,
@@ -79,11 +81,23 @@ return {
             { "branch", icon = "" },
           },
           lualine_c = {
-            { "diff", symbols = { added = " ", modified = " ", removed = " " } },
+            {
+              "diff",
+              symbols = {
+                added = custom_signs.added,
+                modified = custom_signs.modified,
+                removed = custom_signs.removed,
+              },
+            },
             "filename",
             {
               "diagnostics",
-              symbols = { error = " ", warn = " ", info = " ", hint = " " },
+              symbols = {
+                error = custom_signs.error,
+                warn = custom_signs.warn,
+                info = custom_signs.info,
+                hint = custom_signs.hint,
+              },
             },
             arrow_status,
             "aerial",
