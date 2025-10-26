@@ -188,7 +188,7 @@ return {
           },
           {
             text = function()
-              return ""
+              return " "
             end,
             delete_buffer_on_left_click = true,
             highlight = function(buffer)
@@ -201,6 +201,18 @@ return {
             end,
             highlight = function(buffer)
               return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
+            end,
+          },
+          {
+            text = function(buffer)
+              local statusline = require("arrow.statusline")
+              return statusline.is_on_arrow_file(buffer.number) and " 󱡁" or ""
+            end,
+            fg = function()
+              return colors and colors.white
+            end,
+            bg = function()
+              return colors and colors.darker_black
             end,
           },
           {
