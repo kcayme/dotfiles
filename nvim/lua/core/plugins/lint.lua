@@ -12,9 +12,9 @@ return {
         -- typescript = { "eslint_d" },
         -- javascriptreact = { "eslint_d" },
         -- typescriptreact = { "eslint_d" },
-        lua = { "luacheck" },
+        -- lua = { "luacheck" },
         go = { "golangcilint" },
-        -- python = { "pylint" },
+        python = { "ruff" },
         json = { "jsonlint" },
       }
 
