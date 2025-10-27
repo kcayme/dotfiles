@@ -183,18 +183,18 @@ vim.api.nvim_create_autocmd("RecordingLeave", {
   end,
 })
 
-vim.api.nvim_create_autocmd({
-  "BufEnter",
-  "BufWritePost",
-  "InsertLeave",
-}, {
-  group = vim.api.nvim_create_augroup("lint", { clear = true }),
-  callback = function()
-    local lint = require("lint")
-    lint.try_lint()
-    vim.diagnostic.config({ virtual_text = false })
-  end,
-})
+-- vim.api.nvim_create_autocmd({
+--   "BufEnter",
+--   "BufWritePost",
+--   "InsertLeave",
+-- }, {
+--   group = vim.api.nvim_create_augroup("lint", { clear = true }),
+--   callback = function()
+--     local lint = require("lint")
+--     lint.try_lint()
+--     vim.diagnostic.config({ virtual_text = false })
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = "*",
