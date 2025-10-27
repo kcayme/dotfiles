@@ -71,7 +71,7 @@ return {
           refresh = {
             statusline = 100,
             -- tabline = 1000,
-            -- winbar = 1000,
+            winbar = 100,
           },
         },
 
@@ -100,7 +100,7 @@ return {
               },
             },
             arrow_status,
-            "aerial",
+            -- "aerial",
             {
               "macro",
               fmt = function()
@@ -145,7 +145,11 @@ return {
           lualine_z = {},
         },
         tabline = {},
-        winbar = {},
+        winbar = {
+          lualine_c = {
+            "aerial",
+          },
+        },
         inactive_winbar = {},
         extensions = {
           "nvim-tree",
