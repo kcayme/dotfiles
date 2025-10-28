@@ -81,4 +81,4 @@ else
   profile = "default"
 end
 
-print("Config loaded: " .. profile)
+vim.notify(profile, vim.log.levels.INFO, { title = "Config loaded" })
