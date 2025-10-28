@@ -81,4 +81,5 @@ else
   profile = "default"
 end
 
-vim.notify(profile, vim.log.levels.INFO, { title = "Config loaded" })
+local notify = require("utils.notification").show_notification
+notify(profile, vim.log.levels.INFO, { title = "Config loaded" })
