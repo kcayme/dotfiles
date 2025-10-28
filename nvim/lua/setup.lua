@@ -82,4 +82,4 @@ else
 end
 
 local notify = require("utils.notification").show_notification
-notify(profile, vim.log.levels.INFO, { title = "Config loaded" })
+notify("Config loaded: " .. profile, vim.log.levels.INFO)
