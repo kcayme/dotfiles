@@ -31,6 +31,7 @@ M.ui = {
     separator_style = "block",
     lualine = true,
   },
-  -- telescope = { style = "bordered" },
+  colorify = { enabled = false },
+  lsp = { signature = true },
 }
 return M
