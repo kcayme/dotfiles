@@ -12,12 +12,7 @@ return {
     -- OPTIONAL:
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
-    {
-      "rcarriga/nvim-notify",
-      init = function()
-        vim.notify = require("notify")
-      end,
-    },
+    "rcarriga/nvim-notify",
   },
   config = function()
     require("noice").setup({
@@ -76,6 +71,8 @@ return {
       views = {
         notify = {
           replace = false,
+          enabled = true,
+          view = "notify",
         },
         cmdline = {
           enabled = true, -- enables the Noice cmdline UI
