@@ -61,6 +61,13 @@ local custom_hls = {
       bg = colors and colors.cyan,
     },
   },
+  {
+    name = "BlinkCmpMenuBorder",
+    opts = {
+      link = "WinBar",
+    },
+  },
+
   --   {
   --     group_name = "DiagnosticUnderlineError",
   --     opts = { sp = colors.red },
