@@ -1,7 +1,7 @@
 return {
   {
     "saghen/blink.cmp",
-    event = "InsertEnter",
+    -- event = "InsertEnter",
     dependencies = {
       {
         "rafamadriz/friendly-snippets",
@@ -17,7 +17,7 @@ return {
         version = "v2.*",
         build = "make install_jsregexp",
       },
-      { "onsails/lspkind.nvim" },
+      "onsails/lspkind.nvim",
     },
     version = "1.*",
     ---@module 'blink.cmp'
@@ -32,7 +32,8 @@ return {
         ["<C-k>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<Esc>"] = { "hide", "fallback" },
+        -- ["<Esc>"] = { "hide", "fallback" },
+        ["<Esc>"] = { "cancel", "hide", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
         ["<C-u>"] = { "scroll_documentation_up", "fallback" },
         ["<C-d>"] = { "scroll_documentation_down", "fallback" },
@@ -52,6 +53,7 @@ return {
           },
         },
         menu = {
+          border = "rounded",
           auto_show = true,
           draw = {
             treesitter = { "lsp" },
@@ -99,25 +101,26 @@ return {
 
       signature = { enabled = true },
       appearance = {
+        highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
         -- Useful for when your theme doesn't support blink.cmp
         -- Will be removed in a future release
-        -- INFO: set to true if colors dont look right
         use_nvim_cmp_as_default = true,
+        -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+        -- Adjusts spacing to ensure icons are aligned
         nerd_font_variant = "mono",
       },
-
       snippets = {
         preset = "luasnip",
       },
 
       cmdline = {
         completion = {
-          list = {
-            selection = {
-              preselect = false,
-            },
-          },
+          -- list = {
+          --   selection = {
+          --     preselect = false,
+          --   },
+          -- },
           ghost_text = { enabled = true },
           menu = { auto_show = true },
         },
