@@ -125,11 +125,7 @@ return {
           ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         },
         completion = {
-          trigger = {
-            show_on_keyword = true,
-            show_in_snippet = false,
-            show_on_backspace = true,
-          },
+          -- trigger = { show_in_snippet = false },
           -- list = {
           --   selection = {
           --     preselect = false,

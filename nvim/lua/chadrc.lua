@@ -8,14 +8,14 @@ M.base46 = {
     DiagnosticUnderlineWarn = { sp = "yellow", undercurl = true },
     DiagnosticUnderlineInfo = { sp = "blue", undercurl = true },
     DiagnosticUnderlineHint = { sp = "purple", undercurl = true },
-    BlinkCmpGhostText = { fg = "#4e5665" },
+    -- BlinkCmpGhostText = { fg = "#4e5665" },
   },
   hl_add = {
     DiagnosticUnderlineError = { sp = "red", undercurl = true },
     DiagnosticUnderlineWarn = { sp = "yellow", undercurl = true },
     DiagnosticUnderlineInfo = { sp = "blue", undercurl = true },
     DiagnosticUnderlineHint = { sp = "purple", undercurl = true },
-    BlinkCmpGhostText = { fg = "#4e5665" },
+    -- BlinkCmpGhostText = { fg = "#4e5665" },
   },
 }
 
