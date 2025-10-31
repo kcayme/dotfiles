@@ -172,9 +172,9 @@ map("n", "<leader>fk", function()
   Picker.keymaps({ backend = "snacks" })
 end, { desc = "Find Keymaps" })
 
--- map("n", "<leader>fc", function()
---   Picker.smart({ backend = "fzf", cwd_only = true })
--- end, { desc = "Find Smart" })
+map("n", "<leader>fu", function()
+  Picker.undo({ backend = "snacks" })
+end, { desc = "Find Smart" })
 
 map("n", "<leader><leader>", function()
   Picker.smart({ backend = "fff" })

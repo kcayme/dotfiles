@@ -1,17 +1,18 @@
 return {
-  "jiaoshijie/undotree",
-  ---@module 'undotree.collector'
-  ---@type UndoTreeCollector.Opts
+  "XXiaoA/atone.nvim",
+  -- cmd = "Atone" ,
   opts = {
-    float_diff = true, -- using float window previews diff, set this `true` will disable layout option
-    -- layout = "left_bottom", -- "left_left_bottom", "left_left_bottom"
-    position = "left", -- "right", "bottom"
-    window = {
-      winblend = 10,
-      border = "rounded", -- The string values are the same as those described in 'winborder'.
+    layout = {
+      width = 0.25,
+    },
+    diff_cur_node = {
+      enabled = true,
+      ---@type number float less than 1
+      --- The diff window's height is set to a specified percentage of the original (namely tree graph) window's height.
+      split_percent = 0.4,
     },
   },
   keys = {
-    { "<leader>u", "<cmd>lua require('undotree').toggle()<cr>" },
+    { "<leader>u", "<cmd>Atone toggle<CR>", desc = "Toggle UndoTree" },
   },
 }
