@@ -1,6 +1,8 @@
 local M = {}
 
-local notify = require("noice").notify
+local ok, noice = pcall(require, "noice")
+
+local notify = ok and noice.notify or vim.notify
 M.show_notification = function(message, level, opts)
   opts = opts or {}
 
