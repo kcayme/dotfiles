@@ -67,6 +67,18 @@ local custom_hls = {
       link = "WinBar",
     },
   },
+  {
+    name = "LazyGitBorder",
+    opts = {
+      link = "FloatBorder",
+    },
+  },
+  {
+    name = "LazyGitFloat",
+    opts = {
+      link = "NormalFloat",
+    },
+  },
 
   --   {
   --     group_name = "DiagnosticUnderlineError",
