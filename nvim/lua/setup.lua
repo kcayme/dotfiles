@@ -82,4 +82,4 @@ else
 end
 
 local notify = require("utils.notification").show_notification
-notify("Config loaded: " .. profile, vim.log.levels.INFO)
+notify("Config loaded: " .. profile, vim.log.levels.INFO, { timeout = 2000 })
