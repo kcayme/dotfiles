@@ -88,6 +88,8 @@ vim.o.smartindent = true
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 
+vim.o.conceallevel = 0
+
 vim.o.completeopt = "menu,menuone,noselect"
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
