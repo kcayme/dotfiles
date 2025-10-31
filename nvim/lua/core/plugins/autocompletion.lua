@@ -44,7 +44,7 @@ return {
       },
 
       completion = {
-        list = { selection = { preselect = false, auto_insert = false } },
+        list = { selection = { preselect = true, auto_insert = false } },
         documentation = { auto_show = true, auto_show_delay_ms = 500 },
         ghost_text = { enabled = true, show_with_menu = true },
         accept = {
@@ -115,7 +115,21 @@ return {
       },
 
       cmdline = {
+        keymap = {
+          preset = "super-tab",
+          ["<C-k>"] = { "select_prev", "fallback" },
+          ["<C-j>"] = { "select_next", "fallback" },
+          ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+          ["<CR>"] = { "accept", "fallback" },
+          ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+          ["<C-d>"] = { "scroll_documentation_down", "fallback" },
+        },
         completion = {
+          trigger = {
+            show_on_keyword = true,
+            show_in_snippet = false,
+            show_on_backspace = true,
+          },
           -- list = {
           --   selection = {
           --     preselect = false,
