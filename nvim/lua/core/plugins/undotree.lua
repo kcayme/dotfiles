@@ -7,7 +7,7 @@ return {
     -- layout = "left_bottom", -- "left_left_bottom", "left_left_bottom"
     position = "left", -- "right", "bottom"
     window = {
-      winblend = 30,
+      winblend = 10,
       border = "rounded", -- The string values are the same as those described in 'winborder'.
     },
   },
