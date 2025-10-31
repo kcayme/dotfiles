@@ -125,12 +125,8 @@ return {
           ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         },
         completion = {
+          list = { selection = { preselect = true, auto_insert = false } },
           -- trigger = { show_in_snippet = false },
-          -- list = {
-          --   selection = {
-          --     preselect = false,
-          --   },
-          -- },
           ghost_text = { enabled = true },
           menu = { auto_show = true },
         },
