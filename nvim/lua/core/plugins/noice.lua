@@ -169,7 +169,7 @@ return {
     notify.setup({
       timeout = 3000,
       render = "minimal",
-      stages = "fade",
+      stages = "static",
       top_down = false,
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { focusable = false })
