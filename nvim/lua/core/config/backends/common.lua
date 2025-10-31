@@ -21,6 +21,7 @@ M.picker_interface_methods = {
   "global", -- fzf-lua specific
   "registers", -- clipboard
   "resume",
+  "undo",
 }
 
 return M
