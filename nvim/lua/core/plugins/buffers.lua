@@ -127,152 +127,203 @@ return {
       local is_picking_close = require("cokeline.mappings").is_picking_close
       local colors = require("utils.colors").get_base30_palette()
       local custom_sigs = require("core.themes.signs")
+      local min_buffer_width = 25
+      local str_rep = string.rep
+      local components = {
+        left_half_circle = {
+          text = function(buffer)
+            return buffer.is_focused and "" or " "
+          end,
+          highlight = function(buffer)
+            return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
+          end,
+        },
+        devicon = {
+          text = function(buffer)
+            return ""
+              .. (
+                (is_picking_focus() or is_picking_close()) and not buffer.is_focused and buffer.pick_letter .. " "
+                or buffer.devicon.icon
+              )
+          end,
+          fg = function(buffer)
+            return (is_picking_focus() and not buffer.is_focused and (colors and colors.cyan))
+              or (is_picking_close() and not buffer.is_focused and (colors and colors.red))
+              or (buffer.is_focused and (colors and colors.darker_black))
+              or buffer.devicon.color
+          end,
+          bg = function(buffer)
+            return (is_picking_focus() and not buffer.is_focused and (colors and colors.darker_black))
+              or (is_picking_close() and not buffer.is_focused and (colors and colors.darker_black))
+              or (buffer.is_focused and (colors and colors.blue))
+              or colors and colors.darker_black
+          end,
+          italic = function(buffer)
+            return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
+          end,
+          bold = function(buffer)
+            return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
+          end,
+        },
+        prefix = {
+          text = function(buffer)
+            return buffer.unique_prefix
+          end,
+          highlight = function(buffer)
+            return buffer.is_focused and "RoundedInnerActiveSecondary" or "RoundedInnerInactiveSecondary"
+          end,
+        },
+        file_name = {
+          text = function(buffer)
+            return buffer.filename
+          end,
+          style = function(buffer)
+            return buffer.is_focused and "bold" or nil
+          end,
+          highlight = function(buffer)
+            return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+          end,
+        },
+        close_button = {
+          text = function()
+            return " "
+          end,
+          delete_buffer_on_left_click = true,
+          highlight = function(buffer)
+            return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+          end,
+        },
+        right_half_circle = {
+          text = function(buffer)
+            return buffer.is_focused and "" or ""
+          end,
+          highlight = function(buffer)
+            return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
+          end,
+        },
+        arrow = {
+          text = function(buffer)
+            local statusline = require("arrow.statusline")
+            return statusline.is_on_arrow_file(buffer.number) and " 󱡁" or ""
+          end,
+          fg = function()
+            return colors and colors.white
+          end,
+          bg = function()
+            return colors and colors.darker_black
+          end,
+        },
+        errors = {
+          text = function(buffer)
+            if buffer.diagnostics.errors > 0 then
+              return " " .. custom_sigs.error .. buffer.diagnostics.errors
+            end
+            return ""
+          end,
+          fg = function()
+            return colors and colors.red
+          end,
+          bg = function()
+            return colors and colors.darker_black
+          end,
+        },
+        warns = {
+          text = function(buffer)
+            if buffer.diagnostics.warnings > 0 then
+              return " " .. custom_sigs.warn .. buffer.diagnostics.warnings
+            end
+            return ""
+          end,
+          fg = function()
+            return colors and colors.yellow
+          end,
+          bg = function()
+            return colors and colors.darker_black
+          end,
+        },
+        infos = {
+          text = function(buffer)
+            if buffer.diagnostics.infos > 0 then
+              return " " .. custom_sigs.info .. buffer.diagnostics.infos
+            end
+            return ""
+          end,
+          fg = function(_)
+            return colors and colors.green
+          end,
+          bg = function(_)
+            return colors and colors.darker_black
+          end,
+        },
+        modified = {
+          text = function(buffer)
+            return buffer.is_modified and " " or ""
+          end,
+          fg = function(buffer)
+            return buffer.is_modified and colors and colors.green or colors and colors.darker_black
+          end,
+          bg = function(buffer)
+            return buffer.is_modified and colors and colors.darker_black or colors and colors.darker_black
+          end,
+        },
+        separator = {
+          text = "  ",
+          fg = colors and colors.statusline_bg,
+          bg = colors and colors.darker_black,
+        },
+      }
+
+      local get_remaining_space = function(buffer)
+        local used_space = 0
+        for _, component in pairs(components) do
+          used_space = used_space
+            + vim.fn.strwidth(
+              (type(component.text) == "string" and component.text)
+                or (type(component.text) == "function" and component.text(buffer))
+            )
+        end
+        return math.max(0, min_buffer_width - used_space)
+      end
+
+      local left_padding = {
+        text = function(buffer)
+          local remaining_space = get_remaining_space(buffer)
+          return str_rep(" ", remaining_space / 2 + remaining_space % 2)
+        end,
+
+        highlight = function(buffer)
+          return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+        end,
+      }
+
+      local right_padding = {
+        text = function(buffer)
+          local remaining_space = get_remaining_space(buffer)
+          return str_rep(" ", remaining_space / 2)
+        end,
+        highlight = function(buffer)
+          return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
+        end,
+      }
 
       require("cokeline").setup({
         fill_hl = "RoundedInnerInactive",
-
+        rendering = { max_buffer_width = 25 },
         components = {
-          {
-            text = function(buffer)
-              return buffer.is_focused and "" or " "
-            end,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
-            end,
-          },
-          {
-            text = function(buffer)
-              return ""
-                .. (
-                  (is_picking_focus() or is_picking_close()) and not buffer.is_focused and buffer.pick_letter .. " "
-                  or buffer.devicon.icon
-                )
-            end,
-            fg = function(buffer)
-              return (is_picking_focus() and not buffer.is_focused and (colors and colors.cyan))
-                or (is_picking_close() and not buffer.is_focused and (colors and colors.red))
-                or (buffer.is_focused and (colors and colors.darker_black))
-                or buffer.devicon.color
-            end,
-            bg = function(buffer)
-              return (is_picking_focus() and not buffer.is_focused and (colors and colors.darker_black))
-                or (is_picking_close() and not buffer.is_focused and (colors and colors.darker_black))
-                or (buffer.is_focused and (colors and colors.blue))
-                or colors and colors.darker_black
-            end,
-            italic = function(buffer)
-              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
-            end,
-            bold = function(buffer)
-              return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
-            end,
-          },
-          {
-            text = function(buffer)
-              return buffer.unique_prefix
-            end,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActiveSecondary" or "RoundedInnerInactiveSecondary"
-            end,
-          },
-          {
-            text = function(buffer)
-              return buffer.filename .. " "
-            end,
-            style = function(buffer)
-              return buffer.is_focused and "bold" or nil
-            end,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
-            end,
-          },
-          {
-            text = function()
-              return " "
-            end,
-            delete_buffer_on_left_click = true,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
-            end,
-          },
-          {
-            text = function(buffer)
-              return buffer.is_focused and "" or " "
-            end,
-            highlight = function(buffer)
-              return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
-            end,
-          },
-          {
-            text = function(buffer)
-              local statusline = require("arrow.statusline")
-              return statusline.is_on_arrow_file(buffer.number) and " 󱡁" or ""
-            end,
-            fg = function()
-              return colors and colors.white
-            end,
-            bg = function()
-              return colors and colors.darker_black
-            end,
-          },
-          {
-            text = function(buffer)
-              if buffer.diagnostics.errors > 0 then
-                return " " .. custom_sigs.error .. buffer.diagnostics.errors
-              end
-              return ""
-            end,
-            fg = function()
-              return colors and colors.red
-            end,
-            bg = function()
-              return colors and colors.darker_black
-            end,
-          },
-          {
-            text = function(buffer)
-              if buffer.diagnostics.warnings > 0 then
-                return " " .. custom_sigs.warn .. buffer.diagnostics.warnings
-              end
-              return ""
-            end,
-            fg = function()
-              return colors and colors.yellow
-            end,
-            bg = function()
-              return colors and colors.darker_black
-            end,
-          },
-          {
-            text = function(buffer)
-              if buffer.diagnostics.infos > 0 then
-                return " " .. custom_sigs.info .. buffer.diagnostics.infos
-              end
-              return ""
-            end,
-            fg = function(_)
-              return colors and colors.green
-            end,
-            bg = function(_)
-              return colors and colors.darker_black
-            end,
-          },
-          {
-            text = function(buffer)
-              return buffer.is_modified and " " or ""
-            end,
-            fg = function(buffer)
-              return buffer.is_modified and colors and colors.green or colors and colors.darker_black
-            end,
-            bg = function(buffer)
-              return buffer.is_modified and colors and colors.darker_black or colors and colors.darker_black
-            end,
-          },
-          {
-            text = "  ",
-            fg = colors and colors.statusline_bg,
-            bg = colors and colors.darker_black,
-          },
+          components.left_half_circle,
+          left_padding,
+          components.devicon,
+          components.prefix,
+          components.file_name,
+          right_padding,
+          components.close_button,
+          components.right_half_circle,
+          components.arrow,
+          components.errors,
+          components.warns,
+          components.infos,
+          components.modified,
+          components.separator,
         },
       })
 
