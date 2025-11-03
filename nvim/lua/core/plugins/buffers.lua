@@ -127,7 +127,7 @@ return {
       local is_picking_close = require("cokeline.mappings").is_picking_close
       local colors = require("utils.colors").get_base30_palette()
       local custom_sigs = require("core.themes.signs")
-      local min_buffer_width = 25
+      local min_buffer_width = 30
       local str_rep = string.rep
       local components = {
         left_half_circle = {
@@ -308,7 +308,7 @@ return {
 
       require("cokeline").setup({
         fill_hl = "RoundedInnerInactive",
-        rendering = { max_buffer_width = 25 },
+        rendering = { max_buffer_width = 30 },
         components = {
           components.left_half_circle,
           left_padding,
