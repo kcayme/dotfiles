@@ -66,4 +66,35 @@ return {
       vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
     end,
   },
+  {
+    "rachartier/tiny-code-action.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "folke/snacks.nvim",
+    },
+    event = "LspAttach",
+    opts = {
+      backend = "vim",
+      picker = {
+        "snacks",
+      },
+      sort = function(a, b)
+        -- Prioritize quickfix actions, then refactoring, then everything else
+        local function get_priority(kind)
+          if string.match(kind or "", "^quickfix") then
+            return 1
+          end
+          if string.match(kind or "", "^refactor") then
+            return 2
+          end
+          return 3
+        end
+
+        local a_priority = get_priority(a.action.kind)
+        local b_priority = get_priority(b.action.kind)
+
+        return a_priority < b_priority
+      end,
+    },
+  },
 }
