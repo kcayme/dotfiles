@@ -137,6 +137,7 @@ return {
           highlight = function(buffer)
             return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
           end,
+          truncation = { priority = 1 },
         },
         devicon = {
           text = function(buffer)
@@ -164,6 +165,7 @@ return {
           bold = function(buffer)
             return (is_picking_focus() or is_picking_close()) and not buffer.is_focused
           end,
+          truncation = { priority = 1 },
         },
         prefix = {
           text = function(buffer)
@@ -172,6 +174,7 @@ return {
           highlight = function(buffer)
             return buffer.is_focused and "RoundedInnerActiveSecondary" or "RoundedInnerInactiveSecondary"
           end,
+          truncation = { priority = 3, direction = "left" },
         },
         file_name = {
           text = function(buffer)
@@ -183,6 +186,7 @@ return {
           highlight = function(buffer)
             return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
           end,
+          truncation = { priority = 2, direction = "left" },
         },
         close_button = {
           text = function()
@@ -192,6 +196,7 @@ return {
           highlight = function(buffer)
             return buffer.is_focused and "RoundedInnerActive" or "RoundedInnerInactive"
           end,
+          truncation = { priority = 1 },
         },
         right_half_circle = {
           text = function(buffer)
@@ -200,6 +205,7 @@ return {
           highlight = function(buffer)
             return buffer.is_focused and "RoundedEdgeActive" or "RoundedEdgeInactive"
           end,
+          truncation = { priority = 1 },
         },
         arrow = {
           text = function(buffer)
@@ -212,6 +218,7 @@ return {
           bg = function()
             return colors and colors.darker_black
           end,
+          truncation = { priority = 1 },
         },
         errors = {
           text = function(buffer)
@@ -226,6 +233,7 @@ return {
           bg = function()
             return colors and colors.darker_black
           end,
+          truncation = { priority = 1 },
         },
         warns = {
           text = function(buffer)
@@ -240,6 +248,7 @@ return {
           bg = function()
             return colors and colors.darker_black
           end,
+          truncation = { priority = 1 },
         },
         infos = {
           text = function(buffer)
@@ -254,6 +263,7 @@ return {
           bg = function(_)
             return colors and colors.darker_black
           end,
+          truncation = { priority = 1 },
         },
         modified = {
           text = function(buffer)
@@ -265,11 +275,13 @@ return {
           bg = function(buffer)
             return buffer.is_modified and colors and colors.darker_black or colors and colors.darker_black
           end,
+          truncation = { priority = 1 },
         },
         separator = {
           text = "  ",
           fg = colors and colors.statusline_bg,
           bg = colors and colors.darker_black,
+          truncation = { priority = 1 },
         },
       }
 
