@@ -29,7 +29,7 @@ return {
         python = {
           -- "isort",
           "docformatter",
-          "autopep8",
+          -- "autopep8",
           -- To fix auto-fixable lint errors.
           "ruff_fix",
           -- To run the Ruff formatter.
