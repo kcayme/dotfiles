@@ -1,20 +1,20 @@
 vim.api.nvim_create_user_command("FormatToggle", function(args)
   local show_notification = require("utils.notification").show_notification
-  local title = "conform.nvim"
+  local opts = { title = "conform.nvim" }
   local is_global = not args.bang
   if is_global then
     vim.g.disable_autoformat = not vim.g.disable_autoformat
     if vim.g.disable_autoformat then
-      show_notification("Autoformat-on-save disabled globally", "info", title)
+      show_notification("Autoformat-on-save disabled globally", "info", opts)
     else
-      show_notification("Autoformat-on-save enabled globally", "info", title)
+      show_notification("Autoformat-on-save enabled globally", "info", opts)
     end
   else
     vim.b.disable_autoformat = not vim.b.disable_autoformat
     if vim.b.disable_autoformat then
-      show_notification("Autoformat-on-save disabled for this buffer", "info", title)
+      show_notification("Autoformat-on-save disabled for this buffer", "info", opts)
     else
-      show_notification("Autoformat-on-save enabled for this buffer", "info", title)
+      show_notification("Autoformat-on-save enabled for this buffer", "info", opts)
     end
   end
 end, {
