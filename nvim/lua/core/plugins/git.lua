@@ -92,6 +92,7 @@ return {
   },
   {
     "ahkohd/difft.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     keys = {
       {
         "<leader>d",
@@ -115,7 +116,7 @@ return {
         window = {
           width = 0.9, -- Float window width (0-1)
           height = 0.9, -- Float window height (0-1)
-          number = true,
+          -- number = true,
           relativenumber = false,
           border = "rounded",
         },
@@ -126,17 +127,18 @@ return {
             local icon, hl = devicons.get_icon(basename)
 
             -- Get the bg from FloatTitle (what DifftFileHeader links to)
-            local header_hl = vim.api.nvim_get_hl(0, { name = "FloatTitle", link = false })
+            -- local header_hl = vim.api.nvim_get_hl(0, { name = "Title", link = false })
+            local colors = require("utils.colors").get_base30_palette()
 
             -- Create custom highlight with devicon fg + header bg
             local icon_hl = hl
-            if hl and header_hl.bg then
+            if hl and colors then
               local devicon_colors = vim.api.nvim_get_hl(0, { name = hl })
               if devicon_colors.fg then
                 local custom_hl_name = "DifftIcon_" .. hl
                 vim.api.nvim_set_hl(0, custom_hl_name, {
                   fg = devicon_colors.fg,
-                  bg = header_hl.bg,
+                  bg = colors.darker_black,
                 })
                 icon_hl = custom_hl_name
               end
@@ -159,7 +161,7 @@ return {
             return result
           end,
           highlight = {
-            link = "FloatTitle",
+            link = "SpecialChar",
             full_width = true,
           },
         },
