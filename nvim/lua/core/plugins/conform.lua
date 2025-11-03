@@ -24,9 +24,20 @@ return {
         timeout_ms = 500,
       },
       formatters_by_ft = {
-        toml = { "pyproject-fmt" },
+        toml = { "taplo" },
         lua = { "stylua" },
-        python = { "ruff", "isort", "docformatter", "autopep8", stop_after_first = false },
+        python = {
+          -- "isort",
+          "docformatter",
+          "autopep8",
+          -- To fix auto-fixable lint errors.
+          "ruff_fix",
+          -- To run the Ruff formatter.
+          "ruff_format",
+          -- To organize the imports.
+          "ruff_organize_imports",
+          stop_after_first = false,
+        },
         go = { "goimports", "gofmt", stop_after_first = true },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         typescript = { "prettierd", "prettier", stop_after_first = true },
