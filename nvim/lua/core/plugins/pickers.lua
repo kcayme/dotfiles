@@ -89,6 +89,7 @@ return {
         },
       },
       bufdelete = {},
+      terminal = {},
     },
   },
   {
