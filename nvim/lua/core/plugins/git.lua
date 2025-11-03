@@ -113,6 +113,8 @@ return {
         no_diff_message = "All clean! No changes detected.",
         loading_message = "Loading diff...",
         window = {
+          width = 0.9, -- Float window width (0-1)
+          height = 0.9, -- Float window height (0-1)
           number = true,
           relativenumber = false,
           border = "rounded",
