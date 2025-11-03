@@ -235,3 +235,10 @@ vim.api.nvim_create_autocmd("User", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd("BufLeave", {
+  pattern = "oil://*",
+  callback = function()
+    vim.o.conceallevel = 0
+  end,
+})
