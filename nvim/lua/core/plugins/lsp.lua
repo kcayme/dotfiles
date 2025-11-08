@@ -29,7 +29,7 @@ return {
         "ts_ls",
         "eslint",
         "ruff",
-        -- "ty",
+        "basedpyright",
         "typos_lsp",
         "prettierd",
         "cssls",
