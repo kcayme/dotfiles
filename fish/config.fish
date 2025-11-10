@@ -11,17 +11,19 @@ switch (uname)
     case Linux
         # Check if it's specifically Ubuntu
         if test -f /etc/os-release
-            if string match -q "ID=ubuntu" (cat /etc/os-release)
-                set -gx PATH /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $PATH
+            if grep -q '^ID=ubuntu' /etc/os-release
+                # set -gx PATH /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $PATH
+                # # environment variables
+                # set -gx PATH $PATH:/usr/local/go/bin
+
+                fish_add_path /home/linuxbrew/.linuxbrew/bin
+                fish_add_path /home/linuxbrew/.linuxbrew/sbin
                 # environment variables
-                set -gx PATH $PATH:/usr/local/go/bin
-                # Set GOPATH
-                set -gx GOPATH $HOME/go
-                # Add GOPATH/bin to PATH
-                set -gx PATH $PATH:$GOPATH/bin
-                # echo "Ubuntu detected"
-                # set os_name (grep '^PRETTY_NAME=' /etc/os-release | string replace -r 'PRETTY_NAME="(.*)"' '$1')
-                # echo $os_name
+                # fish_add_path /local/go/bin
+                fish_add_path /usr/local/go/bin
+                # Set GOPATH (run once)
+                # set -gx GOPATH $HOME/go
+                # fish_add_path $GOPATH/bin
             end
         end
 end
