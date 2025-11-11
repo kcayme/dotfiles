@@ -12,6 +12,10 @@ return {
       split_percent = 0.4,
     },
   },
+  ui = {
+    border = "rounded",
+    compact = true,
+  },
   keys = {
     { "<leader>u", "<cmd>Atone toggle<CR>", desc = "Toggle UndoTree" },
   },
