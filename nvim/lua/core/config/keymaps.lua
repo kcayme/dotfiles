@@ -74,9 +74,6 @@ map({ "n" }, "<Leader>x", function()
 end, { desc = "Close vertical window split" })
 
 -- INFO: MOTIONS AND EDITING ============
--- save file
-map({ "n", "v" }, "<C-s>", "<cmd>w<cr>", {})
-
 -- keep previously yanked word
 map({ "v" }, "p", '"_dP', { noremap = false })
 
