@@ -1,106 +1,108 @@
--- apply nvchad base46
-for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
-  dofile(vim.g.base46_cache .. v)
-end
-
 local colors = require("utils.colors").get_base30_palette()
 
-local custom_hls = {
-  {
-    name = "RoundedEdgeActive",
-    opts = { fg = colors and colors.blue or "#FFFFFF", bg = colors and colors.darker_black or "#000000" },
-  },
-  {
-    name = "RoundedInnerActive",
-    opts = {
-      fg = colors and colors.darker_black or "#000000",
-      bg = colors and colors.blue or "#ffffff",
-      bold = false,
-    },
-  },
-  {
-    name = "RoundedEdgeInactive",
-    opts = {
-      fg = colors and colors.darker_black or "#000000",
-      bg = colors and colors.darker_black or "None",
-      bold = false,
-    },
-  },
-  {
-    name = "RoundedInnerInactive",
-    opts = {
-      fg = "#FFFFFF",
-      bg = colors and colors.darker_black or "#000000",
-      bold = false,
-    },
-  },
-  {
-    name = "RoundedInnerActiveSecondary",
-    opts = {
-      fg = colors and colors.darker_black or "#000000",
-      bg = colors and colors.blue or "#ffffff",
-      bold = false,
-      italic = true,
-    },
-  },
-  {
-    name = "RoundedInnerInactiveSecondary",
-    opts = {
-      fg = colors and colors.white,
-      bg = colors and colors.darker_black or "#000000",
-      bold = false,
-      italic = true,
-    },
-  },
-  -- customize flash.nvim hl
-  {
-    name = "FlashLabel",
-    opts = {
-      bg = colors and colors.darker_black,
-      fg = colors and colors.cyan,
-    },
-  },
-  {
-    name = "BlinkCmpMenuBorder",
-    opts = {
-      link = "WinBar",
-    },
-  },
-  {
-    name = "LazyGitBorder",
-    opts = {
-      link = "FloatBorder",
-    },
-  },
-  {
-    name = "LazyGitFloat",
-    opts = {
-      link = "NormalFloat",
-    },
-  },
+if colors then
+  -- apply nvchad base46
+  for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+    dofile(vim.g.base46_cache .. v)
+  end
 
-  --   {
-  --     group_name = "DiagnosticUnderlineError",
-  --     opts = { sp = colors.red },
-  --   },
-  --   {
-  --     group_name = "DiagnosticUnderlineWarn",
-  --     opts = { sp = colors.eared },
-  --   },
-  --   {
-  --     group_name = "DiagnosticUnderlineInfo",
-  --     opts = { sp = colors.red },
-  --   },
-  --   {
-  --     group_name = "DiagnosticUnderlineHint",
-  --     opts = { sp = colors.red },
-  --   },
-  --   {
-  --     group_name = "BlinkCmpGhostText",
-  --     opts = { fg = "#4e5665" },
-  --   },
-}
+  local custom_hls = {
+    {
+      name = "RoundedEdgeActive",
+      opts = { fg = colors and colors.blue or "#FFFFFF", bg = colors and colors.darker_black or "#000000" },
+    },
+    {
+      name = "RoundedInnerActive",
+      opts = {
+        fg = colors and colors.darker_black or "#000000",
+        bg = colors and colors.blue or "#ffffff",
+        bold = false,
+      },
+    },
+    {
+      name = "RoundedEdgeInactive",
+      opts = {
+        fg = colors and colors.darker_black or "#000000",
+        bg = colors and colors.darker_black or "None",
+        bold = false,
+      },
+    },
+    {
+      name = "RoundedInnerInactive",
+      opts = {
+        fg = "#FFFFFF",
+        bg = colors and colors.darker_black or "#000000",
+        bold = false,
+      },
+    },
+    {
+      name = "RoundedInnerActiveSecondary",
+      opts = {
+        fg = colors and colors.darker_black or "#000000",
+        bg = colors and colors.blue or "#ffffff",
+        bold = false,
+        italic = true,
+      },
+    },
+    {
+      name = "RoundedInnerInactiveSecondary",
+      opts = {
+        fg = colors and colors.white,
+        bg = colors and colors.darker_black or "#000000",
+        bold = false,
+        italic = true,
+      },
+    },
+    -- customize flash.nvim hl
+    {
+      name = "FlashLabel",
+      opts = {
+        bg = colors and colors.darker_black,
+        fg = colors and colors.cyan,
+      },
+    },
+    {
+      name = "BlinkCmpMenuBorder",
+      opts = {
+        link = "WinBar",
+      },
+    },
+    {
+      name = "LazyGitBorder",
+      opts = {
+        link = "FloatBorder",
+      },
+    },
+    {
+      name = "LazyGitFloat",
+      opts = {
+        link = "NormalFloat",
+      },
+    },
 
-for _, value in ipairs(custom_hls) do
-  vim.api.nvim_set_hl(0, value.name, value.opts)
+    --   {
+    --     group_name = "DiagnosticUnderlineError",
+    --     opts = { sp = colors.red },
+    --   },
+    --   {
+    --     group_name = "DiagnosticUnderlineWarn",
+    --     opts = { sp = colors.eared },
+    --   },
+    --   {
+    --     group_name = "DiagnosticUnderlineInfo",
+    --     opts = { sp = colors.red },
+    --   },
+    --   {
+    --     group_name = "DiagnosticUnderlineHint",
+    --     opts = { sp = colors.red },
+    --   },
+    --   {
+    --     group_name = "BlinkCmpGhostText",
+    --     opts = { fg = "#4e5665" },
+    --   },
+  }
+
+  for _, value in ipairs(custom_hls) do
+    vim.api.nvim_set_hl(0, value.name, value.opts)
+  end
 end
