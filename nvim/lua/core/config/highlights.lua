@@ -56,8 +56,8 @@ local custom_hls = {
   {
     name = "FlashLabel",
     opts = {
-      fg = colors and colors.darker_black,
-      bg = colors and colors.cyan,
+      bg = colors and colors.darker_black,
+      fg = colors and colors.cyan,
     },
   },
   {
