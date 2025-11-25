@@ -91,81 +91,14 @@ return {
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
   },
   {
-    "ahkohd/difft.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    "esmuellert/vscode-diff.nvim",
     keys = {
       {
-        "<leader>d",
-        function()
-          if Difft.is_visible() then
-            Difft.hide()
-          else
-            Difft.diff()
-          end
-        end,
-        desc = "Toggle Difft",
+        "<leader>cd",
+        "<cmd>CodeDiff<cr>",
+        desc = "Toggle Diff View",
       },
     },
-    config = function()
-      require("difft").setup({
-        command = "GIT_EXTERNAL_DIFF='difft --color=always' git diff",
-        -- layout = "ivy_taller",
-        layout = "float", -- nil (buffer), "float", or "ivy_taller"
-        no_diff_message = "All clean! No changes detected.",
-        loading_message = "Loading diff...",
-        window = {
-          width = 0.9, -- Float window width (0-1)
-          height = 0.9, -- Float window height (0-1)
-          -- number = true,
-          relativenumber = false,
-          border = "rounded",
-        },
-        header = {
-          content = function(filename, step, _language)
-            local devicons = require("nvim-web-devicons")
-            local basename = vim.fn.fnamemodify(filename, ":t")
-            local icon, hl = devicons.get_icon(basename)
-
-            -- Get the bg from FloatTitle (what DifftFileHeader links to)
-            -- local header_hl = vim.api.nvim_get_hl(0, { name = "Title", link = false })
-            local colors = require("utils.colors").get_base30_palette()
-
-            -- Create custom highlight with devicon fg + header bg
-            local icon_hl = hl
-            if hl and colors then
-              local devicon_colors = vim.api.nvim_get_hl(0, { name = hl })
-              if devicon_colors.fg then
-                local custom_hl_name = "DifftIcon_" .. hl
-                vim.api.nvim_set_hl(0, custom_hl_name, {
-                  fg = devicon_colors.fg,
-                  bg = colors.darker_black,
-                })
-                icon_hl = custom_hl_name
-              end
-            end
-
-            local result = {}
-            table.insert(result, { " " })
-            table.insert(result, { icon and (icon .. " ") or "", icon_hl })
-            table.insert(result, { filename })
-            table.insert(result, { " " })
-
-            if step then
-              table.insert(result, { "• " })
-              table.insert(result, { tostring(step.current) })
-              table.insert(result, { "/" })
-              table.insert(result, { tostring(step.of) })
-              table.insert(result, { " " })
-            end
-
-            return result
-          end,
-          highlight = {
-            link = "SpecialChar",
-            full_width = true,
-          },
-        },
-      })
-    end,
+    dependencies = { "MunifTanjim/nui.nvim" },
   },
 }
