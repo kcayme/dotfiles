@@ -94,7 +94,7 @@ return {
     "esmuellert/vscode-diff.nvim",
     keys = {
       {
-        "<leader>cd",
+        "<leader>d",
         "<cmd>CodeDiff<cr>",
         desc = "Toggle Diff View",
       },
