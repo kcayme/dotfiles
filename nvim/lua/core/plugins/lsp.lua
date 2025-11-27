@@ -85,4 +85,5 @@ return {
       end,
     },
   },
+  { "microsoft/python-type-stubs" },
 }

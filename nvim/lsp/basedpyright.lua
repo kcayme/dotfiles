@@ -12,6 +12,7 @@ return {
           reportExplicitAny = "none",
           reportImplicitOverride = "none",
         },
+        stubPath = vim.fs.joinpath(vim.fn.stdpath("data"), "lazy", "python-type-stubs"),
       },
     },
   },
