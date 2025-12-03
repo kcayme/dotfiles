@@ -4,8 +4,9 @@ return {
       analysis = {
         typeCheckingMode = "standard",
         autoImportCompletions = true,
-        diagnosticMode = "workspace",
+        autoSearchPaths = true,
         useLibraryCodeForTypes = true,
+        diagnosticMode = "openFilesOnly",
         reportMissingImports = "error",
         reportMissingTypeStubs = "warning",
         diagnosticSeverityOverrides = {
