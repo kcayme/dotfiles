@@ -29,6 +29,9 @@ return {
 
       require("mason-lspconfig").setup({
         automatic_installation = true,
+        automatic_enable = {
+          exclude = { "basedpyright" },
+        },
         -- ensure_installed = ensure_installed,
       })
     end,
