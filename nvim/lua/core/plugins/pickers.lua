@@ -117,7 +117,9 @@ return {
       },
       layout = {
         width = 0.80,
-        height = 0.80, -- Window height as fraction of screen
+        height = 0.90, -- Window height as fraction of screen
+        prompt_position = "top", -- top | bottom
+        preview_position = "right", -- or 'left', 'right', 'top', 'bottom'
       },
     },
   },
