@@ -14,6 +14,7 @@ return {
         "jsonls",
         "yamlls",
         "lua_ls",
+        "vue_ls",
         "ts_ls",
         "eslint",
         "ruff",
