@@ -42,6 +42,7 @@ return {
         markdown = { "prettierd", stop_after_first = true },
         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        vue = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", stop_after_first = true },
         sql = { "sql_formatter", stop_after_first = true },
       },
