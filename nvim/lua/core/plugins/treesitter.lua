@@ -5,33 +5,41 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").setup({
-        ensure_installed = {
-          "bash",
-          "c",
-          "cmake",
-          "dockerfile",
-          "fish",
-          "html",
-          "gitignore",
-          "go",
-          "gomod",
-          "javascript",
-          "json",
-          "lua",
-          "markdown",
-          "sql",
-          "python",
-          "tmux",
-          "typescript",
-          "yaml",
-          "vim",
-          "vimdoc",
-        },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
       })
+
+      ensure_installed = {
+        "bash",
+        "csv",
+        "c",
+        "css",
+        "cmake",
+        "dockerfile",
+        "fish",
+        "html",
+        "gitignore",
+        "go",
+        "gomod",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "sql",
+        "python",
+        "tmux",
+        "typescript",
+        "tsx",
+        "yaml",
+        "vim",
+        "vue",
+        "vimdoc",
+        "toml",
+      }
+
+      require("nvim-treesitter").install(ensure_installed)
     end,
   },
   {
