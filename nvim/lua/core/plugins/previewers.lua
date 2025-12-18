@@ -39,8 +39,6 @@ return {
     keys = {
       { "<leader>md", "<cmd>Markview toggle<cr>", mode = "n", desc = "Toggle MarkView" },
     },
-    dependencies = {
-      "sagimhen/blink.cmp",
-    },
+    dependencies = { "saghen/blink.cmp" },
   },
 }
