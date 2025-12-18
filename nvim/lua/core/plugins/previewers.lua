@@ -36,8 +36,11 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,
+    keys = {
+      { "<leader>md", "<cmd>Markview toggle<cr>", mode = "n", desc = "Toggle MarkView" },
+    },
     dependencies = {
-      "saghen/blink.cmp",
+      "sagimhen/blink.cmp",
     },
   },
 }
