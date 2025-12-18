@@ -11,7 +11,7 @@ return {
         indent = { enable = true },
       })
 
-      ensure_installed = {
+      local ensure_installed = {
         "bash",
         "csv",
         "c",
