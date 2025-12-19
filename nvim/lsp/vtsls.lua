@@ -4,12 +4,13 @@ return {
     hostInfo = "neovim",
   },
   filetypes = {
-    "javascript",
-    "javascriptreact",
-    "javascript.jsx",
-    "typescript",
-    "typescriptreact",
-    "typescript.tsx",
+    "vue",
+    -- "javascript",
+    -- "javascriptreact",
+    -- "javascript.jsx",
+    -- "typescript",
+    -- "typescriptreact",
+    -- "typescript.tsx",
   },
   root_dir = function(bufnr, on_dir)
     -- The project root is where the LSP can be started from
