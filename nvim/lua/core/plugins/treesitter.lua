@@ -4,12 +4,7 @@ return {
     lazy = false,
     build = ":TSUpdate",
     config = function()
-      require("nvim-treesitter").setup({
-        -- Autoinstall languages that are not installed
-        auto_install = true,
-        highlight = { enable = true },
-        indent = { enable = true },
-      })
+      require("nvim-treesitter").setup({})
 
       local ensure_installed = {
         "bash",
