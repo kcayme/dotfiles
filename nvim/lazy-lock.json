@@ -8,7 +8,6 @@
   "base46": { "branch": "v3.0", "commit": "45b336ec52615dd1a3aa47848d894616dd6293a5" },
   "blink.cmp": { "branch": "main", "commit": "b19413d214068f316c78978b08264ed1c41830ec" },
   "conform.nvim": { "branch": "master", "commit": "41715945edf518ca73a9bd63ab6cdc23dd5c7b33" },
-  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "fff.nvim": { "branch": "main", "commit": "f6af8353c3cb02ddde1588f24f27ff8b3a4037cf" },
   "flash.nvim": { "branch": "main", "commit": "fcea7ff883235d9024dc41e638f164a450c14ca2" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
