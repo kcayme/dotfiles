@@ -74,8 +74,12 @@ map({ "n" }, "<Leader>x", function()
 end, { desc = "Close vertical window split" })
 
 -- INFO: MOTIONS AND EDITING ============
--- keep previously yanked word
-map({ "v" }, "p", '"_dP', { noremap = false })
+map({ "v" }, "p", function()
+  -- keep previously yanked word
+  vim.cmd.normal({ '"_dP', bang = true })
+  -- clean ^Ms (windows newlines created when pasting into WSL from winddows)
+  vim.cmd([[silent! %s/\r//g]])
+end, { noremap = false })
 
 -- indent on visual and normal mode
 map({ "n" }, "<tab>", ">>")
