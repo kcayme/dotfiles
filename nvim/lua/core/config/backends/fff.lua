@@ -1,14 +1,6 @@
-local picker = require("fff")
-
 local M = {}
 
--- local picker_interface_methods = require("core.config.backends.common").picker_interface_methods
---
--- for _, method in ipairs(picker_interface_methods) do
---   fff[method] = function(opts)
---     fff.library[method](opts)
---   end
--- end
+local picker = require("fff")
 
 -- Snacks as ui with fff and backend
 -- (https://github.com/madmaxieee/nvim-config/blob/c773485d76cf1fff4be3eca888a6ed4525cc9065/lua/plugins/fuzzy-finder/snacks-picker/fff.lua)

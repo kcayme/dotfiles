@@ -111,6 +111,29 @@ return {
         end
         vim.cmd("NvimTreeRefresh")
       end, {})
+
+      local fff_ok, fff = pcall(require, "fff")
+      local notify = require("utils.notification").show_notification
+
+      if fff_ok then
+        local Event = api.events.Event
+        local src_events = {
+          Event.FileCreated,
+          Event.FileRemoved,
+          Event.NodeRenamed,
+        }
+
+        local function rescan_files()
+          notify("Scanning files...", vim.log.levels.INFO)
+          fff.scan_files()
+        end
+
+        for _, event in ipairs(src_events) do
+          api.events.subscribe(event, rescan_files)
+        end
+      else
+        notify("fff and nvim-tree unanvaible")
+      end
     end,
   },
 }
