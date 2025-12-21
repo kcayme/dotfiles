@@ -230,8 +230,42 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd("User", {
   pattern = "OilActionsPost",
   callback = function(event)
-    if event.data.actions[1].type == "move" then
-      Snacks.rename.on_rename_file(event.data.actions[1].src_url, event.data.actions[1].dest_url)
+    if event.data.err then
+      return
+    end
+
+    local parse_url = function(url)
+      return url:match("^.*://(.*)$")
+    end
+
+    -- https://github.com/stevearc/oil.nvim/blob/32e18df30f937e02135398c270b72a4d24b40120/lua/oil/mutator/init.lua
+    ---@alias oil.EntryType "file"|"directory"|"socket"|"link"|"fifo"
+    ---@alias oil.Action oil.CreateAction|oil.DeleteAction|oil.MoveAction|oil.CopyAction|oil.ChangeAction
+    for _, action in ipairs(event.data.actions) do
+      -- close deleted files via oil.nvim
+      if action.type == "delete" and action.entry_type == "file" then
+        local path = parse_url(action.url)
+        local bufnr = vim.fn.bufnr(path)
+        if bufnr == -1 then
+          return
+        end
+
+        local winnr = vim.fn.win_findbuf(bufnr)[1]
+        if not winnr then
+          return
+        end
+
+        vim.fn.win_execute(winnr, "bfirst | bw " .. bufnr)
+      end
+
+      if action.type == "move" then
+        Snacks.rename.on_rename_file(action.src_url, action.dest_url)
+      end
+    end
+
+    if event.data.actions then
+      -- rescan fff.nvim when there were actions done
+      require("fff").scan_files()
     end
   end,
 })
