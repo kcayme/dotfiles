@@ -176,7 +176,15 @@ return {
           },
         },
       },
-      fuzzy = { implementation = "prefer_rust_with_warning" },
+      fuzzy = {
+        implementation = "prefer_rust_with_warning",
+        sorts = {
+          "exact",
+          "score",
+          "sort_text",
+          "label",
+        },
+      },
     },
     opts_extend = { "sources.default" },
   },
