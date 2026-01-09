@@ -42,10 +42,16 @@ local vtsls_config = {
 }
 
 vim.lsp.config("vtsls", vtsls_config)
--- vim.lsp.config("vue_ls", vue_ls_config)
--- vim.lsp.enable({ "vtsls", "vue_ls" })
 
 vim.lsp.config("*", {
   capabilities = capabilities,
   root_markers = { ".git" },
+})
+
+-- <rtp>/lsp/postgres_lsp.lua doesn't seem to work
+vim.lsp.config("postgres_lsp", {
+  cmd = { "postgres-language-server", "lsp-proxy" },
+  filetypes = { "sql" },
+  root_markers = { "postgres-language-server.jsonc", ".git" },
+  workspace_required = false,
 })
