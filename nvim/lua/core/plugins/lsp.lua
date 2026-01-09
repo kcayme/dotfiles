@@ -20,6 +20,7 @@ return {
         "ruff",
         "basedpyright",
         "typos_lsp",
+        "postgres_lsp",
         "prettierd",
         "cssls",
         "dockerls",
