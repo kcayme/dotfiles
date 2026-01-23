@@ -16,6 +16,14 @@ return {
           backend = "tmux",
           enabled = false,
         },
+        -- INFO: add custom prompts
+        -- prompts = {
+        --   refactor = "Please refactor {this} to be more maintainable",
+        --   security = "Review {file} for security vulnerabilities",
+        --   custom = function(ctx)
+        --     return "Current file: " .. ctx.buf .. " at line " .. ctx.row
+        --   end,
+        -- },
       },
     },
     keys = {
@@ -99,6 +107,13 @@ return {
           require("sidekick.cli").toggle({ name = "claude", focus = true })
         end,
         desc = "Sidekick Toggle Claude",
+      },
+      {
+        "<leader>ag",
+        function()
+          require("sidekick.cli").toggle({ name = "gemini", focus = true })
+        end,
+        desc = "Sidekick Toggle Gemini",
       },
     },
   },
