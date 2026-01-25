@@ -25,6 +25,7 @@ return {
         --   end,
         -- },
       },
+      nes = { enabled = false },
     },
     keys = {
       {
