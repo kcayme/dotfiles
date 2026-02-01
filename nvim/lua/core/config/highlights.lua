@@ -80,6 +80,80 @@ if colors then
         link = "NormalFloat",
       },
     },
+    -- vim-go highlight overrides
+    {
+      name = "goParamName",
+      opts = {
+        link = "@variable.parameter",
+      },
+    },
+    {
+      name = "goParamType",
+      opts = {
+        link = "Type",
+      },
+    },
+    {
+      name = "goPackage",
+      opts = {
+        link = "Function",
+      },
+    },
+    {
+      name = "goParen",
+      opts = {
+        link = "@variable.parameter",
+      },
+    },
+    {
+      name = "goSimpleParams",
+      opts = {
+        link = "SpecialChar",
+      },
+    },
+    {
+      name = "goSingleDecl",
+      opts = {
+        link = "SpecialChar",
+      },
+    },
+    {
+      name = "goCharacter",
+      opts = {
+        link = "String",
+      },
+    },
+
+    {
+      name = "goVarArgs",
+      opts = {
+        link = "SpecialChar",
+      },
+    },
+    {
+      name = "goFunctionReturn",
+      opts = {
+        link = "Type",
+      },
+    },
+    {
+      name = "goReceiver",
+      opts = {
+        link = "SpecialChar",
+      },
+    },
+    {
+      name = "goFunctionCall",
+      opts = {
+        link = "Function",
+      },
+    },
+    -- {
+    --   name = "goBlock",
+    --   opts = {
+    --     link = "SpecialChar",
+    --   },
+    -- },
 
     --   {
     --     group_name = "DiagnosticUnderlineError",
