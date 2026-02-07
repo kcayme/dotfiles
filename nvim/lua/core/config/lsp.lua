@@ -16,10 +16,10 @@ local vue_language_server_path = vim.fn.expand("$MASON/packages")
   .. "/node_modules/@vue/language-server"
 
 local tsserver_filetypes = {
-  "typescript",
-  "javascript",
-  "javascriptreact",
-  "typescriptreact",
+  -- "typescript",
+  -- "javascript",
+  -- "javascriptreact",
+  -- "typescriptreact",
   "vue",
 }
 local vue_plugin = {
