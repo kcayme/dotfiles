@@ -35,7 +35,6 @@ return {
         automatic_enable = {
           exclude = {
             "basedpyright",
-            -- "ts_ls",
           },
         },
         -- ensure_installed = ensure_installed,

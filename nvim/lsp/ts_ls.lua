@@ -1,6 +1,11 @@
 return {
   init_options = {
     hostInfo = "neovim",
+    implicitProjectConfiguration = {
+      compilerOptions = {
+        skipLibCheck = true,
+      },
+    },
   },
   cmd = { "typescript-language-server", "--stdio" },
   filetypes = {
