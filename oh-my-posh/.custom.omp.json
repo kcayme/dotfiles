@@ -4,12 +4,6 @@
     "black": "#111111",
     "white": "#f7f7f7"
   },
-  "upgrade": {
-    "source": "cdn",
-    "interval": "168h",
-    "auto": false,
-    "notice": false
-  },
   "console_title_template": "{{if .Root}}[root] {{end}}{{.Shell}} in <{{.Folder}}>",
   "blocks": [
     {
@@ -24,7 +18,7 @@
           "style": "plain"
         },
         {
-          "properties": {
+          "options": {
             "linux": "\uf17c",
             "macos": "\uf179",
             "ubuntu": "\uf31b",
@@ -64,7 +58,7 @@
           "style": "plain"
         },
         {
-          "properties": {
+          "options": {
             "branch_icon": " \ue0a0 "
           },
           "template": "{{.HEAD}}\u2800",
@@ -81,7 +75,7 @@
       "alignment": "right",
       "segments": [
         {
-          "properties": {
+          "options": {
             "style": "austin",
             "threshold": 0
           },
@@ -92,7 +86,7 @@
           "style": "plain"
         },
         {
-          "properties": {
+          "options": {
             "time_format": "02/01/06 15:04"
           },
           "template": "<p:white> · </>{{.CurrentDate | date .Format}}",
@@ -106,44 +100,42 @@
     {
       "type": "prompt",
       "alignment": "left",
+      "newline": true,
       "segments": [
         {
-          "properties": {
+          "background": "transparent",
+          "foreground": "p:white",
+          "options": {
             "folder_icon": "\uf07b",
-            "folder_separator_template": "<#93d0ff> » </>",
+            "folder_separator_template": "<#93d0ff> \u00bb </>",
             "home_icon": "\ueb06",
             "style": "agnoster"
           },
+          "style": "plain",
           "template": "<p:white>\u2514</><#93d0ff>[</> {{.Path}} <#93d0ff>]</>",
-          "foreground": "p:white",
-          "background": "transparent",
-          "type": "path",
-          "style": "plain"
+          "type": "path"
         }
-      ],
-      "newline": true
+      ]
     },
     {
       "type": "prompt",
       "alignment": "left",
+      "newline": true,
       "segments": [
         {
-          "properties": {
+          "background": "transparent",
+          "foreground": "#81ff91",
+          "foreground_templates": ["{{if gt .Code 0}}#ff3030{{end}}"],
+          "options": {
             "always_enabled": true
           },
-          "template": "❯",
-          "foreground": "#81ff91",
-          "background": "transparent",
-          "type": "status",
           "style": "plain",
-          "foreground_templates": [
-            "{{if gt .Code 0}}#ff3030{{end}}"
-          ]
+          "template": "\u276f",
+          "type": "status"
         }
-      ],
-      "newline": true
+      ]
     }
   ],
-  "version": 3,
+  "version": 4,
   "final_space": true
 }
