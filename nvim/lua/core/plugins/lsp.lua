@@ -15,7 +15,7 @@ return {
         "yamlls",
         "lua_ls",
         "vue_ls",
-        "ts_ls",
+        -- "ts_ls",
         "eslint",
         "ruff",
         "basedpyright",
@@ -35,6 +35,7 @@ return {
         automatic_enable = {
           exclude = {
             "basedpyright",
+            "ts_ls",
           },
         },
         -- ensure_installed = ensure_installed,
