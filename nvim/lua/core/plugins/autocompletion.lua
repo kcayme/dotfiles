@@ -111,7 +111,7 @@ return {
         },
       },
 
-      signature = { enabled = true },
+      signature = { enabled = false },
       appearance = {
         highlight_ns = vim.api.nvim_create_namespace("blink_cmp"),
         -- Sets the fallback highlight groups to nvim-cmp's highlight groups
