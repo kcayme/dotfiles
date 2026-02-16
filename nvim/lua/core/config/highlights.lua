@@ -58,8 +58,9 @@ if colors then
       name = "FlashLabel",
       opts = {
         bg = colors and colors.black,
-        fg = colors and colors.sun,
+        fg = colors and colors.cyan,
         italic = true,
+        bold = true,
       },
     },
     {
