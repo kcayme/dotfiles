@@ -63,6 +63,30 @@ if colors then
       },
     },
     {
+      name = "FlashMatch",
+      opts = {
+        bg = colors and colors.black,
+        fg = colors and colors.sun,
+        italic = true,
+        bold = true,
+      },
+    },
+    {
+      name = "Search",
+      opts = {
+        fg = colors and colors.black,
+        bg = colors and colors.cyan,
+      },
+    },
+    {
+      name = "CurSearch",
+      opts = {
+        fg = colors and colors.black,
+        bg = colors and colors.sun,
+        bold = true,
+      },
+    },
+    {
       name = "BlinkCmpMenuBorder",
       opts = {
         link = "WinBar",
