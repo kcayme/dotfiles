@@ -9,23 +9,45 @@ return {
           jump_labels = true,
         },
       },
+      label = {
+        before = true,
+        -- rainbow = {
+        --   enabled = true,
+        --   -- number between 1 and 9
+        --   shade = 8,
+        -- },
+      },
+      highlight = {
+        -- show a backdrop with hl FlashBackdrop
+        backdrop = true,
+        -- Highlight the search matches
+        matches = true,
+        -- extmark priority
+        priority = 5000,
+        groups = {
+          match = "FlashMatch",
+          current = "FlashCurrent",
+          backdrop = "FlashBackdrop",
+          label = "FlashLabel",
+        },
+      },
     },
     keys = {
       -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      {
-        "s",
-        mode = { "n", "o", "x" },
-        function()
-          require("flash").treesitter({
-            search = { incremental = true },
-            actions = {
-              ["<c-space>"] = "next",
-              ["<BS>"] = "prev",
-            },
-          })
-        end,
-        desc = "Flash Treesitter",
-      },
+      -- {
+      --   "s",
+      --   mode = { "n", "o", "x" },
+      --   function()
+      --     require("flash").treesitter({
+      --       search = { incremental = true },
+      --       actions = {
+      --         ["<c-space>"] = "next",
+      --         ["<BS>"] = "prev",
+      --       },
+      --     })
+      --   end,
+      --   desc = "Flash Treesitter",
+      -- },
       -- { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       {

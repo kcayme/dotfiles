@@ -130,6 +130,17 @@ map("n", "<leader>/", function()
   end)
 end)
 
+-- flash.nvim incremental treesitter selection
+-- NOTE: mapping to ''
+map({ "n", "x", "o" }, "<leader>s", function()
+  require("flash").treesitter({
+    actions = {
+      ["<leader>s"] = "next",
+      ["<BS>"] = "prev",
+    },
+  })
+end, { desc = "Treesitter incremental selection" })
+
 -- INFO: PICKERS =======================================
 local Picker = require("core.config.interfaces")
 
