@@ -30,7 +30,7 @@ end
 
 # remove welcome message
 # oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
-source "$HOME/.cargo/env.fish" # For fish
+# source "$HOME/.cargo/env.fish" # For fish
 set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' # optional
 carapace _carapace | source
 oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
