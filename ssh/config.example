@@ -1,3 +1,11 @@
+# Default ssh
+Host *
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_here_2
+  User git
+  IdentitiesOnly yes
+  PreferredAuthentications publickey
+
 # Amihan GitHub 
 Host git-work
   HostName github.com
@@ -14,9 +22,3 @@ Host git-perso
   IdentityFile ~/.ssh/id_here_1
   User git
 
-Host *
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_here_2
-  User git
-  IdentitiesOnly yes
-  PreferredAuthentications publickey
