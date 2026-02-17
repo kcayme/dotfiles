@@ -1,5 +1,6 @@
 shell-integration = fish
-command = /usr/local/bin/fish --login --interactive
+#command = <path-to-shell> --login --interactive
+command = /usr/bin/fish --login --interactive
 
 font-family = "GeistMono NFM"
 font-feature = -calt, -liga
