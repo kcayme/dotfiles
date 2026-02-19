@@ -46,6 +46,7 @@ return {
         vue = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", stop_after_first = true },
         sql = { "sql_formatter", stop_after_first = true },
+        c = { "clang-format", stop_after_first = true },
       },
     },
   },
