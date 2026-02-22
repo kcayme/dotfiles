@@ -2,6 +2,9 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
     # enable vim binding
     fish_vi_key_bindings --no-erase insert
+    if command -q fastfetch
+        fastfetch --config examples/7.jsonc
+    end
 end
 
 set fish_greeting
@@ -20,7 +23,7 @@ switch (uname)
                 fish_add_path /home/linuxbrew/.linuxbrew/sbin
                 # environment variables
                 # fish_add_path /local/go/bin
-                fish_add_path /usr/local/go/bin
+                # fish_add_path /usr/local/go/bin
                 # Set GOPATH (run once)
                 # set -gx GOPATH $HOME/go
                 # fish_add_path $GOPATH/bin
@@ -32,7 +35,7 @@ end
 # oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
 # source "$HOME/.cargo/env.fish" # For fish
 set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense' # optional
-carapace _carapace | source
+# carapace _carapace | source
 oh-my-posh init fish --config "~/.config/oh-my-posh/.custom.omp.json" | source
 zoxide init fish | source
 fzf --fish | source
@@ -56,12 +59,12 @@ fish_ssh_agent
 # end
 # <<< conda initialize <<<
 
-if not set -q __conda_initialized
-    set -g __conda_initialized yes
-
-    if test -f ~/miniconda3/etc/fish/conf.d/conda.fish
-        source ~/miniconda3/etc/fish/conf.d/conda.fish
-    else
-        set -x PATH ~/miniconda3/bin $PATH
-    end
-end
+# if not set -q __conda_initialized
+#     set -g __conda_initialized yes
+#
+#     if test -f ~/miniconda3/etc/fish/conf.d/conda.fish
+#         source ~/miniconda3/etc/fish/conf.d/conda.fish
+#     else
+#         set -x PATH ~/miniconda3/bin $PATH
+#     end
+# end
