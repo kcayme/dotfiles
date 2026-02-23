@@ -13,5 +13,6 @@ tmux/plugins
 !lazygit/*
 !windows/*
 !oh-my-posh/*
+!kdeglobals
 
 !.gitignore
