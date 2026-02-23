@@ -127,6 +127,7 @@ return {
       },
 
       cmdline = {
+        sources = { "path", "cmdline" },
         keymap = {
           preset = "super-tab",
           ["<C-k>"] = { "select_prev", "fallback" },
