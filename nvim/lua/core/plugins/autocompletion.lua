@@ -127,7 +127,19 @@ return {
       },
 
       cmdline = {
-        sources = { "path", "cmdline" },
+        -- sources = { "path", "cmdline", "buffer", "snippets" },
+        sources = function()
+          local type = vim.fn.getcmdtype()
+          -- Search forward and backward
+          if type == "/" or type == "?" then
+            return { "buffer", "path" }
+          end
+          -- Commands
+          if type == ":" or type == "@" then
+            return { "cmdline" }
+          end
+          return {}
+        end,
         keymap = {
           preset = "super-tab",
           ["<C-k>"] = { "select_prev", "fallback" },
@@ -138,7 +150,7 @@ return {
           ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         },
         completion = {
-          list = { selection = { preselect = false, auto_insert = false } },
+          list = { selection = { preselect = true, auto_insert = false } },
           -- trigger = { show_in_snippet = false },
           ghost_text = { enabled = true },
           menu = { auto_show = true },
