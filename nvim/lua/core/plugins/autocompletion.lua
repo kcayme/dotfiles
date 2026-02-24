@@ -145,7 +145,14 @@ return {
           ["<C-k>"] = { "select_prev", "fallback" },
           ["<C-j>"] = { "select_next", "fallback" },
           ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-          ["<CR>"] = { "accept", "fallback" },
+          -- ["<CR>"] = { "accept", "fallback" },
+          ["<CR>"] = {
+            function(cmp)
+              cmp.accept({ force = true })
+            end,
+            -- "accept"
+            "fallback",
+          },
           ["<C-u>"] = { "scroll_documentation_up", "fallback" },
           ["<C-d>"] = { "scroll_documentation_down", "fallback" },
         },
