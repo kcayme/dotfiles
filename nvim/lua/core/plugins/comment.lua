@@ -11,7 +11,9 @@ return {
       local api = require("Comment.api")
       local map = vim.api.nvim_set_keymap
       map("n", "<C-/>", "gcc", { noremap = false, desc = "Toggle linewise comment" })
+      map("n", "<C-_>", "gcc", { noremap = false, desc = "Toggle linewise comment" })
       map("v", "<C-/>", "gcc", { noremap = false, desc = "Toggle blockwise comment" })
+      map("v", "<C-_>", "gcc", { noremap = false, desc = "Toggle blockwise comment" })
       vim.keymap.set("x", "<leader><C-/>", function()
         vim.api.nvim_feedkeys(esc, "nx", false)
         api.toggle.blockwise(vim.fn.visualmode())
