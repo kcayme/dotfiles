@@ -9,7 +9,7 @@ return {
     opts = {
       notify_on_error = true,
       default_format_opts = {
-        lsp_format = "fallback",
+        -- lsp_format = "fallback",
       },
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
@@ -47,6 +47,7 @@ return {
         yaml = { "prettierd", stop_after_first = true },
         sql = { "sql_formatter", stop_after_first = true },
         c = { "clang-format", stop_after_first = true },
+        cpp = { "clang-format", stop_after_first = true },
       },
     },
   },
