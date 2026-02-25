@@ -14,6 +14,7 @@ return {
         "cmake",
         "dockerfile",
         "fish",
+        "hurl",
         "html",
         "gitignore",
         "go",
