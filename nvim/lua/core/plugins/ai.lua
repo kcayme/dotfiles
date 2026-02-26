@@ -5,7 +5,8 @@ return {
       cli = {
         mux = {
           backend = "tmux",
-          enabled = false,
+          enabled = true,
+          create = "split", ---@type "terminal"|"window"|"split"
         },
         -- INFO: add custom prompts
         -- prompts = {
