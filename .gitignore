@@ -16,3 +16,4 @@ tmux/plugins
 !kdeglobals
 
 !.gitignore
+/nvim/.claude/settings.local.json
