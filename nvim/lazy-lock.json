@@ -34,7 +34,7 @@
   "nui.nvim": { "branch": "main", "commit": "de740991c12411b663994b2860f1a4fd0937c130" },
   "nvim-autopairs": { "branch": "master", "commit": "59bce2eef357189c3305e25bc6dd2d138c1683f5" },
   "nvim-cokeline": { "branch": "main", "commit": "9fbed130683b7b6f73198c09e35ba4b33f547c08" },
-  "nvim-colorizer.lua": { "branch": "master", "commit": "13e65a4bf30de5170c3351cd0ee035e3b0fae23d" },
+  "nvim-colorizer.lua": { "branch": "master", "commit": "3c3a9dc9bda4a926bc84b2a1be783374546c252c" },
   "nvim-lint": { "branch": "master", "commit": "606b823a57b027502a9ae00978ebf4f5d5158098" },
   "nvim-lspconfig": { "branch": "master", "commit": "ead0f5f342d8d323441e7d4b88f0fc436a81ad5f" },
   "nvim-notify": { "branch": "master", "commit": "8701bece920b38ea289b457f902e2ad184131a5d" },
@@ -64,5 +64,5 @@
   "vim-go": { "branch": "master", "commit": "9f4b56e32774604172be0dd2745b5aeacdb40ff5" },
   "vim-sleuth": { "branch": "master", "commit": "be69bff86754b1aa5adcbb527d7fcd1635a84080" },
   "vim-tmux-navigator": { "branch": "master", "commit": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432" },
-  "vscode-diff.nvim": { "branch": "main", "commit": "5e6915233e71503795d365d5ce6aec651461a434" }
+  "vscode-diff.nvim": { "branch": "main", "commit": "3f6ed79d1cbb105fc85734bce077e2cea691204a" }
 }
