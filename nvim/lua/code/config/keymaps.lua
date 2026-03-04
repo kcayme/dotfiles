@@ -20,13 +20,8 @@ vim.keymap.set("n", "<C-r>", notify("redo"))
 vim.keymap.set("n", "<C-s>", notify("workbench.action.files.save"))
 vim.keymap.set("n", "<Leader><Leader>", notify("workbench.action.quickOpenPreviousEditor"), { silent = false })
 vim.keymap.set("n", "<Leader>gg", notify("git-graph.view"), { silent = false, desc = "Git graph open" })
-vim.keymap.set("n", "<Leader>ff", notify("find-it-faster.findFiles"), { silent = false, desc = "Find Files" })
-vim.keymap.set(
-  "n",
-  "<Leader>fg",
-  notify("find-it-faster.findWithinFiles"),
-  { silent = false, desc = "Find Within Files" }
-)
+vim.keymap.set("n", "<Leader>ff", notify("periscope.search"), { silent = false, desc = "Find Files" })
+vim.keymap.set("n", "<Leader>fg", notify("periscope.searchFiles"), { silent = false, desc = "Find Within Files" })
 vim.keymap.set(
   "n",
   "<Leader>fw",
@@ -93,3 +88,58 @@ vim.api.nvim_set_keymap("n", "<Leader>ll", "yss", { noremap = false })
 vim.keymap.set({ "n", "o", "x" }, "w", "<cmd>lua require('spider').motion('w')<CR>", { desc = "Spider-w" })
 vim.keymap.set({ "n", "o", "x" }, "e", "<cmd>lua require('spider').motion('e')<CR>", { desc = "Spider-e" })
 vim.keymap.set({ "n", "o", "x" }, "b", "<cmd>lua require('spider').motion('b')<CR>", { desc = "Spider-b" })
+
+vim.keymap.set({ "n", "v" }, "<Leader>w", function()
+  local Flash = require("flash")
+  Flash.jump({
+    search = { mode = "search" },
+    label = {
+      after = false,
+      before = { 0, 0 },
+      uppercase = false,
+      format = function(opts)
+        return {
+          { opts.match.label1, "FlashLabel" },
+          { opts.match.label2, "Comment" },
+        }
+      end,
+    },
+    pattern = [[\<]],
+    action = function(match, state)
+      state:hide()
+      Flash.jump({
+        search = { max_length = 0 },
+        highlight = { matches = false },
+        label = {
+          after = false,
+          before = { 0, 0 },
+          format = function(opts)
+            return {
+              { opts.match.label1, "Comment" },
+              { opts.match.label2, "FlashMatch" },
+            }
+          end,
+        },
+        matcher = function(win)
+          -- limit matches to the current label
+          return vim.tbl_filter(function(m)
+            return m.label == match.label and m.win == win
+          end, state.results)
+        end,
+        labeler = function(matches)
+          for _, m in ipairs(matches) do
+            m.label = m.label2 -- use the second label
+          end
+        end,
+      })
+    end,
+    labeler = function(matches, state)
+      local labels = state:labels()
+      for m, match in ipairs(matches) do
+        match.label1 = labels[math.floor((m - 1) / #labels) + 1]
+        match.label2 = labels[(m - 1) % #labels + 1]
+        match.label = match.label1
+      end
+    end,
+  })
+end, { noremap = true, desc = "Hop next words" })
