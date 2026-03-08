@@ -3,7 +3,7 @@ if vim.g.vscode then
   require("code.config.options")
 else
   require("core.config.options")
-  vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
+  -- vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -24,9 +24,9 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- { import = "core.themes.tokyonight" },
+    -- { import = "core.themes.base46", cond = function() return not vim.g.vscode end },
     {
-      import = "core.themes.base46",
+      import = "core.themes.bearded-arc",
       cond = function()
         return not vim.g.vscode
       end,
