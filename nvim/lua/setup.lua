@@ -58,7 +58,7 @@ else
   require("core.config.diagnostics")
   require("core.config.autocmds")
   require("core.config.commands")
-  require("core.config.highlights")
+  -- require("core.config.highlights")
   require("core.config.keymaps")
   require("core.config.lsp")
   profile = "default"
