@@ -1,9 +1,4 @@
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities(capabilities))
-
--- merge custom capabilities
-capabilities = vim.tbl_deep_extend("force", capabilities, {
+local base_capabilities = vim.tbl_deep_extend("force", vim.lsp.protocol.make_client_capabilities(), {
   textDocument = {
     semanticTokens = {
       multilineTokenSupport = true,
@@ -12,8 +7,25 @@ capabilities = vim.tbl_deep_extend("force", capabilities, {
 })
 
 vim.lsp.config("*", {
-  capabilities = capabilities,
+  capabilities = base_capabilities,
   root_markers = { ".git" },
+})
+
+-- Re-apply with blink.cmp capabilities once it loads
+vim.api.nvim_create_autocmd("User", {
+  pattern = "BlinkCmpReady",
+  once = true,
+  callback = function()
+    local capabilities = vim.tbl_deep_extend(
+      "force",
+      base_capabilities,
+      require("blink.cmp").get_lsp_capabilities()
+    )
+    vim.lsp.config("*", {
+      capabilities = capabilities,
+      root_markers = { ".git" },
+    })
+  end,
 })
 
 -- Re-apply lsp/*.lua configs via vim.lsp.config() so they take

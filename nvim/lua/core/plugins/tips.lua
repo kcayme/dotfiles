@@ -1,5 +1,6 @@
 return {
   "saxon1964/neovim-tips",
+  cmd = { "NeovimTips", "NeovimTipsEdit", "NeovimTipsAdd" },
   dependencies = {
     "MunifTanjim/nui.nvim",
     "OXY2DEV/markview.nvim",

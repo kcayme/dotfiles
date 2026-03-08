@@ -1,10 +1,11 @@
 return {
   {
     "saghen/blink.cmp",
-    -- event = "InsertEnter",
+    event = "InsertEnter",
     dependencies = {
       {
         "rafamadriz/friendly-snippets",
+        lazy = true,
         config = function()
           -- INFO: vscode snippets
           require("luasnip.loaders.from_vscode").lazy_load()
@@ -14,10 +15,11 @@ return {
       },
       {
         "L3MON4D3/LuaSnip",
+        lazy = true,
         version = "v2.*",
         build = "make install_jsregexp",
       },
-      "onsails/lspkind.nvim",
+      { "onsails/lspkind.nvim", lazy = true },
     },
     version = "1.*",
     ---@module 'blink.cmp'

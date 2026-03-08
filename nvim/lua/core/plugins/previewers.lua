@@ -36,7 +36,6 @@ return {
   {
     "OXY2DEV/markview.nvim",
     lazy = false,
-    dependencies = { "saghen/blink.cmp" },
     config = function()
       local presets = require("markview.presets").headings
 
