@@ -21,37 +21,6 @@ return {
         return statusline.text_for_statusline_with_icons()
       end
 
-      local custom_theme = nil
-
-      local colors = require("utils.colors").get_base30_palette()
-      if colors then
-        -- ref: https://github.com/NvChad/base46/blob/v3.0/lua/base46/themes/bearded-arc.lua
-        custom_theme = {
-          normal = {
-            a = { bg = colors.blue, fg = colors.black, gui = "bold" },
-            b = { bg = colors.statusline_bg, fg = colors.white },
-            c = { bg = colors.darker_black, fg = colors.white },
-          },
-          insert = {
-            a = { bg = colors.green, fg = colors.black, gui = "bold" },
-          },
-          visual = {
-            a = { bg = colors.purple, fg = colors.black, gui = "bold" },
-          },
-          replace = {
-            a = { bg = colors.red, fg = colors.black, gui = "bold" },
-          },
-          command = {
-            a = { bg = colors.yellow, fg = colors.black, gui = "bold" },
-          },
-          inactive = {
-            a = { bg = colors.darker_black, fg = colors.grey },
-            b = { bg = colors.darker_black, fg = colors.grey },
-            c = { bg = colors.darker_black },
-          },
-        }
-      end
-
       local custom_signs = require("core.themes.signs")
 
       require("lualine").setup({
