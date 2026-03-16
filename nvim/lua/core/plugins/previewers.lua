@@ -21,4 +21,14 @@ return {
       "folke/snacks.nvim",
     },
   },
+
+  {
+    "kcayme/md-view.nvim",
+    opts = {
+      theme = "sync",
+      auto_open = {
+        enable = true,
+      },
+    },
+  },
 }
