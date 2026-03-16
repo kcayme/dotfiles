@@ -43,8 +43,10 @@ return {
       },
       statuscolumn = { enabled = true },
       picker = {
-        files = {},
-        smart = {},
+        sources = {
+          files = { hidden = true, ignored = true },
+          smart = { hidden = true, ignored = true },
+        },
         layouts = {
           default = {
             -- reverse = true,
