@@ -21,6 +21,7 @@ keybind = cmd+z=unbind
 
 
 #term = xterm-256color
+window-colorspace = srgb
 
 quick-terminal-animation-duration = 0
 
