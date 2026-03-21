@@ -1,30 +1,74 @@
-local backends = {
-  fff = require("core.config.backends.fff"),
-  snacks = require("core.config.backends.snacks"),
-  -- fzf = require("core.config.backends.fzf"),
-}
-
-local Picker = {
-  default_backend = "snacks", -- fallback
-}
-
-local function get_backend(opts)
-  local name = opts and opts.backend or Picker.default_backend
-  local backend = backends[name]
-  assert(backend, "Unsupported backend: " .. tostring(name))
-  return backend
-end
-
--- Use metatable to forward undefined methods
-setmetatable(Picker, {
-  __index = function(_, method_name)
-    return function(opts)
-      local backend = get_backend(opts)
-      local method = backend[method_name]
-      assert(method, "Method not found in backend: " .. method_name)
-      return method(opts)
-    end
-  end,
-})
-
-return Picker
+-- local notify = require("utils.notification").show_notification
+--
+-- local backends = {}
+--
+-- local ok_fff, fff = pcall(require, "core.config.backends.fff")
+-- if ok_fff then
+--   backends.fff = fff
+-- end
+-- require("core.config.backends.snacks")
+-- local ok_snacks, snacks = pcall(require, "core.config.backends.snacks")
+-- if ok_snacks then
+--   backends.snacks = snacks
+-- else
+--   print(snacks)
+-- end
+--
+-- local ok_fzf, fzf = pcall(require, "core.config.backends.fzf")
+-- if ok_fzf then
+--   backends.fzf = fzf
+-- end
+--
+-- notify("[Pickers]: " .. table.concat(vim.tbl_keys(backends), ", "))
+--
+-- local Picker = {
+--   default_backend = "snacks", -- fallback
+--   interfaces = {
+--     "lsp_implementations",
+--     "lsp_type_definitions",
+--     "lsp_symbols",
+--     "lsp_workspace_symbols",
+--     "lsp_declarations",
+--     "lsp_definitions",
+--     "lsp_references",
+--     "grep",
+--     "grep_word",
+--     "todo_comments",
+--     "diagnostics",
+--     "help",
+--     "jumps",
+--     "keymaps",
+--     "files",
+--     "buffers",
+--     "smart", -- frecency
+--     "global", -- fzf-lua specific
+--     "registers", -- clipboard
+--     "resume",
+--     "undo",
+--   },
+-- }
+--
+-- local function get_backend(opts)
+--   local name = opts and opts.backend or Picker.default_backend
+--   local backend = backends[name]
+--
+--   assert(backend, "Unsupported backend: " .. tostring(name))
+--
+--   return backend
+-- end
+--
+-- -- Use metatable to forward undefined methods
+-- setmetatable(Picker, {
+--   __index = function(_, method_name)
+--     return function(opts)
+--       local backend = get_backend(opts)
+--       local method = backend[method_name]
+--
+--       assert(method, "Method not found in backend: " .. method_name)
+--
+--       return method(opts)
+--     end
+--   end,
+-- })
+--
+-- return Picker

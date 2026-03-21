@@ -150,6 +150,13 @@ return {
           },
           opts = { stop = true },
         },
+        {
+          view = "mini",
+          filter = {
+            event = "notify",
+            find = "%[Pickers%]",
+          },
+        },
         -- {
         -- view = "messages",
         -- filter = {
