@@ -27,20 +27,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-    local picker = require("core.config.interfaces")
+    local Picker = require("core.config.pickers")
     -- Jump to the implementation of the word under your cursor.
     --  Useful when your language has ways of declaring types without an actual implementation.
-    map("<leader>gi", picker.lsp_implementations, "[G]oto [I]mplementation")
+    map("<leader>gi", Picker.lsp_implementations, "[G]oto [I]mplementation")
 
     -- Jump to the type of the word under your cursor.
     --  Useful when you're not sure what type a variable is and you want to see
     --  the definition of its *type*, not where it was *defined*.
-    map("<leader>gt", picker.lsp_type_definitions, "[G]o [T]ype Definition")
+    map("<leader>gt", Picker.lsp_type_definitions, "[G]o [T]ype Definition")
 
     -- Fuzzy find all the symbols in your current document.
     --  Symbols are things like variables, functions, types, etc.
     map("<leader>@", function()
-      picker.global({
+      Picker.global({
         -- query = "@",
         backend = "snacks",
       })
@@ -48,7 +48,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     -- Fuzzy find all the symbols in your current workspace
     --  Similar to document symbols, except searches over your whole project.
-    map("<leader>gs", picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
+    map("<leader>gs", Picker.lsp_workspace_symbols, "[W]orkspace [S]ymbols")
 
     -- Rename the variable under your cursor
     -- map("<F2>", vim.lsp.buf.rename, "[F2] Rename")
@@ -78,24 +78,24 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map(",", vim.lsp.buf.hover, "Hover Documentation")
 
     -- map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-    map("gD", picker.lsp_declarations, "[G]oto [D]eclaration")
+    map("gD", Picker.lsp_declarations, "[G]oto [D]eclaration")
 
     -- map("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-    map("gd", picker.lsp_definitions, "[G]oto [D]efinition")
+    map("gd", Picker.lsp_definitions, "[G]oto [D]efinition")
 
     map("<leader>gd", function()
       vim.cmd("vsplit")
-      picker.lsp_definitions()
+      Picker.lsp_definitions()
     end, "[G]oto [D]efinition in new vsplit")
 
     vim.keymap.set("i", "<C-h>", function()
       vim.lsp.buf.signature_help()
     end, { desc = "Signature Help" })
 
-    map("gr", picker.lsp_references, "[G]oto [R]eferences")
+    map("gr", Picker.lsp_references, "[G]oto [R]eferences")
 
     map("<leader>gr", function()
-      picker.lsp_references({ ignore_current_line = true })
+      Picker.lsp_references({ ignore_current_line = true })
     end, "[G]oto [R]eferences in current buffer")
 
     -- The following two autocommands are used to highlight references of the
