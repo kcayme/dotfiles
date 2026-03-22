@@ -91,7 +91,7 @@ return {
   --   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
   -- },
   {
-    "esmuellert/vscode-diff.nvim",
+    "esmuellert/codediff.nvim",
     keys = {
       {
         "<leader>d",
