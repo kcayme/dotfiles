@@ -25,7 +25,9 @@ return {
   {
     "kcayme/md-view.nvim",
     opts = {
-      theme = "sync",
+      theme = {
+        mode = "sync",
+      },
       auto_open = {
         enable = true,
       },
