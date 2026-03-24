@@ -21,7 +21,14 @@ return {
         mode = "sync",
       },
       auto_open = {
-        enable = true,
+        enable = false,
+      },
+      scroll = {
+        method = "cursor", -- "percentage" | "cursor"
+      },
+      single_page = {
+        enable = false,
+        close_by = "page",
       },
     },
   },
