@@ -44,8 +44,8 @@ return {
       statuscolumn = { enabled = true },
       picker = {
         sources = {
-          files = { hidden = true, ignored = true },
-          smart = { hidden = true, ignored = true },
+          files = { hidden = true, ignored = false },
+          smart = { hidden = true, ignored = false },
         },
         layouts = {
           default = {
