@@ -45,7 +45,7 @@ return {
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         vue = { "prettierd", "prettier", stop_after_first = true },
         yaml = { "prettierd", stop_after_first = true },
-        sql = { "sql_formatter", stop_after_first = true },
+        sql = { "pg_format", stop_after_first = true },
         c = { "clang-format", stop_after_first = true },
         cpp = { "clang-format", stop_after_first = true },
       },
