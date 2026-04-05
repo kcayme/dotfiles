@@ -30,6 +30,9 @@ return {
         enable = false,
         close_by = "page",
       },
+      table_of_contents = {
+        enable = true,
+      },
     },
   },
   {
