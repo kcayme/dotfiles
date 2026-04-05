@@ -23,6 +23,9 @@ keybind = cmd+z=unbind
 #term = xterm-256color
 window-colorspace = srgb
 
+# skip close prompt
+confirm-close-surface = false
+
 quick-terminal-animation-duration = 0
 
 # bearded-arc theme
