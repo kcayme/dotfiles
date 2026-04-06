@@ -27,7 +27,7 @@ return {
         method = "cursor", -- "percentage" | "cursor"
       },
       single_page = {
-        enable = false,
+        enable = true,
         close_by = "page",
       },
       table_of_contents = {
