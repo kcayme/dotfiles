@@ -3,7 +3,7 @@ k9s:
   screenDumpDir: /Users/karlcayme/.config/k9s/screen-dumps
   refreshRate: 2
   maxConnRetry: 5
-  readOnly: false
+  readOnly: true
   noExitOnCtrlC: false
   ui:
     enableMouse: true
@@ -11,7 +11,7 @@ k9s:
     logoless: false
     crumbsless: false
     reactive: true
-    noIcons: false
+    noIcons: true
     defaultsToFullScreen: false
     skin: nord
   skipLatestRevCheck: false
@@ -28,11 +28,12 @@ k9s:
       namespaces: []
       labels: {}
   logger:
-    tail: 500
+    tail: 5000
     buffer: 5000
-    sinceSeconds: -1
+    sinceSeconds: 7200 # default 60 — pull last 2h on open
     textWrap: true
     showTime: false
+    fullScreen: true
   thresholds:
     cpu:
       critical: 90
