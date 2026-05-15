@@ -18,7 +18,7 @@ return {
             {
               name = "diagnostics",
               enabled = true, -- disabled by default - enable explicitly to use
-              min_level = "WARN", -- only show WARN and ERROR by default (HINT, INFO, WARN, ERROR)
+              min_level = "ERROR", -- only show WARN and ERROR by default (HINT, INFO, WARN, ERROR)
             },
             {
               name = "complexity",
@@ -27,10 +27,10 @@ return {
             },
             {
               name = "usages",
-              enabled = true,
+              enabled = false,
               include = { "refs", "defs", "impls" }, -- Track all usage types
-              breakdown = true, -- Show "5 refs, 2 defs, 1 impls"
-              show_zero = true,
+              breakdown = false, -- Show "5 refs, 2 defs, 1 impls"
+              show_zero = false,
             },
             -- custom providers
             -- {
