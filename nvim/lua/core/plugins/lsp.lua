@@ -23,6 +23,7 @@ return {
         "postgres_lsp",
         "prettierd",
         "cssls",
+        "html",
         "dockerls",
         "stylua",
         "tailwindcss",
