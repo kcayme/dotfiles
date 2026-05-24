@@ -1,3 +1,4 @@
+-- custom git signs
 local M = {
   error = " ",
   warn = " ",
