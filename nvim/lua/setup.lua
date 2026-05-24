@@ -45,8 +45,8 @@ require("lazy").setup({
     },
   },
   checker = {
-    enabled = true,
-    frequency = 86400, -- check for updates once per day
+    enabled = false,
+    frequency = 259200, -- check for updates once per day
   },
 })
 
@@ -68,4 +68,4 @@ else
 end
 
 local notify = require("utils.notification").show_notification
-notify("Config loaded: " .. profile, vim.log.levels.INFO, { timeout = 2000 })
+notify("[PROFILE]: " .. profile, vim.log.levels.INFO, { timeout = 2000 })
