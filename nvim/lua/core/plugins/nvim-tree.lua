@@ -25,7 +25,7 @@ return {
         end
 
         -- default mappings
-        api.config.mappings.default_on_attach(bufnr)
+        api.map.on_attach.default(bufnr)
 
         -- custom mappings
         -- vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
