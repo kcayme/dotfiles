@@ -25,15 +25,15 @@ return {
     },
     keys = {
       {
-        "<leader>tx",
+        "<leader>tX",
         "<cmd>Trouble diagnostics toggle focus=true<cr>",
         desc = "Diagnostics (Trouble)",
       },
-      -- {
-      --   "<leader>tx",
-      --   "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-      --   desc = "Buffer Diagnostics (Trouble)",
-      -- },
+      {
+        "<leader>tx",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
       -- {
       --   "<leader>tt",
       --   "<cmd>Trouble todo toggle<cr>",
