@@ -86,10 +86,6 @@ return {
       map("n", "<leader>gN", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Git Prev Hunk" })
     end,
   },
-  -- {
-  --   "sindrets/diffview.nvim",
-  --   cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
-  -- },
   {
     "esmuellert/codediff.nvim",
     keys = {
