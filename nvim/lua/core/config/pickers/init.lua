@@ -11,7 +11,7 @@ local ok_snacks, snacks = pcall(require, "core.config.pickers.snacks")
 if ok_snacks then
   backends.snacks = snacks
 else
-  print(snacks)
+  notify("snacks unavailable", vim.log.levels.WARN)
 end
 
 local ok_fzf, fzf = pcall(require, "core.config.pickers.fzf")
