@@ -2,7 +2,7 @@ local M = {
   colors = nil,
 }
 
-M.get_base30_palette = function()
+M.get_palette = function()
   if M.colors then
     return M.colors
   end
