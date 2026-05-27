@@ -49,7 +49,7 @@ for _, name in ipairs(modules) do
   if ok then
     table.insert(specs, spec)
   else
-    local notify = require("utils.notification").show_notification
+    local notify = require("utils.notification").notify
 
     notify("plugin '" .. name .. "' failed to load: " .. tostring(spec), vim.log.levels.WARN)
   end

@@ -3,7 +3,7 @@ local M = {}
 local ok, noice = pcall(require, "noice")
 
 local notify = ok and noice.notify or vim.notify
-M.show_notification = function(message, level, opts)
+M.notify = function(message, level, opts)
   opts = opts or {}
 
   local defaults = {

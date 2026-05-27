@@ -1,4 +1,4 @@
-local notify = require("utils.notification").show_notification
+local notify = require("utils.notification").notify
 
 local backends = {}
 
