@@ -112,27 +112,30 @@ return {
         vim.cmd("NvimTreeRefresh")
       end, {})
 
-      local fff_ok, fff = pcall(require, "fff")
       local notify = require("utils.notification").show_notification
 
-      if fff_ok then
-        local Event = api.events.Event
-        local src_events = {
-          Event.FileCreated,
-          Event.FileRemoved,
-          Event.NodeRenamed,
-        }
+      local Event = api.events.Event
+      local src_events = {
+        Event.FileCreated,
+        Event.FileRemoved,
+        Event.NodeRenamed,
+      }
 
-        local function rescan_files()
-          notify("Scanning files...", vim.log.levels.INFO)
-          fff.scan_files()
+      -- Require fff lazily inside the callback so it isn't force-loaded at
+      -- startup. (fff holds an LMDB lock; force-loading it during startup
+      -- contributed to the orphaned-process lock hang -- see fff.nvim #449.)
+      local function rescan_files()
+        local fff_ok, fff = pcall(require, "fff")
+        if not fff_ok then
+          notify("fff unavailable", vim.log.levels.WARN)
+          return
         end
+        notify("Scanning files...", vim.log.levels.INFO)
+        fff.scan_files()
+      end
 
-        for _, event in ipairs(src_events) do
-          api.events.subscribe(event, rescan_files)
-        end
-      else
-        notify("fff and nvim-tree unanvaible")
+      for _, event in ipairs(src_events) do
+        api.events.subscribe(event, rescan_files)
       end
     end,
   },

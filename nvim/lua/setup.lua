@@ -3,7 +3,6 @@ if vim.g.vscode then
   require("code.config.options")
 else
   require("core.config.options")
-  -- vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
 end
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -31,12 +30,7 @@ require("lazy").setup({
         return not vim.g.vscode
       end,
     },
-    {
-      import = "core.plugins",
-      cond = function()
-        return not vim.g.vscode
-      end,
-    },
+    require("core.plugins"),
     {
       import = "code.plugins",
       cond = function()
