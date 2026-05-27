@@ -1,6 +1,8 @@
 -- Single entrypoint for all plugins in this directory.
+local specs = {}
+
 if vim.g.vscode then
-  return {}
+  return specs
 end
 
 local modules = {
@@ -42,7 +44,6 @@ local modules = {
   "undotree",
 }
 
-local specs = {}
 for _, name in ipairs(modules) do
   local ok, spec = pcall(require, "core.plugins." .. name)
   if ok then
