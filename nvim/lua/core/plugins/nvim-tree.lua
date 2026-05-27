@@ -112,7 +112,7 @@ return {
         vim.cmd("NvimTreeRefresh")
       end, {})
 
-      local notify = require("utils.notification").show_notification
+      local notify = require("utils.notification").notify
 
       local Event = api.events.Event
       local src_events = {
