@@ -48,10 +48,9 @@ for _, name in ipairs(modules) do
   if ok then
     table.insert(specs, spec)
   else
-    -- A missing/broken module shouldn't take down the whole config.
-    vim.schedule(function()
-      vim.notify("plugin module '" .. name .. "' failed to load: " .. tostring(spec), vim.log.levels.WARN)
-    end)
+    local notify = require("utils.notification").show_notification
+
+    notify("plugin '" .. name .. "' failed to load: " .. tostring(spec), vim.log.levels.WARN)
   end
 end
 
