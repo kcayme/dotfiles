@@ -21,12 +21,10 @@ end
 
 notify("[Pickers]: " .. table.concat(vim.tbl_keys(backends), ", "))
 
-local Picker = {
-  fallback = "snacks", -- fallback
-}
+local Picker = {}
 
 local function get_backend(opts)
-  local name = opts and opts.backend or Picker.fallback
+  local name = opts and opts.backend or "snacks"
   local backend = backends[name]
 
   assert(backend, "Unsupported backend: " .. tostring(name))
