@@ -310,14 +310,16 @@ function M.fff()
   end
 end
 
-M.files = function(opts)
-  -- M.fff(opts) -- FIXME: snacks FE + fff BE currently not working
-  picker.find_files(opts)
-end
+-- M.files = function(opts)
+--   -- M.fff(opts) -- FIXME: snacks FE + fff BE currently not working
+--   picker.find_files(opts)
+-- end
 
-M.smart = function(opts)
-  -- M.fff(opts) -- FIXME: snacks FE + fff BE currently not working
-  picker.find_files(opts)
-end
+-- M.smart = function(opts)
+--   -- M.fff(opts) -- FIXME: snacks FE + fff BE currently not working
+--   picker.find_files(opts)
+-- end
+
+M.smart = picker.find_files
 
 return M
