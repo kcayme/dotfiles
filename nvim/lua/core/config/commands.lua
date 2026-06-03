@@ -37,13 +37,7 @@ vim.api.nvim_create_user_command("LintInfo", function()
 end, {})
 
 vim.api.nvim_create_user_command("WrapToggle", function(args)
-  vim.g.disable_wrap = not vim.g.disable_wrap
+  vim.o.wrap = not vim.o.wrap
 
-  if vim.g.disable_wrap then
-    vim.o.wrap = false
-    notify("line wrap: disabled", "info")
-  else
-    vim.o.wrap = true
-    notify("line wrap: enabled", "info")
-  end
+  notify("line wrap: " .. tostring(vim.o.wrap), "info")
 end, { desc = "Toggle line wrap" })
