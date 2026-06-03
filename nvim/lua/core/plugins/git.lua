@@ -81,7 +81,18 @@ return {
       })
 
       local map = vim.keymap.set
-      map("n", "<leader>bl", "<cmd>Gitsigns blame<cr>", { desc = "Git Blame" })
+      -- map("n", "<leader>bl", "<cmd>Gitsigns blame<cr>", { desc = "Git Blame" })
+      map("n", "<leader>bl", function()
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype == "gitsigns-blame" then
+            vim.api.nvim_win_close(win, true)
+            return
+          end
+        end
+
+        vim.cmd("Gitsigns blame")
+      end, { desc = "Git Blame" })
       map("n", "<leader>gn", "<cmd>Gitsigns next_hunk<cr>", { desc = "Git Next Hunk" })
       map("n", "<leader>gN", "<cmd>Gitsigns prev_hunk<cr>", { desc = "Git Prev Hunk" })
     end,
