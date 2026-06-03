@@ -68,6 +68,7 @@ return {
                 hint = custom_signs.hint,
               },
             },
+            "searchcount",
             arrow_status,
             -- "aerial",
             {
@@ -89,7 +90,6 @@ return {
           },
           lualine_x = {
             "encoding",
-            "searchcount",
             {
               function()
                 local status = require("sidekick.status").cli()
