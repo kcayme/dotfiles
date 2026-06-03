@@ -1,5 +1,6 @@
+local notify = require("utils.notification").notify
+
 vim.api.nvim_create_user_command("FormatToggle", function(args)
-  local notify = require("utils.notification").notify
   local opts = { title = "conform.nvim" }
   local is_global = not args.bang
 
@@ -49,3 +50,15 @@ vim.api.nvim_create_autocmd("User", {
     end)
   end,
 })
+
+vim.api.nvim_create_user_command("WrapToggle", function(args)
+  vim.g.disable_wrap = not vim.g.disable_wrap
+
+  if vim.g.disable_wrap then
+    vim.o.wrap = false
+    notify("line wrap: disabled", "info")
+  else
+    vim.o.wrap = true
+    notify("line wrap: enabled", "info")
+  end
+end, { desc = "Toggle line wrap" })
