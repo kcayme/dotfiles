@@ -6,11 +6,11 @@ Host *
   IdentitiesOnly yes
   PreferredAuthentications publickey
 
-# Amihan GitHub 
+# Work GitHub 
 Host git-work
   HostName github.com
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_amihan
+  IdentityFile ~/.ssh/id_work
   IdentitiesOnly yes
   User git
 
