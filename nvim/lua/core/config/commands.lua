@@ -36,6 +36,12 @@ vim.api.nvim_create_user_command("LintInfo", function()
   end
 end, {})
 
+vim.api.nvim_create_user_command("LspInfo", function()
+  if vim.fn.has("nvim-0.12") == 1 then
+    vim.cmd("checkhealth vim.lsp")
+  end
+end, { desc = "LSP info" })
+
 vim.api.nvim_create_user_command("WrapToggle", function(args)
   vim.o.wrap = not vim.o.wrap
 
