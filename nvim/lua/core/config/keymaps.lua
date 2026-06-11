@@ -212,7 +212,7 @@ map("n", "<leader>frg", function()
   Picker.resume({ backend = "snacks" })
 end, { desc = "Resume" })
 
-map("n", "<leader>fo", function()
+map("n", "<leader>fb", function()
   Picker.buffers({ backend = "snacks" })
 end, { desc = "Find Open Buffers" })
 
