@@ -1,5 +1,6 @@
 local M = {}
 local custom_signs = require("core.themes.signs")
+
 vim.diagnostic.config({
   signs = {
     text = {
