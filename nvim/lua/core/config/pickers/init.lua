@@ -10,12 +10,9 @@ end
 local ok_snacks, snacks = pcall(require, "core.config.pickers.snacks")
 if ok_snacks then
   backends.snacks = snacks.picker
-else
-  notify("snacks unavailable", vim.log.levels.WARN)
 end
 
-notify("[Pickers]: " .. table.concat(vim.tbl_keys(backends), ", "))
-local Picker = {}
+notify("[PICKER]: " .. table.concat(vim.tbl_keys(backends), ", "))
 
 local function get_backend(opts)
   local name = opts and opts.backend or "snacks"
@@ -31,6 +28,8 @@ local function get_backend(opts)
     name = name,
   }
 end
+
+local Picker = {}
 
 function Picker.smart(opts)
   local result = get_backend(opts)
