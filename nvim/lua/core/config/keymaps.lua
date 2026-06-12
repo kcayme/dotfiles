@@ -251,3 +251,7 @@ end, { desc = "Global Find" })
 map("n", "<leader>fr", function()
   Picker.registers({ backend = "snacks" })
 end, { desc = "Find Registers" })
+
+map("n", "<leader>fc", function()
+  Picker.commands({ backend = "snacks" })
+end, { desc = "Find Commands" })
