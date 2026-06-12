@@ -15,7 +15,6 @@ else
 end
 
 notify("[Pickers]: " .. table.concat(vim.tbl_keys(backends), ", "))
-
 local Picker = {}
 
 local function get_backend(opts)
@@ -244,6 +243,16 @@ function Picker.undo(opts)
 
   if result and result.name == "snacks" then
     backends.snacks.undo(opts)
+
+    return
+  end
+end
+
+function Picker.commands(opts)
+  local result = get_backend(opts)
+
+  if result and result.name == "snacks" then
+    backends.snacks.commands(opts)
 
     return
   end
