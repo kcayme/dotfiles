@@ -277,20 +277,20 @@ vim.api.nvim_create_autocmd("BufLeave", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspProgress", {
-  callback = function(ev)
-    local value = ev.data.params.value or {}
-    local msg = value.message or "OK"
-
-    -- rust analyszer in particular has really long LSP messages so truncate them
-    -- if #msg > 40 then
-    --   msg = msg:sub(1, 37) .. "..."
-    -- end
-
-    -- :h LspProgress
-    vim.api.nvim_echo({ { msg } }, false, {})
-  end,
-})
+-- vim.api.nvim_create_autocmd("LspProgress", {
+--   callback = function(ev)
+--     local value = ev.data.params.value or {}
+--     local msg = value.message or "LspProgress: OK"
+--
+--     -- rust analyszer in particular has really long LSP messages so truncate them
+--     -- if #msg > 40 then
+--     --   msg = msg:sub(1, 37) .. "..."
+--     -- end
+--
+--     -- :h LspProgress
+--     vim.api.nvim_echo({ { msg } }, false, {})
+--   end,
+-- })
 
 -- https://github.com/folke/snacks.nvim/blob/main/docs/rename.md
 local prev = { new_name = "", old_name = "" } -- Prevents duplicate events
@@ -308,23 +308,28 @@ vim.api.nvim_create_autocmd("User", {
 })
 
 -- INFO: revisit this command for nvim v0.12
--- vim.api.nvim_create_autocmd("LspProgress", {
---   callback = function(ev)
---     local value = ev.data.params.value or {}
---     local msg = value.message or "done"
---
---     -- rust analyszer in particular has really long LSP messages so truncate them
---     if #msg > 40 then
---       msg = msg:sub(1, 37) .. "..."
---     end
---
---     -- :h LspProgress
---     vim.api.nvim_echo({ { msg } }, false, {
---       id = "lsp",
---       kind = "progress",
---       title = value.title,
---       status = value.kind ~= "end" and "running" or "success",
---       percent = value.percentage,
---     })
---   end,
--- })
+vim.api.nvim_create_autocmd("LspProgress", {
+  callback = function(ev)
+    local value = ev.data.params.value
+    -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    -- local client_name = client and client.name or "LSP"
+
+    -- Define message string or mark as done
+    local msg = value.message or (value.kind == "end" and "done" or "")
+    -- local percentage = value.percentage and string.format(" [%d%%]", value.percentage) or ""
+    -- local title = value.title and string.format("(%s)", value.title) or ""
+
+    -- Construct the full string
+    -- local full_text = string.format("%s: %s %s%s", client_name, value.kind, title, percentage)
+
+    -- Display using Neovim's built-in message area echo API
+    vim.api.nvim_echo({ { msg } }, false, {
+      id = "lsp." .. ev.data.client_id,
+      kind = "progress",
+      source = "vim.lsp",
+      title = value.title,
+      status = value.kind ~= "end" and "running" or "success",
+      percent = value.percentage,
+    })
+  end,
+})
