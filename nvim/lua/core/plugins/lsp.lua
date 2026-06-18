@@ -28,6 +28,7 @@ return {
         "stylua",
         "tailwindcss",
         "clangd",
+        "terraform-ls",
       }
 
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
