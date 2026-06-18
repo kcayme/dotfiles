@@ -33,6 +33,7 @@ return {
         "vue",
         "vimdoc",
         "toml",
+        "terraform",
       }
 
       require("nvim-treesitter").install(ensure_installed)
