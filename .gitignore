@@ -18,3 +18,4 @@ tmux/plugins
 !.gitignore
 /nvim/.claude/settings.local.json
 !claude/*
+tmux/plugins/*
