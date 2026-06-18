@@ -4,7 +4,7 @@ command = /usr/bin/fish --login --interactive
 
 font-family = "GeistMono NFM"
 font-feature = -calt, -liga
-font-size = 12
+font-size = 13
 font-thicken
 
 theme = bearded-arc
