@@ -92,6 +92,82 @@ return {
       },
       bufdelete = {},
       terminal = {},
+      image = {
+        ---@class snacks.image.Config
+        ---@field enabled? boolean enable image viewer
+        ---@field wo? vim.wo|{} options for windows showing the image
+        ---@field bo? vim.bo|{} options for the image buffer
+        ---@field formats? string[]
+        --- Resolves a reference to an image with src in a file (currently markdown only).
+        --- Return the absolute path or url to the image.
+        --- When `nil`, the path is resolved relative to the file.
+        ---@field resolve? fun(file: string, src: string): string?
+        ---@field convert? snacks.image.convert.Config
+        enabled = true,
+        formats = {
+          "png",
+          "svg",
+          "jpg",
+          "jpeg",
+          "gif",
+          "bmp",
+          "webp",
+          "tiff",
+          "heic",
+          "avif",
+          "mp4",
+          "mov",
+          "avi",
+          "mkv",
+          "webm",
+          "pdf",
+          "icns",
+        },
+        doc = {
+          -- enable image viewer for documents
+          -- a treesitter parser must be available for the enabled languages.
+          enabled = true,
+          -- render the image inline in the buffer
+          -- if your env doesn't support unicode placeholders, this will be disabled
+          -- takes precedence over `opts.float` on supported terminals
+          inline = true,
+          -- render the image in a floating window
+          -- only used if `opts.inline` is disabled
+          float = true,
+          max_width = 80,
+          max_height = 40,
+          -- Set to `true`, to conceal the image text when rendering inline.
+          -- (experimental)
+          ---@param lang string tree-sitter language
+          ---@param type snacks.image.Type image type
+          conceal = function(lang, type)
+            -- only conceal math expressions
+            return type == "math"
+          end,
+        },
+        img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments" },
+        -- window options applied to windows displaying image buffers
+        -- an image buffer is a buffer with `filetype=image`
+        wo = {
+          wrap = false,
+          number = false,
+          relativenumber = false,
+          cursorcolumn = false,
+          signcolumn = "no",
+          foldcolumn = "0",
+          list = false,
+          spell = false,
+          statuscolumn = "",
+        },
+        cache = vim.fn.stdpath("cache") .. "/snacks/image",
+        -- icons used to show where an inline image is located that is
+        -- rendered below the text.
+        icons = {
+          math = "󰪚 ",
+          chart = "󰄧 ",
+          image = " ",
+        },
+      },
     },
   },
   {
