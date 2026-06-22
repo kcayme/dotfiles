@@ -15,7 +15,7 @@ return {
         "yamlls",
         "lua_ls",
         "vue_ls",
-        -- "ts_ls",
+        "vtsls",
         "eslint",
         "ruff",
         "basedpyright",
