@@ -10,26 +10,26 @@ end
 set fish_greeting
 set -x XDG_CONFIG_HOME "$HOME/.config"
 set -x EDITOR nvim
-switch (uname)
-    case Linux
+# switch (uname)
+    # case Linux
         # Check if it's specifically Ubuntu
-        if test -f /etc/os-release
-            if grep -q '^ID=ubuntu' /etc/os-release
+        # if test -f /etc/os-release
+            # if grep -q '^ID=ubuntu' /etc/os-release
                 # set -gx PATH /home/linuxbrew/.linuxbrew/bin /home/linuxbrew/.linuxbrew/sbin $PATH
                 # # environment variables
                 # set -gx PATH $PATH:/usr/local/go/bin
 
-                fish_add_path /home/linuxbrew/.linuxbrew/bin
-                fish_add_path /home/linuxbrew/.linuxbrew/sbin
+                # fish_add_path /home/linuxbrew/.linuxbrew/bin
+                # fish_add_path /home/linuxbrew/.linuxbrew/sbin
                 # environment variables
                 # fish_add_path /local/go/bin
                 # fish_add_path /usr/local/go/bin
                 # Set GOPATH (run once)
                 # set -gx GOPATH $HOME/go
                 # fish_add_path $GOPATH/bin
-            end
-        end
-end
+#             end
+#         end
+# end
 
 # remove welcome message
 # oh-my-posh init fish --config $(brew --prefix oh-my-posh)/themes/hul10.omp.json | source
