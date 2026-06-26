@@ -88,6 +88,13 @@ map({ "n" }, "<s-tab>", "<<")
 map({ "v", "x" }, "<tab>", ">gv", { noremap = true })
 map({ "v", "x" }, "<s-tab>", "<gv", { noremap = true })
 
+-- comment
+map("n", "<C-/>", "gcc", { remap = true, desc = "Toggle linewise comment" })
+map("n", "<C-_>", "gcc", { remap = true, desc = "Toggle linewise comment" })
+map("x", "<C-/>", "gc", { remap = true, desc = "Toggle linewise comment" })
+map("x", "<C-_>", "gc", { remap = true, desc = "Toggle linewise comment" })
+map("x", "<leader><C-/>", "gb", { remap = true, desc = "Toggle blockwise comment" })
+
 -- fold
 map({ "n" }, "zx", "za", { desc = "Toggle fold under cursor" })
 map({ "n" }, "zcf", "zC", { desc = "Recursive fold under cursor" })
