@@ -102,9 +102,25 @@ return {
           },
           lualine_y = {
             {
-              "lsp_status",
+              -- "lsp_status", -- shows lsp names
+              -- show lsp name when < 3. else, only show count
+              function()
+                local ignore = {}
+                local names = {}
+
+                for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+                  if not ignore[client.name] then
+                    names[#names + 1] = client.name
+                  end
+                end
+
+                if #names < 3 then
+                  return table.concat(names, ", ")
+                end
+
+                return string.format("%s (%d more)", names[1] or "", tostring(#names - 1))
+              end,
               icon = "",
-              ignore_lsp = { "typos_lsp" },
             },
             "filetype",
             "fileformat",
