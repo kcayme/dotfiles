@@ -1,11 +1,10 @@
 local M = {}
 
-local picker = require("fff")
+-- fff is required inside functions, not here: a top-level require would
+-- force-load the plugin at startup and defeat its lazy-loading (see pickers.lua).
 
 -- Snacks as ui with fff and backend
 -- (https://github.com/madmaxieee/nvim-config/blob/c773485d76cf1fff4be3eca888a6ed4525cc9065/lua/plugins/fuzzy-finder/snacks-picker/fff.lua)
-local conf = require("fff.conf")
-local file_picker = require("fff.file_picker")
 
 ---@class FFFSnacksState
 ---@field current_file_cache? string
@@ -74,6 +73,8 @@ end
 M.source = {
   title = "FFFiles",
   finder = function(opts, ctx)
+    local conf = require("fff.conf")
+    local file_picker = require("fff.file_picker")
     -- initialization code from require('fff.picker_ui').open
     -- on_show does not seem to be called before finder
     if not M.state.current_file_cache then
@@ -320,6 +321,9 @@ end
 --   picker.find_files(opts)
 -- end
 
-M.smart = picker.find_files
+-- wrapper, not a captured reference, so fff loads lazily on first call
+function M.smart(opts)
+  return require("fff").find_files(opts)
+end
 
 return M
