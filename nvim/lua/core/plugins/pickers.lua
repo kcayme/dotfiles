@@ -172,12 +172,16 @@ return {
   },
   {
     "dmtrKovalenko/fff.nvim",
+    lazy = false,
     build = function()
       -- this will download prebuild binary or try to use existing rustup toolchain to build from source
       -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
       require("fff.download").download_or_build_binary()
     end,
     opts = {
+      logging = {
+        enabled = false,
+      },
       keymaps = {
         close = "<Esc>",
         select = "<CR>",

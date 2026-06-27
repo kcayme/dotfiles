@@ -121,9 +121,6 @@ return {
         Event.NodeRenamed,
       }
 
-      -- Require fff lazily inside the callback so it isn't force-loaded at
-      -- startup. (fff holds an LMDB lock; force-loading it during startup
-      -- contributed to the orphaned-process lock hang -- see fff.nvim #449.)
       local function rescan_files()
         local fff_ok, fff = pcall(require, "fff")
         if not fff_ok then
