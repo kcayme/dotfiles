@@ -220,7 +220,7 @@ map("n", "<leader>frg", function()
 end, { desc = "Resume" })
 
 map("n", "<leader>fb", function()
-  Picker.buffers({ backend = "snacks" })
+  Picker.buffers({ backend = "snacks", filter = { cwd = true } })
 end, { desc = "Find Open Buffers" })
 
 map("n", "<leader>fj", function()
