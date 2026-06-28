@@ -1,260 +1,149 @@
 local notify = require("utils.notification").notify
 
-local backends = {}
-
-local ok_fff, fff = pcall(require, "core.config.pickers.fff")
-if ok_fff then
-  backends.fff = fff
-end
-
-local ok_snacks, snacks = pcall(require, "core.config.pickers.snacks")
-if ok_snacks then
-  backends.snacks = snacks.picker
-end
-
-notify("[PICKER]: " .. table.concat(vim.tbl_keys(backends), ", "))
-
 local function get_backend(opts)
-  local name = opts and opts.backend or "snacks"
-  local backend = backends[name]
+  local name = opts and opts.backend
 
-  if not backend then
+  if name ~= "snacks" and name ~= "fff" then
     notify("[PICKER] Unsupported backend: " .. tostring(name), vim.log.levels.WARN)
-
     return nil
   end
 
-  return {
-    name = name,
-  }
+  -- local backend = backends[name]
+
+  local ok_fff, backend = pcall(require, "core.config.pickers." .. name)
+  if not ok_fff then
+    notify("[PICKER] Failed to load picker backend: " .. tostring(name), vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- local ok_snacks, snacks = pcall(require, "core.config.pickers.snacks")
+  -- if ok_snacks then
+  --   backends.snacks = snacks.picker
+  -- end
+
+  -- notify("[PICKER]: " .. table.concat(vim.tbl_keys(backends), ", "))
+
+  return backend
+
+  -- if not backend then
+  -- end
+
+  -- return {
+  --   name = name,
+  -- }
 end
 
 local Picker = {}
 
 function Picker.smart(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "fff" then
-    backends.fff.smart(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.smart(opts)
 end
 
 function Picker.files(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.files(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.files(opts)
 end
 
 function Picker.grep(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.grep(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.grep(opts)
 end
 
 function Picker.buffers(opts)
-  local result = get_backend(opts)
-
-  opts = opts or {}
-
-  if result and result.name == "snacks" then
-    opts.filter = vim.tbl_extend("force", opts.filter or {}, { cwd = true })
-    backends.snacks.buffers(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.buffers(opts)
 end
 
 function Picker.keymaps(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.keymaps(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.keymaps(opts)
 end
 
+-- INFO: unused!
 function Picker.global(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_symbols(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.global(opts)
 end
 
 function Picker.diagnostics(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.diagnostics(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.diagnostics(opts)
 end
 
 function Picker.help(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.help(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.help(opts)
 end
 
 function Picker.jumps(opts)
-  local result = get_backend(opts)
-
-  opts = opts or {}
-
-  if result and result.name == "snacks" then
-    opts.filter = vim.tbl_extend("force", opts.filter or {}, { cwd = true })
-    backends.snacks.buffers(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.jumps(opts)
 end
 
 function Picker.lsp_implementations(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_implementations(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_implementations(opts)
 end
 
 function Picker.lsp_type_definitions(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_type_definitions(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_type_definitions(opts)
 end
 
 function Picker.lsp_symbols(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_symbols(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_symbols(opts)
 end
 
 function Picker.lsp_workspace_symbols(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_workspace_symbols(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_workspace_symbols(opts)
 end
 
 function Picker.lsp_declarations(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_declarations(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_declarations(opts)
 end
 
 function Picker.lsp_definitions(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_definitions(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_definitions(opts)
 end
 
 function Picker.lsp_references(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.lsp_references(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.lsp_references(opts)
 end
 
 function Picker.grep_word(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.grep_word(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.grep_word(opts)
 end
 
 function Picker.todo_comments(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.todo_comments(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.todo_comments(opts)
 end
 
 function Picker.registers(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.registers(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.registers(opts)
 end
 
 function Picker.resume(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.resume(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.resume(opts)
 end
 
 function Picker.undo(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.undo(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.undo(opts)
 end
 
 function Picker.commands(opts)
-  local result = get_backend(opts)
-
-  if result and result.name == "snacks" then
-    backends.snacks.commands(opts)
-
-    return
-  end
+  local backend = get_backend(opts)
+  backend.commands(opts)
 end
 
 return Picker
