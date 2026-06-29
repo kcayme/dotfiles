@@ -37,8 +37,8 @@ return {
         automatic_installation = true,
         automatic_enable = {
           exclude = {
-            "basedpyright",
-            "ts_ls",
+            -- "basedpyright",
+            -- "ts_ls",
           },
         },
         -- ensure_installed = ensure_installed,
