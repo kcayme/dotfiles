@@ -115,7 +115,7 @@ return {
                 end
 
                 if #names < 3 then
-                  return table.concat(names, ", ")
+                  return table.concat(names, " ")
                 end
 
                 return string.format("%s (%d more)", names[1] or "", tostring(#names - 1))
