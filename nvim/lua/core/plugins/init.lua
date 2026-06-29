@@ -29,7 +29,7 @@ local modules = {
   "noice",
   "nvim-tree",
   "oil",
-  "paste",
+  -- "paste", -- smart-paste.nvim disabled: testing builtin indent-aware paste
   "pickers",
   "previewers",
   "session",
