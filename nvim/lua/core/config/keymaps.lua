@@ -82,6 +82,11 @@ map({ "v" }, "p", function()
   vim.cmd([[silent! %s/\r//g]])
 end, { noremap = false })
 
+-- indent-aware paste in normal mode: reindent pasted linewise text to the
+-- current line (builtin ]p / [p). charwise yanks fall back to a normal paste.
+map({ "n" }, "p", "]p", { desc = "Indent-aware paste" })
+map({ "n" }, "P", "[p", { desc = "Indent-aware paste (before)" })
+
 -- indent on visual and normal mode
 map({ "n" }, "<tab>", ">>")
 map({ "n" }, "<s-tab>", "<<")
