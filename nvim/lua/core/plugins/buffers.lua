@@ -148,7 +148,7 @@ return {
               )
           end,
           fg = function(buffer)
-            return (is_picking_focus() and not buffer.is_focused and (colors and colors.cyan))
+            return (is_picking_focus() and not buffer.is_focused and (colors and colors.magenta))
               or (is_picking_close() and not buffer.is_focused and (colors and colors.red))
               or (buffer.is_focused and (colors and colors.darker_black))
               or buffer.devicon.color
