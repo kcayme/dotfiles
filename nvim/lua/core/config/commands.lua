@@ -42,6 +42,10 @@ vim.api.nvim_create_user_command("LspInfo", function()
   end
 end, { desc = "LSP info" })
 
+vim.api.nvim_create_user_command("LspRestart", function(args)
+  vim.cmd("lsp restart " .. args.args)
+end, { desc = "Restart LSP client(s)", nargs = "*" })
+
 vim.api.nvim_create_user_command("WrapToggle", function(args)
   vim.o.wrap = not vim.o.wrap
 
