@@ -18,7 +18,7 @@ return {
     "kcayme/md-view.nvim",
     opts = {
       theme = {
-        mode = "sync",
+        mode = "dark",
       },
       auto_open = {
         enable = false,
