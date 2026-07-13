@@ -9,10 +9,12 @@ tmux/plugins
 !ghostty/**/*
 !fish/*
 !fish/shortcuts/*
+fish/fish_variables
 !ssh/*
 !lazygit/*
 !windows/*
 !oh-my-posh/*
+!scripts/*
 !kdeglobals
 
 !.gitignore
