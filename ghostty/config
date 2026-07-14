@@ -1,6 +1,6 @@
 shell-integration = fish
-#command = <path-to-shell> --login --interactive
-command = /usr/bin/fish --login --interactive
+# Bare name is looked up in PATH, so the same config works across machines
+#command = fish
 
 font-family = "GeistMono NFM"
 font-feature = -calt, -liga
