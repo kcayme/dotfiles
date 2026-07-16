@@ -49,6 +49,11 @@ return {
       -- LazyVim already handles gopls via its 'go' extra, but this ensures compatibility
       -- vim.g.go_def_mode = "gopls"
       -- vim.g.go_info_mode = "gopls"
+
+      -- Formatting/imports are handled by conform + gopls, so disable vim-go's
+      -- own format-on-save to avoid double formatting on Go buffers.
+      vim.g.go_fmt_autosave = 0
+      vim.g.go_imports_autosave = 0
       vim.g.go_highlight_extra_types = 1
       vim.g.go_highlight_operators = 1
       vim.g.go_highlight_functions = 1
