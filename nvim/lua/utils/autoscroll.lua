@@ -9,6 +9,8 @@ local MAX_DWELL_MS = 7 * 60 * 1000
 local DWELL_MS_PER_LINE = 360 -- ~1000-line file reaches the max
 local MIN_TICK_MS = 800
 local MAX_TICK_MS = 4000
+local BURST_STEP_MS = 300 -- default delay between single steps of a counted motion
+local SCROLL_STEP_MS = 500 -- slower stepping for line scrolls
 local MAX_LISTED_BUFFERS = 30
 -- Require this many cursor movements in a buffer (on top of the dwell time) before switching
 local MIN_MOVES = 3
@@ -22,6 +24,7 @@ local state = {
   elapsed_ms = 0,
   moves = 0,
   moves_needed = 0,
+  burst = nil, -- { key, remaining }: counted motion being played back step by step
   opened = {}, -- bufnrs this module opened itself, for cleanup on stop
   files = nil, -- cached project file list
 }
@@ -59,20 +62,21 @@ local function random_line()
   feed("zz")
 end
 
+-- Entries with `key` are counted motions played back one step per BURST_STEP_MS
 local actions = {
-  { weight = 5, act = function() feed(math.random(2, 6) .. "<C-e>") end },
-  { weight = 2, act = function() feed(math.random(2, 6) .. "<C-y>") end },
+  { weight = 5, key = "<C-e>", min = 2, max = 6, step_ms = SCROLL_STEP_MS },
+  { weight = 2, key = "<C-y>", min = 2, max = 6, step_ms = SCROLL_STEP_MS },
   { weight = 2, act = function() feed("<C-d>") end },
   { weight = 1, act = function() feed("<C-u>") end },
   { weight = 2, act = random_line },
   { weight = 1, act = function() feed(math.random(2) == 1 and "gg" or "G") end },
-  { weight = 4, act = function() feed(math.random(7, 15) .. "w") end },
-  { weight = 2, act = function() feed(math.random(7, 15) .. "b") end },
+  { weight = 4, key = "w", min = 7, max = 15 },
+  { weight = 2, key = "b", min = 7, max = 15 },
   { weight = 1, act = function() feed("e") end },
-  { weight = 4, act = function() feed(math.random(5, 10) .. "j") end },
-  { weight = 3, act = function() feed(math.random(5, 10) .. "k") end },
-  { weight = 2, act = function() feed(math.random(5, 10) .. "l") end },
-  { weight = 2, act = function() feed(math.random(5, 10) .. "h") end },
+  { weight = 4, key = "j", min = 5, max = 10 },
+  { weight = 3, key = "k", min = 5, max = 10 },
+  { weight = 2, key = "l", min = 5, max = 10 },
+  { weight = 2, key = "h", min = 5, max = 10 },
 }
 
 local total_weight = 0
@@ -91,7 +95,15 @@ local function random_action()
   for _, action in ipairs(actions) do
     roll = roll - action.weight
     if roll <= 0 then
-      action.act()
+      if action.key then
+        state.burst = {
+          key = action.key,
+          remaining = math.random(action.min, action.max),
+          step_ms = action.step_ms or BURST_STEP_MS,
+        }
+      else
+        action.act()
+      end
       return
     end
   end
@@ -127,6 +139,7 @@ local function switch_buffer()
   state.bufnr = vim.api.nvim_get_current_buf()
   state.elapsed_ms = 0
   state.moves = 0
+  state.burst = nil
   state.moves_needed = math.random(MIN_MOVES, MAX_MOVES)
   local lines = vim.api.nvim_buf_line_count(state.bufnr)
   state.dwell_ms = math.min(math.max(MIN_DWELL_MS, lines * DWELL_MS_PER_LINE), MAX_DWELL_MS)
@@ -143,6 +156,24 @@ local function tick()
     return
   end
 
+  -- Play back a pending counted motion one step at a time
+  if state.burst then
+    if safe_to_act() then
+      feed(state.burst.key)
+      state.burst.remaining = state.burst.remaining - 1
+      if state.burst.remaining <= 0 then
+        state.burst = nil
+      end
+    else
+      state.burst = nil -- user became active or buffer changed; drop the rest
+    end
+
+    local delay = state.burst and state.burst.step_ms or math.random(MIN_TICK_MS, MAX_TICK_MS)
+    state.elapsed_ms = state.elapsed_ms + delay
+    state.timer:start(delay, 0, vim.schedule_wrap(tick))
+    return
+  end
+
   local delay = math.random(MIN_TICK_MS, MAX_TICK_MS)
   state.elapsed_ms = state.elapsed_ms + delay
 
@@ -152,6 +183,9 @@ local function tick()
     else
       random_action()
       state.moves = state.moves + 1
+      if state.burst then
+        delay = state.burst.step_ms -- start stepping promptly
+      end
     end
   end
 
