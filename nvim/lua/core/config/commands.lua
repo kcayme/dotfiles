@@ -51,3 +51,7 @@ vim.api.nvim_create_user_command("WrapToggle", function(args)
 
   notify("line wrap: " .. tostring(vim.o.wrap), "info")
 end, { desc = "Toggle line wrap" })
+
+vim.api.nvim_create_user_command("AutoScrollToggle", function()
+  require("utils.autoscroll").toggle()
+end, { desc = "Toggle random buffer auto-scrolling" })
