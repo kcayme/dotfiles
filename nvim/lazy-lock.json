@@ -51,6 +51,7 @@
   "tiny-code-action.nvim": { "branch": "main", "commit": "0d040ed81f7953118b81cd12681fcdfcac069803" },
   "tiny-inline-diagnostic.nvim": { "branch": "main", "commit": "6264451f14119d63a52580e5198d6baf8518b0b2" },
   "todo-comments.nvim": { "branch": "main", "commit": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668" },
+  "tree-sitter-manager.nvim": { "branch": "main", "commit": "09e3a321eea8100cacd2e759c3a6c9d350295fab" },
   "treesj": { "branch": "main", "commit": "79aedb401bbdc7e4202f7881eab5f6feb2105b0a" },
   "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
   "vim-go": { "branch": "master", "commit": "551d423ba27915d96721c8709702edd23bc2bb48" },

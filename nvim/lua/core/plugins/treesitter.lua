@@ -1,3 +1,33 @@
+local ensure_installed = {
+  "bash",
+  "csv",
+  "c",
+  "css",
+  "cmake",
+  "dockerfile",
+  "fish",
+  "hurl",
+  "html",
+  "gitignore",
+  "go",
+  "gomod",
+  "javascript",
+  "json",
+  "lua",
+  "markdown",
+  "sql",
+  "python",
+  "tmux",
+  "typescript",
+  "tsx",
+  "yaml",
+  "vim",
+  "vue",
+  "vimdoc",
+  "toml",
+  "terraform",
+}
+
 return {
   { -- Highlight, edit, and navigate code
     "nvim-treesitter/nvim-treesitter",
@@ -6,37 +36,7 @@ return {
     config = function()
       require("nvim-treesitter").setup({})
 
-      local ensure_installed = {
-        "bash",
-        "csv",
-        "c",
-        "css",
-        "cmake",
-        "dockerfile",
-        "fish",
-        "hurl",
-        "html",
-        "gitignore",
-        "go",
-        "gomod",
-        "javascript",
-        "json",
-        "lua",
-        "markdown",
-        "sql",
-        "python",
-        "tmux",
-        "typescript",
-        "tsx",
-        "yaml",
-        "vim",
-        "vue",
-        "vimdoc",
-        "toml",
-        "terraform",
-      }
-
-      require("nvim-treesitter").install(ensure_installed)
+      -- require("nvim-treesitter").install(ensure_installed)
 
       vim.api.nvim_create_autocmd("FileType", {
         callback = function()
@@ -116,6 +116,16 @@ return {
             ["[]"] = "@class.outer",
           },
         },
+      })
+    end,
+  },
+  {
+    "romus204/tree-sitter-manager.nvim",
+    dependencies = {}, -- tree-sitter CLI must be installed system-wide
+    config = function()
+      require("tree-sitter-manager").setup({
+        auto_install = false,
+        ensure_installed = ensure_installed,
       })
     end,
   },
