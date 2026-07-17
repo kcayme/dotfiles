@@ -24,10 +24,31 @@ local state = {
   elapsed_ms = 0,
   moves = 0,
   moves_needed = 0,
-  burst = nil, -- { key, remaining }: counted motion being played back step by step
+  burst = nil, -- { key|pool, remaining, step_ms, visual }: motion being played back step by step
   opened = {}, -- bufnrs this module opened itself, for cleanup on stop
   files = nil, -- cached project file list
 }
+
+-- Common non-text file extensions to keep out of the buffer pool
+local NON_TEXT_EXTENSIONS = {
+  -- images / media
+  png = true, jpg = true, jpeg = true, gif = true, webp = true, ico = true,
+  bmp = true, svg = true, pdf = true, mp3 = true, mp4 = true, wav = true,
+  mov = true, avi = true, mkv = true, webm = true, ogg = true, flac = true,
+  -- fonts
+  woff = true, woff2 = true, ttf = true, otf = true, eot = true,
+  -- archives / binaries
+  zip = true, tar = true, gz = true, bz2 = true, xz = true, ["7z"] = true,
+  rar = true, exe = true, dll = true, so = true, dylib = true, bin = true,
+  wasm = true, jar = true, class = true, pyc = true, o = true, a = true,
+  -- data blobs
+  db = true, sqlite = true, sqlite3 = true, ds_store = true,
+}
+
+local function is_text_file(path)
+  local ext = path:match("%.([^./]+)$")
+  return not (ext and NON_TEXT_EXTENSIONS[ext:lower()])
+end
 
 local function project_files()
   if state.files then
@@ -40,7 +61,7 @@ local function project_files()
   end
 
   state.files = vim.tbl_filter(function(path)
-    return vim.fn.filereadable(path) == 1
+    return vim.fn.filereadable(path) == 1 and is_text_file(path)
   end, files)
 
   return state.files
@@ -48,7 +69,10 @@ end
 
 local function listed_buffers()
   return vim.tbl_filter(function(bufnr)
-    return vim.bo[bufnr].buflisted and vim.api.nvim_buf_is_loaded(bufnr) and vim.bo[bufnr].buftype == ""
+    return vim.bo[bufnr].buflisted
+      and vim.api.nvim_buf_is_loaded(bufnr)
+      and vim.bo[bufnr].buftype == ""
+      and is_text_file(vim.api.nvim_buf_get_name(bufnr))
   end, vim.api.nvim_list_bufs())
 end
 
@@ -62,21 +86,90 @@ local function random_line()
   feed("zz")
 end
 
+-- Adopt the current buffer as the managed one with a fresh dwell/movement budget
+local function adopt_current_buffer()
+  state.bufnr = vim.api.nvim_get_current_buf()
+  state.elapsed_ms = 0
+  state.moves = 0
+  state.moves_needed = math.random(MIN_MOVES, MAX_MOVES)
+  state.burst = nil
+  local lines = vim.api.nvim_buf_line_count(state.bufnr)
+  state.dwell_ms = math.min(math.max(MIN_DWELL_MS, lines * DWELL_MS_PER_LINE), MAX_DWELL_MS)
+end
+
+-- Highlight some text and let go, like someone inspecting code. Only motion keys and
+-- <Esc> are ever fed while selecting — never operators — so no edit can result.
+local VISUAL_STEP_POOL = { "w", "w", "e", "j", "l", "b" }
+
+local function visual_burst()
+  feed(math.random(4) == 1 and "V" or "v")
+  state.burst = {
+    pool = VISUAL_STEP_POOL,
+    remaining = math.random(3, 8),
+    step_ms = BURST_STEP_MS,
+    visual = true,
+  }
+end
+
+-- Mirror the <leader>bb keymap: hop to the alternate buffer like a human flipping back
+local function alternate_buffer()
+  local alt = vim.fn.bufnr("#")
+  if
+    alt > 0
+    and alt ~= state.bufnr
+    and vim.fn.buflisted(alt) == 1
+    and is_text_file(vim.api.nvim_buf_get_name(alt))
+  then
+    vim.cmd("b#")
+    adopt_current_buffer()
+  end
+end
+
 -- Entries with `key` are counted motions played back one step per BURST_STEP_MS
 local actions = {
   { weight = 5, key = "<C-e>", min = 2, max = 6, step_ms = SCROLL_STEP_MS },
   { weight = 2, key = "<C-y>", min = 2, max = 6, step_ms = SCROLL_STEP_MS },
-  { weight = 2, act = function() feed("<C-d>") end },
-  { weight = 1, act = function() feed("<C-u>") end },
+  {
+    weight = 2,
+    act = function()
+      feed("<C-d>")
+    end,
+  },
+  {
+    weight = 1,
+    act = function()
+      feed("<C-u>")
+    end,
+  },
   { weight = 2, act = random_line },
-  { weight = 1, act = function() feed(math.random(2) == 1 and "gg" or "G") end },
+  {
+    weight = 1,
+    act = function()
+      feed(math.random(2) == 1 and "gg" or "G")
+    end,
+  },
   { weight = 4, key = "w", min = 7, max = 15 },
   { weight = 2, key = "b", min = 7, max = 15 },
-  { weight = 1, act = function() feed("e") end },
-  { weight = 4, key = "j", min = 5, max = 10 },
-  { weight = 3, key = "k", min = 5, max = 10 },
-  { weight = 2, key = "l", min = 5, max = 10 },
-  { weight = 2, key = "h", min = 5, max = 10 },
+  { weight = 2, key = "W", min = 7, max = 15 },
+  { weight = 1, key = "B", min = 7, max = 15 },
+  {
+    weight = 1,
+    act = function()
+      feed("e")
+    end,
+  },
+  {
+    weight = 1,
+    act = function()
+      feed("E")
+    end,
+  },
+  { weight = 1, act = alternate_buffer },
+  { weight = 2, act = visual_burst },
+  { weight = 4, key = "j", min = 5, max = 10, after = "zz" },
+  { weight = 3, key = "k", min = 5, max = 10, after = "zz" },
+  { weight = 2, key = "l", min = 5, max = 50 },
+  { weight = 2, key = "h", min = 5, max = 50 },
 }
 
 local total_weight = 0
@@ -100,6 +193,7 @@ local function random_action()
           key = action.key,
           remaining = math.random(action.min, action.max),
           step_ms = action.step_ms or BURST_STEP_MS,
+          after = action.after,
         }
       else
         action.act()
@@ -136,19 +230,20 @@ local function switch_buffer()
     vim.api.nvim_set_current_buf(pick)
   end
 
-  state.bufnr = vim.api.nvim_get_current_buf()
-  state.elapsed_ms = 0
-  state.moves = 0
-  state.burst = nil
-  state.moves_needed = math.random(MIN_MOVES, MAX_MOVES)
-  local lines = vim.api.nvim_buf_line_count(state.bufnr)
-  state.dwell_ms = math.min(math.max(MIN_DWELL_MS, lines * DWELL_MS_PER_LINE), MAX_DWELL_MS)
+  adopt_current_buffer()
 end
 
 local function safe_to_act()
-  return vim.api.nvim_get_current_buf() == state.bufnr
-    and vim.fn.mode() == "n"
-    and vim.fn.getcmdtype() == ""
+  if vim.api.nvim_get_current_buf() ~= state.bufnr or vim.fn.getcmdtype() ~= "" then
+    return false
+  end
+
+  local mode = vim.fn.mode()
+  if mode == "n" then
+    return true
+  end
+  -- Visual mode is only ours if a visual burst is mid-flight; otherwise the user is selecting
+  return (mode == "v" or mode == "V") and state.burst ~= nil and state.burst.visual == true
 end
 
 local function tick()
@@ -159,13 +254,24 @@ local function tick()
   -- Play back a pending counted motion one step at a time
   if state.burst then
     if safe_to_act() then
-      feed(state.burst.key)
-      state.burst.remaining = state.burst.remaining - 1
-      if state.burst.remaining <= 0 then
+      local burst = state.burst
+      feed(burst.pool and burst.pool[math.random(#burst.pool)] or burst.key)
+      burst.remaining = burst.remaining - 1
+      if burst.remaining <= 0 then
+        if burst.visual then
+          feed("<Esc>")
+        end
+        if burst.after then
+          feed(burst.after)
+        end
         state.burst = nil
       end
     else
-      state.burst = nil -- user became active or buffer changed; drop the rest
+      -- User became active or buffer changed; drop the rest of the burst
+      if state.burst.visual and vim.fn.mode():match("^[vV]") then
+        feed("<Esc>")
+      end
+      state.burst = nil
     end
 
     local delay = state.burst and state.burst.step_ms or math.random(MIN_TICK_MS, MAX_TICK_MS)
@@ -225,6 +331,11 @@ function M.stop()
     state.timer = nil
   end
   vim.api.nvim_del_augroup_by_name("AutoScroll")
+
+  if state.burst and state.burst.visual and vim.fn.mode():match("^[vV]") then
+    feed("<Esc>")
+  end
+  state.burst = nil
 
   for _, bufnr in ipairs(state.opened) do
     if vim.api.nvim_buf_is_valid(bufnr) and not vim.bo[bufnr].modified and bufnr ~= vim.api.nvim_get_current_buf() then
