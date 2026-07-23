@@ -32,17 +32,54 @@ local state = {
 -- Common non-text file extensions to keep out of the buffer pool
 local NON_TEXT_EXTENSIONS = {
   -- images / media
-  png = true, jpg = true, jpeg = true, gif = true, webp = true, ico = true,
-  bmp = true, svg = true, pdf = true, mp3 = true, mp4 = true, wav = true,
-  mov = true, avi = true, mkv = true, webm = true, ogg = true, flac = true,
+  png = true,
+  jpg = true,
+  jpeg = true,
+  gif = true,
+  webp = true,
+  ico = true,
+  bmp = true,
+  svg = true,
+  pdf = true,
+  mp3 = true,
+  mp4 = true,
+  wav = true,
+  mov = true,
+  avi = true,
+  mkv = true,
+  webm = true,
+  ogg = true,
+  flac = true,
   -- fonts
-  woff = true, woff2 = true, ttf = true, otf = true, eot = true,
+  woff = true,
+  woff2 = true,
+  ttf = true,
+  otf = true,
+  eot = true,
   -- archives / binaries
-  zip = true, tar = true, gz = true, bz2 = true, xz = true, ["7z"] = true,
-  rar = true, exe = true, dll = true, so = true, dylib = true, bin = true,
-  wasm = true, jar = true, class = true, pyc = true, o = true, a = true,
+  zip = true,
+  tar = true,
+  gz = true,
+  bz2 = true,
+  xz = true,
+  ["7z"] = true,
+  rar = true,
+  exe = true,
+  dll = true,
+  so = true,
+  dylib = true,
+  bin = true,
+  wasm = true,
+  jar = true,
+  class = true,
+  pyc = true,
+  o = true,
+  a = true,
   -- data blobs
-  db = true, sqlite = true, sqlite3 = true, ds_store = true,
+  db = true,
+  sqlite = true,
+  sqlite3 = true,
+  ds_store = true,
 }
 
 local function is_text_file(path)
@@ -114,12 +151,7 @@ end
 -- Mirror the <leader>bb keymap: hop to the alternate buffer like a human flipping back
 local function alternate_buffer()
   local alt = vim.fn.bufnr("#")
-  if
-    alt > 0
-    and alt ~= state.bufnr
-    and vim.fn.buflisted(alt) == 1
-    and is_text_file(vim.api.nvim_buf_get_name(alt))
-  then
+  if alt > 0 and alt ~= state.bufnr and vim.fn.buflisted(alt) == 1 and is_text_file(vim.api.nvim_buf_get_name(alt)) then
     vim.cmd("b#")
     adopt_current_buffer()
   end
@@ -255,8 +287,20 @@ local function tick()
   if state.burst then
     if safe_to_act() then
       local burst = state.burst
-      feed(burst.pool and burst.pool[math.random(#burst.pool)] or burst.key)
-      burst.remaining = burst.remaining - 1
+      local pos = { vim.fn.line("."), vim.fn.col("."), vim.fn.line("w0") }
+      local stuck = burst.last_pos
+        and pos[1] == burst.last_pos[1]
+        and pos[2] == burst.last_pos[2]
+        and pos[3] == burst.last_pos[3]
+
+      if stuck then
+        burst.remaining = 0
+      else
+        feed(burst.pool and burst.pool[math.random(#burst.pool)] or burst.key)
+        burst.last_pos = pos
+        burst.remaining = burst.remaining - 1
+      end
+
       if burst.remaining <= 0 then
         if burst.visual then
           feed("<Esc>")
