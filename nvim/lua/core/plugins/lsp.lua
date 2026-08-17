@@ -24,6 +24,7 @@ return {
         "postgres_lsp",
         "prettierd",
         "cssls",
+        "bashls",
         "html",
         "dockerls",
         "stylua",
