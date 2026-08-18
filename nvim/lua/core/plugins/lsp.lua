@@ -16,7 +16,7 @@ return {
         "lua_ls",
         "vue_ls",
         "vtsls",
-        "tsgo",
+        "tsc",
         "eslint",
         "ruff",
         "basedpyright",
