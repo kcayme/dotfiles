@@ -1,3 +1,6 @@
+local dimensions = require("utils.screen").get_screen_dimensions()
+local notify = require("utils.notification").notify
+
 return {
   {
     "nvim-tree/nvim-tree.lua",
@@ -41,7 +44,6 @@ return {
       end
 
       local function open_win_config_func()
-        local dimensions = require("utils.screen").get_screen_dimensions()
         local scr_w = dimensions.screen_width
         local scr_h = dimensions.screen_height
         local tree_w = 45
@@ -111,8 +113,6 @@ return {
         end
         vim.cmd("NvimTreeRefresh")
       end, {})
-
-      local notify = require("utils.notification").notify
 
       local Event = api.events.Event
       local src_events = {
