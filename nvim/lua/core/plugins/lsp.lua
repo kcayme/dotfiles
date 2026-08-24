@@ -11,6 +11,8 @@ return {
     config = function()
       local ensure_installed = {
         "gopls",
+        "goimports",
+        "gofumpt",
         "jsonls",
         "yamlls",
         "lua_ls",
@@ -32,6 +34,8 @@ return {
         "clangd",
         "terraform-ls",
         "bashls",
+        "marksman",
+        "mdformat",
       }
 
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
