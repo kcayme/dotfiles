@@ -17,7 +17,7 @@ return {
         "yamlls",
         "lua_ls",
         "vue_ls",
-        "vtsls",
+        -- "vtsls",
         "tsc",
         "eslint",
         "ruff",
