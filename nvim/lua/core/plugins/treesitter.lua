@@ -26,6 +26,11 @@ local ensure_installed = {
   "vimdoc",
   "toml",
   "terraform",
+  "http",
+  "ghostty",
+  "mermaid",
+  "nginx",
+  "xml",
 }
 
 return {
