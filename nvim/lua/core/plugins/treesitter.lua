@@ -40,9 +40,6 @@ return {
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter").setup({})
-
-      -- Highlighting is started by tree-sitter-manager's own FileType autocmd
-      -- (its `highlight` option defaults to true), so none is needed here.
     end,
   },
   {
@@ -127,9 +124,6 @@ return {
         auto_install = false,
       })
 
-      -- Installing during setup() blocks the main loop (a synchronous
-      -- `git version` wait per missing parser) and kicks off a clone + C
-      -- compile storm while nvim starts. Defer it off the startup path.
       vim.schedule(function()
         require("tree-sitter-manager.installer").install(ensure_installed)
       end)
