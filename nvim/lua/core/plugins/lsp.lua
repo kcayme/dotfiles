@@ -20,6 +20,7 @@ return {
         -- "vtsls",
         "tsc",
         "eslint",
+        "svelte-language-server",
         "ruff",
         "basedpyright",
         "typos_lsp",
