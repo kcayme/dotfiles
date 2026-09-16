@@ -40,35 +40,38 @@ return {
   --   ft = { "go", "gomod" },
   --   build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   -- },
+  -- {
+  --   "fatih/vim-go",
+  --   ft = "go",
+  --   build = ":GoInstallBinaries", -- Installs necessary Go binaries
+  --   config = function()
+  --     -- Optional: configure vim-go to explicitly use gopls
+  --     -- LazyVim already handles gopls via its 'go' extra, but this ensures compatibility
+  --     -- vim.g.go_def_mode = "gopls"
+  --     -- vim.g.go_info_mode = "gopls"
+  --
+  --     -- Formatting/imports are handled by conform + gopls, so disable vim-go's
+  --     -- own format-on-save to avoid double formatting on Go buffers.
+  --     vim.g.go_fmt_autosave = 0
+  --     vim.g.go_imports_autosave = 0
+  --     vim.g.go_highlight_extra_types = 1
+  --     vim.g.go_highlight_operators = 1
+  --     vim.g.go_highlight_functions = 1
+  --     vim.g.go_highlight_function_parameters = 1
+  --     vim.g.go_highlight_function_calls = 1
+  --     vim.g.go_highlight_types = 1
+  --     vim.g.go_highlight_fields = 1
+  --     vim.g.go_highlight_build_constraints = 1
+  --     vim.g.go_highlight_generate_tags = 1
+  --     vim.g.go_highlight_format_strings = 1
+  --     vim.g.go_highlight_variable_declarations = 1
+  --     vim.g.go_highlight_variable_assignments = 1
+  --     vim.g.go_highlight_array_whitespace_error = 1
+  --     vim.g.go_highlight_chan_whitespace_error = 1
+  --     vim.g.go_highlight_space_tab_error = 1
+  --   end,
+  -- },
   {
-    "fatih/vim-go",
-    ft = "go",
-    build = ":GoInstallBinaries", -- Installs necessary Go binaries
-    config = function()
-      -- Optional: configure vim-go to explicitly use gopls
-      -- LazyVim already handles gopls via its 'go' extra, but this ensures compatibility
-      -- vim.g.go_def_mode = "gopls"
-      -- vim.g.go_info_mode = "gopls"
-
-      -- Formatting/imports are handled by conform + gopls, so disable vim-go's
-      -- own format-on-save to avoid double formatting on Go buffers.
-      vim.g.go_fmt_autosave = 0
-      vim.g.go_imports_autosave = 0
-      vim.g.go_highlight_extra_types = 1
-      vim.g.go_highlight_operators = 1
-      vim.g.go_highlight_functions = 1
-      vim.g.go_highlight_function_parameters = 1
-      vim.g.go_highlight_function_calls = 1
-      vim.g.go_highlight_types = 1
-      vim.g.go_highlight_fields = 1
-      vim.g.go_highlight_build_constraints = 1
-      vim.g.go_highlight_generate_tags = 1
-      vim.g.go_highlight_format_strings = 1
-      vim.g.go_highlight_variable_declarations = 1
-      vim.g.go_highlight_variable_assignments = 1
-      vim.g.go_highlight_array_whitespace_error = 1
-      vim.g.go_highlight_chan_whitespace_error = 1
-      vim.g.go_highlight_space_tab_error = 1
-    end,
+    "olexsmir/gopher.nvim",
   },
 }
