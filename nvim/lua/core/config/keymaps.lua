@@ -126,6 +126,11 @@ map({ "n", "x" }, "<leader>cc", function()
   require("utils.case").cycle({ "snake", "camel", "pascal" }, { lsp = true })
 end, { desc = "[C]ycle [C]ase (LSP rename)" })
 
+-- flip boolean under cursor (pairs defined in utils/toggle.lua)
+map("n", "<leader>tb", function()
+  require("utils.toggle").flip()
+end, { desc = "[T]oggle [B]oolean" })
+
 -- search and show results in loclist
 map("n", "<leader>/", function()
   Snacks.input.input({
