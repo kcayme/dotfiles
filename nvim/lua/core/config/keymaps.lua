@@ -119,6 +119,13 @@ vim.api.nvim_set_keymap("n", "<Leader>ll", "yss", { noremap = false, desc = "Sur
 -- git diff
 map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
 
+-- map({ "n", "x" }, "<leader>cc", function()
+--   require("utils.case").cycle({ "snake", "camel", "pascal" })
+-- end, { desc = "[C]ycle [C]ase" })
+map({ "n", "x" }, "<leader>cc", function()
+  require("utils.case").cycle({ "snake", "camel", "pascal" }, { lsp = true })
+end, { desc = "[C]ycle [C]ase (LSP rename)" })
+
 -- search and show results in loclist
 map("n", "<leader>/", function()
   Snacks.input.input({
