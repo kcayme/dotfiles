@@ -164,7 +164,7 @@ return {
       -- Diff view behavior
       diff = {
         layout = "side-by-side", -- Diff layout: "side-by-side" (two panes) or "inline" (single pane with virtual lines)
-        filler_text = " ", -- Repeated filler pattern; use "" for blank alignment rows
+        filler_text = "• ", -- Repeated filler pattern; use "" for blank alignment rows
         disable_inlay_hints = true, -- Disable inlay hints in diff windows for cleaner view
         max_computation_time_ms = 5000, -- Maximum time for diff computation (VSCode default)
         ignore_trim_whitespace = false, -- Ignore leading and trailing whitespace changes
