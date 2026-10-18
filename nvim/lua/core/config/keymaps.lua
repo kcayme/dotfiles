@@ -123,7 +123,10 @@ map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
 --   require("utils.case").cycle({ "snake", "camel", "pascal" })
 -- end, { desc = "[C]ycle [C]ase" })
 map({ "n", "x" }, "<leader>cc", function()
-  require("utils.case").cycle({ "snake", "camel", "pascal" }, { lsp = true })
+  require("utils.case").cycle({
+    order = { "snake", "camel", "pascal" },
+    lsp = true,
+  })
 end, { desc = "[C]ycle [C]ase (LSP rename)" })
 
 -- flip boolean under cursor (pairs defined in utils/toggle.lua)

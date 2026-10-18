@@ -1,10 +1,12 @@
 local notify = require("utils.notification").notify
 local M = {}
+local tag = "[Case] "
 
 ---@alias CaseName "snake"|"screaming"|"kebab"|"camel"|"pascal"|string
 ---@alias CaseFormatter fun(parts: string[]): string
 
 ---@class CaseCycleOpts
+---@field order CaseName[]
 ---@field lsp? boolean rename all references via LSP instead of editing text
 
 ---@class CaseState
@@ -135,6 +137,45 @@ local function next_case(word, order)
   end
 end
 
+-- rename via LSP, calling on_fail(msg) if the symbol isn't renameable or the rename returns nothing
+---@param row integer 0-based
+---@param col integer 0-based byte offset
+---@param new_name string
+---@param on_fail fun(msg: string)
+local function lsp_rename(row, col, new_name, on_fail)
+  local client = vim.lsp.get_clients({ bufnr = 0, method = "textDocument/rename" })[1]
+  if not client then
+    return on_fail(tag .. "No LSP rename available")
+  end
+
+  local bufnr = vim.api.nvim_get_current_buf()
+  vim.api.nvim_win_set_cursor(0, { row + 1, col })
+  local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
+
+  local function rename()
+    params.newName = new_name
+    client:request("textDocument/rename", params, function(err, result)
+      if err or not result then
+        return on_fail(tag .. (err and err.message or "LSP rename returned no edits"))
+      end
+
+      vim.lsp.util.apply_workspace_edit(result, client.offset_encoding)
+    end, bufnr)
+  end
+
+  if not client:supports_method("textDocument/prepareRename") then
+    -- return rename()
+    return on_fail(tag .. "LSP does not support textDocument/prepareRename")
+  end
+
+  client:request("textDocument/prepareRename", params, function(err, result)
+    if err or result == nil then
+      return on_fail(tag .. "Not renameable via LSP")
+    end
+    rename()
+  end, bufnr)
+end
+
 ---@type CaseState
 local state = { order = {}, visual = false }
 
@@ -159,34 +200,47 @@ function M._apply()
     return
   end
 
-  if state.lsp then
-    if #vim.lsp.get_clients({ bufnr = 0, method = "textDocument/rename" }) > 0 then
-      vim.api.nvim_win_set_cursor(0, { row + 1, start_col })
-      vim.lsp.buf.rename(converted)
-      return
-    end
+  local bufnr = vim.api.nvim_get_current_buf()
 
-    notify("No LSP rename available", vim.log.levels.WARN)
+  if state.lsp then
+    return lsp_rename(row, start_col, converted, function(msg)
+      notify(msg, vim.log.levels.WARN)
+      vim.api.nvim_buf_set_text(bufnr, row, start_col, row, end_col, { converted })
+    end)
   end
 
-  vim.api.nvim_buf_set_text(0, row, start_col, row, end_col, { converted })
+  vim.api.nvim_buf_set_text(bufnr, row, start_col, row, end_col, { converted })
+end
+
+local function validate_opts(opts)
+  local order = opts and opts.order
+  local lsp = opts and opts.lsp
+
+  if not order then
+    return nil, nil, string.format(tag .. "order empty!")
+  end
+
+  for _, format in ipairs(order) do
+    if not M.formats[format] then
+      return nil, nil, string.format(tag .. "Unsupported format: " .. format)
+    end
+  end
+
+  return order, lsp, nil
 end
 
 -- convert word under cursor (or charwise visual selection) to the next case
 -- in `order`, e.g. { "snake", "camel" }. `opts.lsp` renames all references via LSP
----@param order CaseName[]
----@param opts? CaseCycleOpts
-function M.cycle(order, opts)
-  local visual = vim.fn.mode() == "v"
-
-  for _, format in ipairs(order) do
-    if not M.formats[format] then
-      notify("Unsupported format: " .. format, vim.log.levels.WARN)
-      return
-    end
+---@param opts CaseCycleOpts
+function M.cycle(opts)
+  local order, lsp, err = validate_opts(opts)
+  if err then
+    notify(err, vim.log.levels.WARN)
+    return
   end
 
-  state = { order = order, visual = visual, lsp = opts and opts.lsp }
+  local visual = vim.fn.mode() == "v"
+  state = { order = order, visual = visual, lsp = lsp }
   vim.o.operatorfunc = "v:lua.require'utils.case'._apply"
   -- normal mode: dummy `l` motion, the range comes from word_range()
   vim.api.nvim_feedkeys(visual and "g@" or "g@l", "nx", false)
