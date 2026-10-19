@@ -108,6 +108,11 @@ return {
           Snacks.picker.git_branches({
             all = true,
             title = "Branch to CodeDiff",
+            transform = function(item)
+              item.text = item.branch or item.commit -- match on branch name only, not the commit message
+              item.is_local = not (item.branch or ""):find("^remotes/")
+            end,
+            sort = { fields = { "is_local", "score:desc", "idx" } },
             preview = function(ctx)
               Snacks.picker.preview.cmd({
                 "git",
@@ -228,6 +233,24 @@ return {
           file = nil, -- File rows
           folder = nil, -- Directory rows in tree view
           group = function(ctx)
+            local right = { { segments = { { text = ctx.file_count .. " files", hl = "Number" } } } }
+            -- Formatters only see their own group, so read sibling groups from the explorer tree.
+            local view = require("codediff.ui.lifecycle").get_panel_view(vim.api.nvim_get_current_tabpage())
+            local groups = view and view.tree and view.tree:get_nodes() or {}
+            if ctx.stats and groups[1] and groups[1].data.name == ctx.name then
+              local ins, del = 0, 0
+              for _, node in ipairs(groups) do
+                ins = ins + node.data.stats.insertions
+                del = del + node.data.stats.deletions
+              end
+              table.insert(right, 1, {
+                segments = {
+                  { text = #groups > 1 and "Σ " or "", hl = "CodeDiffExplorerTreeGroup" },
+                  { text = "+" .. ins, hl = "CodeDiffExplorerStatInsertions" },
+                  { text = " -" .. del .. " ", hl = "CodeDiffExplorerStatDeletions" },
+                },
+              })
+            end
             return {
               left = {
                 {
@@ -235,11 +258,7 @@ return {
                   truncate_priority = 1,
                 },
               },
-              right = {
-                {
-                  segments = { { text = ctx.file_count .. " files", hl = "Number" } },
-                },
-              },
+              right = right,
             }
           end,
         },
