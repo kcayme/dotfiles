@@ -4,7 +4,7 @@
   "arrow.nvim": { "branch": "master", "commit": "6e0f726f55f99332dd726a53effd6813786b6d49" },
   "atone.nvim": { "branch": "main", "commit": "98afae6743f61b3d57c2de89c48237e77d3d05ba" },
   "auto-session": { "branch": "main", "commit": "02a5588f677970a9bc784115c62bef9e5855499b" },
-  "bearded-arc.nvim": { "branch": "main", "commit": "26a72961ce95e1c7bf8ff067b2eafe4ad48828e6" },
+  "bearded-arc.nvim": { "branch": "main", "commit": "b02425c7adfedb7f059879a2b0e8b486093c4b7c" },
   "blink.cmp": { "branch": "main", "commit": "78336bc89ee5365633bcf754d93df01678b5c08f" },
   "codediff.nvim": { "branch": "main", "commit": "09d9ebef2cc5a5c04db7a349cd6c61bdf84ecc8e" },
   "conform.nvim": { "branch": "master", "commit": "016802de402556da54c36bd7359b441266b01cdd" },

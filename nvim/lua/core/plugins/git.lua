@@ -143,6 +143,26 @@ return {
         desc = "CodeDiff Against Branch",
       },
     },
+    init = function()
+      -- Scroll the modified pane from the explorer; scrollbind keeps the original pane in sync.
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "codediff-explorer",
+        callback = function(ev)
+          local function scroll(key)
+            return function()
+              local _, win = require("codediff.ui.lifecycle").get_windows(vim.api.nvim_get_current_tabpage())
+              if win and vim.api.nvim_win_is_valid(win) then
+                vim.api.nvim_win_call(win, function()
+                  vim.cmd("normal! " .. vim.keycode(key))
+                end)
+              end
+            end
+          end
+          vim.keymap.set("n", "<C-d>", scroll("<C-d>"), { buffer = ev.buf, desc = "Scroll diff down" })
+          vim.keymap.set("n", "<C-u>", scroll("<C-u>"), { buffer = ev.buf, desc = "Scroll diff up" })
+        end,
+      })
+    end,
     opts = {
       highlights = {
         -- Line-level: accepts highlight group names or hex colors (e.g., "#2ea043")
@@ -169,7 +189,7 @@ return {
       -- Diff view behavior
       diff = {
         layout = "side-by-side", -- Diff layout: "side-by-side" (two panes) or "inline" (single pane with virtual lines)
-        filler_text = "• ", -- Repeated filler pattern; use "" for blank alignment rows
+        filler_text = " ", -- Repeated filler pattern; use "" for blank alignment rows
         disable_inlay_hints = true, -- Disable inlay hints in diff windows for cleaner view
         max_computation_time_ms = 5000, -- Maximum time for diff computation (VSCode default)
         ignore_trim_whitespace = false, -- Ignore leading and trailing whitespace changes
@@ -221,7 +241,7 @@ return {
         },
         untracked = "all", -- Untracked scan: "all", "normal" (collapse dirs), or "no" (skip; use for huge work trees like GIT_WORK_TREE=$HOME that hang, #389)
         focus_on_select = false, -- Jump to modified pane after selecting a file (default: stay in explorer)
-        auto_open_on_cursor = false, -- Rebind j/k/Down/Up in the explorer to also open the file under the cursor
+        auto_open_on_cursor = true, -- Rebind j/k/Down/Up in the explorer to also open the file under the cursor
         status_right_margin = 1, -- Trailing cells between status symbol (M/A/D) and right edge; increase if Nerd Font icons clip it
         line_stats = {
           enabled = true, -- Fetch and show Git line statistics
@@ -245,7 +265,7 @@ return {
               end
               table.insert(right, 1, {
                 segments = {
-                  { text = #groups > 1 and "Σ " or "", hl = "CodeDiffExplorerTreeGroup" },
+                  -- { text = #groups > 1 and "Σ " or "", hl = "CodeDiffExplorerTreeGroup" },
                   { text = "+" .. ins, hl = "CodeDiffExplorerStatInsertions" },
                   { text = " -" .. del .. " ", hl = "CodeDiffExplorerStatDeletions" },
                 },
