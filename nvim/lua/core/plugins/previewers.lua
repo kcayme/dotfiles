@@ -36,6 +36,6 @@ return {
     },
   },
   {
-    "barrettruth/live-server.nvim",
+    url = "https://forge.barrettruth.com/barrettruth/live-server.nvim",
   },
 }
