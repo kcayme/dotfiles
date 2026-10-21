@@ -1,0 +1,439 @@
+{
+    "$schema": "https://lnav.org/schemas/config-v1.schema.json",
+    "ui": {
+        "theme-defs": {
+            "bearded-arc": {
+                "icons": {
+                    "hidden": {
+                        "value": "⋮"
+                    },
+                    "ok": {
+                        "value": "✔"
+                    },
+                    "info": {
+                        "value": "ⓘ"
+                    },
+                    "warning": {
+                        "value": "⚠"
+                    },
+                    "error": {
+                        "value": "✘"
+                    },
+                    "log-level-trace": {
+                        "value": "🅃"
+                    },
+                    "log-level-debug": {
+                        "value": "🄳"
+                    },
+                    "log-level-info": {
+                        "value": "🄸"
+                    },
+                    "log-level-stats": {
+                        "value": "🅂"
+                    },
+                    "log-level-notice": {
+                        "value": "🄽"
+                    },
+                    "log-level-warning": {
+                        "value": "🅆"
+                    },
+                    "log-level-error": {
+                        "value": "🄴"
+                    },
+                    "log-level-critical": {
+                        "value": "🄲"
+                    },
+                    "log-level-fatal": {
+                        "value": "🄵"
+                    },
+                    "breakpoint": {
+                        "value": "●"
+                    },
+                    "disabled-breakpoint": {
+                        "value": "○"
+                    },
+                    "play": {
+                        "value": "▶"
+                    },
+                    "edit": {
+                        "value": "✏️"
+                    },
+                    "file": {
+                        "value": "📄"
+                    },
+                    "thread": {
+                        "value": "🧵"
+                    },
+                    "tag": {
+                        "value": "🏷️"
+                    },
+                    "partition": {
+                        "value": "⊑"
+                    },
+                    "busy": {
+                        "value": "⏳"
+                    },
+                    "reload": {
+                        "value": "↻"
+                    }
+                },
+                "vars": {
+                    "semantic_highlight_color": "semantic()",
+                    "yellow": "#EACD61",
+                    "bg": "#1c2433",
+                    "bg_dark": "#171e2b",
+                    "bg_status": "#212a3a",
+                    "bg_highlight": "#263042",
+                    "bg_visual": "#2b374b",
+                    "border": "#344055",
+                    "fg": "#d0d7e4",
+                    "fg_muted": "#8196b5",
+                    "fg_dim": "#536686",
+                    "blue": "#69C3FF",
+                    "green": "#3CEC85",
+                    "red": "#E35535",
+                    "cyan": "#22ECDB",
+                    "purple": "#B78AFF",
+                    "orange": "#FF955C",
+                    "pink": "#FF738A",
+                    "error": "#FF738A",
+                    "warning": "#B78AFF"
+                },
+                "styles": {
+                    "text": {
+                        "color": "$fg",
+                        "background-color": "$bg"
+                    },
+                    "selected-text": {
+                        "background-color": "$bg_visual"
+                    },
+                    "identifier": {
+                        "background-color": "",
+                        "color": "semantic()"
+                    },
+                    "fuzzy-match": {
+                        "color": "$yellow",
+                        "underline": true,
+                        "bold": true
+                    },
+                    "alt-text": {
+                        "bold": true
+                    },
+                    "ok": {
+                        "color": "$green",
+                        "bold": true
+                    },
+                    "info": {
+                        "color": "$fg",
+                        "bold": true
+                    },
+                    "error": {
+                        "color": "$error",
+                        "bold": true
+                    },
+                    "warning": {
+                        "color": "$warning",
+                        "bold": true
+                    },
+                    "hidden": {
+                        "color": "$yellow",
+                        "bold": true
+                    },
+                    "disabled-cursor-line": {
+                        "color": "$cyan",
+                        "background-color": "$bg_visual"
+                    },
+                    "adjusted-time": {
+                        "color": "$error"
+                    },
+                    "skewed-time": {
+                        "color": "$yellow"
+                    },
+                    "offset-time": {
+                        "color": "$cyan"
+                    },
+                    "time-ago": {
+                        "bold": true
+                    },
+                    "time-column": {
+                        "background-color": "$bg_dark"
+                    },
+                    "file-offset": {
+                        "color": "$fg"
+                    },
+                    "invalid-msg": {
+                        "color": "$yellow"
+                    },
+                    "popup": {
+                        "color": "$fg"
+                    },
+                    "popup-border": {
+                        "color": "$purple"
+                    },
+                    "scrollbar": {
+                        "color": "$bg",
+                        "background-color": "$fg_dim"
+                    },
+                    "timeline-bar": {
+                        "background-color": "$cyan"
+                    },
+                    "focused": {
+                        "color": "$bg",
+                        "background-color": "$blue"
+                    },
+                    "disabled-focused": {
+                        "color": "$bg",
+                        "background-color": "$fg_muted"
+                    },
+                    "h1": {
+                        "underline": true
+                    },
+                    "h2": {
+                        "underline": true
+                    },
+                    "h3": {
+                        "underline": true
+                    },
+                    "h4": {
+                        "underline": true
+                    },
+                    "h5": {
+                        "underline": true
+                    },
+                    "h6": {
+                        "underline": true
+                    },
+                    "hr": {
+                        "color": "$border"
+                    },
+                    "hyperlink": {
+                        "underline": true
+                    },
+                    "list-glyph": {
+                        "color": "$yellow"
+                    },
+                    "breadcrumb": {
+                        "color": "$cyan",
+                        "bold": true
+                    },
+                    "table-border": {
+                        "color": "$border"
+                    },
+                    "table-header": {
+                        "bold": true
+                    },
+                    "quote-border": {
+                        "color": "$fg_dim",
+                        "background-color": "$border"
+                    },
+                    "quoted-text": {
+                        "background-color": "$bg_highlight"
+                    },
+                    "footnote-border": {
+                        "color": "$blue",
+                        "background-color": "$border"
+                    },
+                    "footnote-text": {
+                        "color": "$fg",
+                        "background-color": "$bg_highlight"
+                    },
+                    "snippet-border": {
+                        "color": "$cyan"
+                    },
+                    "indent-guide": {
+                        "color": "$border"
+                    }
+                },
+                "syntax-styles": {
+                    "inline-code": {
+                        "color": "$error"
+                    },
+                    "quoted-code": {
+                        "color": "$fg"
+                    },
+                    "code-border": {
+                        "color": "$border"
+                    },
+                    "object-key": {
+                        "color": "semantic()"
+                    },
+                    "keyword": {
+                        "color": "$blue"
+                    },
+                    "string": {
+                        "color": "$green"
+                    },
+                    "comment": {
+                        "color": "$green"
+                    },
+                    "doc-directive": {
+                        "color": "$cyan"
+                    },
+                    "variable": {
+                        "color": "$cyan"
+                    },
+                    "symbol": {
+                        "color": "$blue"
+                    },
+                    "re-special": {
+                        "color": "$cyan"
+                    },
+                    "re-repeat": {
+                        "color": "$yellow"
+                    },
+                    "diff-delete": {
+                        "color": "$error"
+                    },
+                    "diff-add": {
+                        "color": "$green"
+                    },
+                    "diff-section": {
+                        "color": "$error"
+                    },
+                    "spectrogram-low": {
+                        "color": "$bg",
+                        "background-color": "$green",
+                        "bold": true
+                    },
+                    "spectrogram-medium": {
+                        "color": "$bg",
+                        "background-color": "$yellow",
+                        "bold": true
+                    },
+                    "spectrogram-high": {
+                        "color": "$bg",
+                        "background-color": "$red",
+                        "bold": true
+                    },
+                    "file": {
+                        "color": "$blue"
+                    },
+                    "null": {
+                        "color": "$fg"
+                    },
+                    "ascii-control": {
+                        "color": "$green"
+                    },
+                    "non-ascii": {
+                        "color": "$yellow"
+                    },
+                    "number": {
+                        "bold": true
+                    },
+                    "function": {
+                        "color": "$cyan"
+                    },
+                    "separators-references-accessors": {
+                        "color": "$fg"
+                    },
+                    "type": {
+                        "color": "$blue"
+                    }
+                },
+                "status-styles": {
+                    "title": {
+                        "color": "$bg",
+                        "background-color": "$blue",
+                        "bold": true
+                    },
+                    "alert-title": {
+                        "color": "$bg",
+                        "background-color": "$error",
+                        "bold": true
+                    },
+                    "disabled-title": {
+                        "color": "$fg_muted",
+                        "background-color": "$bg_status",
+                        "bold": true
+                    },
+                    "subtitle": {
+                        "color": "$fg",
+                        "background-color": "$bg_visual"
+                    },
+                    "text": {
+                        "color": "$fg",
+                        "background-color": "$bg_status"
+                    },
+                    "warn": {
+                        "color": "$warning",
+                        "background-color": "$bg_status"
+                    },
+                    "alert": {
+                        "color": "$error",
+                        "background-color": "$bg_status"
+                    },
+                    "active": {
+                        "color": "$green",
+                        "background-color": "$bg_status"
+                    },
+                    "info": {
+                        "color": "$fg_muted",
+                        "background-color": "$bg_dark"
+                    },
+                    "inactive": {
+                        "color": "$fg_dim",
+                        "background-color": "$bg_dark"
+                    },
+                    "inactive-warn": {
+                        "color": "$warning",
+                        "background-color": "$bg_dark"
+                    },
+                    "inactive-alert": {
+                        "color": "$error",
+                        "background-color": "$bg_dark"
+                    },
+                    "title-hotkey": {
+                        "color": "$bg",
+                        "background-color": "$blue",
+                        "underline": true
+                    },
+                    "hotkey": {
+                        "color": "$purple",
+                        "underline": true,
+                        "bold": true
+                    }
+                },
+                "log-level-styles": {
+                    "warning": {
+                        "color": "$warning"
+                    },
+                    "error": {
+                        "color": "$error"
+                    },
+                    "critical": {
+                        "color": "$error"
+                    },
+                    "fatal": {
+                        "color": "$error"
+                    }
+                },
+                "highlights": {
+                    "colors": {
+                        "pattern": "(?:#[a-fA-F0-9]{6}|#[a-fA-F0-9]{3}\\b)",
+                        "style": {
+                            "color": "${semantic_highlight_color}"
+                        }
+                    },
+                    "ipv4": {
+                        "pattern": "\\b(?<!\\d\\.)\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b(?!\\.\\d)",
+                        "style": {
+                            "color": "${semantic_highlight_color}"
+                        }
+                    },
+                    "xml": {
+                        "pattern": "</?([^ >=!]+)[^>]*>",
+                        "style": {
+                            "color": "${semantic_highlight_color}"
+                        }
+                    },
+                    "xml-decl": {
+                        "pattern": "<!([^ >=!]+)[^>]*>",
+                        "style": {
+                            "color": "${semantic_highlight_color}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -14,8 +14,11 @@ fish/fish_variables
 !lazygit/*
 !windows/*
 !oh-my-posh/*
-!scripts/*
+!scripts/**/*
 !kdeglobals
+!lnav/config.json
+!lnav/configs/installed/*
+!lnav/formats/installed/*
 
 !.gitignore
 /nvim/.claude/settings.local.json
