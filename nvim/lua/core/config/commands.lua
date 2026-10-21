@@ -55,3 +55,37 @@ end, { desc = "Toggle line wrap" })
 vim.api.nvim_create_user_command("AutoScrollToggle", function()
   require("utils.autoscroll").toggle()
 end, { desc = "Toggle random buffer auto-scrolling" })
+
+vim.api.nvim_create_user_command("RandUUID", function()
+  local b = { vim.uv.random(16):byte(1, 16) }
+  b[7] = bit.bor(bit.band(b[7], 0x0f), 0x40) -- version 4
+  b[9] = bit.bor(bit.band(b[9], 0x3f), 0x80) -- RFC 4122 variant
+  local uuid = string.format("%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x", unpack(b))
+  local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+  local in_string = false
+  local parser = vim.treesitter.get_parser(0, nil, { error = false })
+  if parser then
+    parser:parse({ row - 1, row })
+    local node = vim.treesitter.get_node()
+    while node and not node:type():find("string") do
+      -- `${...}` / f"{...}" hold code, not string content
+      if node:type():find("substitution") or node:type():find("interpolation") then
+        node = nil
+      else
+        node = node:parent()
+      end
+    end
+    if node then
+      local _, _, end_row, end_col = node:range()
+      -- on the closing quote the UUID would land after the string
+      in_string = not (end_row == row - 1 and end_col == col + 1)
+    end
+  else
+    -- no parser: the UUID lands between the char under the cursor and the next one
+    in_string = vim.api.nvim_get_current_line():sub(col + 1, col + 2):find("[\"'`]") ~= nil
+  end
+  if not in_string then
+    uuid = '"' .. uuid .. '"'
+  end
+  vim.api.nvim_put({ uuid }, "c", true, true)
+end, { desc = "Insert a random v4 UUID after the cursor, quoted unless inside a string" })
