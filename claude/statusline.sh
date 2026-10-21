@@ -147,13 +147,23 @@ if [ -n "$cwd" ]; then
         out+="${dim}@${reset}${green}${git_branch}${reset}"
         git_stat=$(git -C "${cwd}" diff --numstat 2>/dev/null | awk '{a+=$1; d+=$2} END {if (a+d>0) printf "+%d -%d", a, d}')
         [ -n "$git_stat" ] && out+=" ${dim}(${reset}${green}${git_stat%% *}${reset} ${red}${git_stat##* }${reset}${dim})${reset}"
+        # Other worktrees of this repo (current one is already shown above)
+        top=$(git --no-optional-locks -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
+        wt_others=$(git --no-optional-locks -C "$cwd" worktree list --porcelain 2>/dev/null | awk -v top="$top" '
+            /^worktree /{p=substr($0,10); n=p; sub(/.*\//,"",n)}
+            /^branch /{b=substr($0,8); sub(/^refs\/heads\//,"",b)}
+            /^detached/{b="detached"}
+            /^$/{if(p!="" && p!=top)print n "@" b; p="";b=""}
+            END{if(p!="" && p!=top)print n "@" b}' | paste -sd ' ' -)
+        [ -n "$wt_others" ] && out+=" ${dim}[wt: ${wt_others}]${reset}"
     fi
 fi
 
 out+=" ${dim}|${reset} "
 out+="${orange}${used_tokens}/${total_tokens}${reset} ${dim}(${reset}${green}${pct_used}%${reset}${dim})${reset}"
-out+=" ${dim}|${reset} "
-out+="effort: "
+# Everything from here on is right-aligned
+left="$out"
+out="effort: "
 case "$effort_level" in
     low)    out+="${dim}${effort_level}${reset}" ;;
     medium) out+="${orange}med${reset}" ;;
@@ -515,6 +525,15 @@ if [ -n "$cli_version" ]; then
 fi
 
 # Output
-printf "%b" "$out$update_line"
+# Pad between left and right halves to fill the terminal width; reserve covers Claude Code's own margins
+strip() { printf '%b' "$1" | sed $'s/\x1b\[[0-9;]*m//g'; }
+visible="$(strip "$left")$(strip "$out")"
+pad=$(( ${COLUMNS:-0} - 4 - ${#visible} ))
+if [ "$pad" -gt 2 ]; then
+    gap=$(printf '%*s' "$pad" '')
+else
+    gap=" ${dim}|${reset} "
+fi
+printf "%b" "$left$gap$out$update_line"
 
 exit 0
