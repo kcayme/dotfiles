@@ -105,14 +105,25 @@ return {
       {
         "<leader>d",
         function()
+          local checkout_rank = {} -- branch -> position in reflog, lower = checked out more recently
+          for i, line in ipairs(vim.fn.systemlist({ "git", "reflog", "--format=%gs" })) do
+            local to = line:match("^checkout: moving from %S+ to (%S+)$")
+            if to and not checkout_rank[to] then
+              checkout_rank[to] = i
+            end
+          end
+
           Snacks.picker.git_branches({
             all = true,
+            cmd_args = { "--sort=-committerdate" },
             title = "Branch to CodeDiff",
             transform = function(item)
               item.text = item.branch or item.commit -- match on branch name only, not the commit message
               item.is_local = not (item.branch or ""):find("^remotes/")
+              item.checkout = checkout_rank[item.branch] or math.huge
             end,
-            sort = { fields = { "is_local", "score:desc", "idx" } },
+            sort = { fields = { "current", "is_local", "score:desc", "checkout", "idx" } },
+            matcher = { sort_empty = true }, -- apply sort before anything is typed
             preview = function(ctx)
               Snacks.picker.preview.cmd({
                 "git",
@@ -128,15 +139,6 @@ return {
                 vim.cmd("CodeDiff " .. item.branch)
               end
               picker:close()
-            end,
-            on_show = function(picker)
-              for i, item in ipairs(picker:items()) do
-                if item.current then
-                  picker.list:view(i)
-                  Snacks.picker.actions.list_scroll_center(picker)
-                  break
-                end
-              end
             end,
           })
         end,
