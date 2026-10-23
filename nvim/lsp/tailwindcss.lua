@@ -25,7 +25,6 @@ return {
     "jade",
     "leaf",
     "liquid",
-    "markdown",
     "mdx",
     "mustache",
     "njk",
