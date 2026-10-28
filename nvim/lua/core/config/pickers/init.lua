@@ -146,4 +146,8 @@ function Picker.commands(opts)
   backend.commands(opts)
 end
 
+function Picker.unified()
+  require("core.config.pickers.unified").unified()
+end
+
 return Picker

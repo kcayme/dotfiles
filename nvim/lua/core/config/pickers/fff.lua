@@ -94,15 +94,20 @@ M.source = {
         return {}
       end
     end
+    -- the first open races fff's initial scan; re-run until the index is ready (like fff's own UI)
+    if not file_picker.get_scan_progress().is_index_ready then
+      vim.defer_fn(function()
+        ctx.picker:find()
+      end, 100)
+    end
     local config = conf.get()
     M.state.config = vim.tbl_deep_extend("force", config or {}, opts or {})
 
     local fff_result = file_picker.search_files(
       ctx.filter.search,
-      opts.limit or M.state.config.max_results,
-      M.state.config.max_threads,
       M.state.current_file_cache,
-      false
+      opts.limit or M.state.config.max_results,
+      M.state.config.max_threads
     )
 
     ---@type snacks.picker.finder.Item[]
@@ -111,7 +116,8 @@ M.source = {
       ---@type snacks.picker.finder.Item
       local item = {
         text = fff_item.name,
-        file = fff_item.path,
+        -- fff items only carry `relative_path` (to fff's base_path); resolve it the way fff's UI does
+        file = require("fff.utils").canonicalize_fff_path(fff_item.relative_path),
         score = fff_item.total_frecency_score,
         -- HACK: in original snacks implementation status is a string of
         -- `git status --porcelain` output
@@ -158,6 +164,7 @@ M.source = {
     },
   },
   live = true,
+  show_empty = true,
 }
 
 -- local staged_status = {
@@ -321,9 +328,56 @@ end
 --   picker.find_files(opts)
 -- end
 
+-- fff live grep (in-memory index) as a snacks source
+---@type snacks.picker.Config
+M.grep_source = {
+  live = true,
+  format = "file",
+  finder = function(opts, ctx)
+    if ctx.filter.search == "" then
+      return {}
+    end
+    local file_picker = require("fff.file_picker")
+    if not file_picker.is_initialized() then
+      file_picker.setup()
+    end
+    local grep = require("fff.picker_ui.grep_renderer")
+    local cwd = require("fff.conf").get().base_path
+
+    ---@type snacks.picker.finder.Item[]
+    local items = {}
+    local offset = 0
+    -- fff pages by file; keep pulling pages up to the limit
+    repeat
+      local result = grep.search(ctx.filter.search, offset, 50)
+      for _, m in ipairs(result.items) do
+        local positions = {} ---@type number[]
+        for _, range in ipairs(m.match_ranges or {}) do
+          for i = range[1] + 1, range[2] do -- 0-based [start, end) -> 1-based
+            positions[#positions + 1] = i
+          end
+        end
+        items[#items + 1] = {
+          text = m.relative_path .. ":" .. m.line_content,
+          file = m.relative_path,
+          cwd = cwd,
+          pos = { m.line_number, m.col },
+          line = m.line_content,
+          positions = positions,
+        }
+      end
+      offset = result.next_file_offset
+    until offset == 0 or #items >= (opts.limit or 1000)
+    return items
+  end,
+}
+
 -- wrapper, not a captured reference, so fff loads lazily on first call
 function M.smart(opts)
   return require("fff").find_files(opts)
 end
+
+-- custom sources the unified picker can name with `backend = "fff"`
+M.sources = { files = M.source, grep = M.grep_source }
 
 return M

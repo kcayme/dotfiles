@@ -272,7 +272,7 @@ map("n", "<leader>fu", function()
 end, { desc = "Find Smart" })
 
 map("n", "<leader><leader>", function()
-  Picker.smart({ backend = "fff" })
+  Picker.unified()
 end, { desc = "Global Find" })
 
 map("n", "<leader>fr", function()
