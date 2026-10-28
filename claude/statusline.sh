@@ -147,15 +147,14 @@ if [ -n "$cwd" ]; then
         out+="${dim}@${reset}${green}${git_branch}${reset}"
         git_stat=$(git -C "${cwd}" diff --numstat 2>/dev/null | awk '{a+=$1; d+=$2} END {if (a+d>0) printf "+%d -%d", a, d}')
         [ -n "$git_stat" ] && out+=" ${dim}(${reset}${green}${git_stat%% *}${reset} ${red}${git_stat##* }${reset}${dim})${reset}"
-        # Other worktrees of this repo (current one is already shown above)
-        top=$(git --no-optional-locks -C "$cwd" rev-parse --show-toplevel 2>/dev/null)
-        wt_others=$(git --no-optional-locks -C "$cwd" worktree list --porcelain 2>/dev/null | awk -v top="$top" '
-            /^worktree /{p=substr($0,10); n=p; sub(/.*\//,"",n)}
-            /^branch /{b=substr($0,8); sub(/^refs\/heads\//,"",b)}
-            /^detached/{b="detached"}
-            /^$/{if(p!="" && p!=top)print n "@" b; p="";b=""}
-            END{if(p!="" && p!=top)print n "@" b}' | paste -sd ' ' -)
-        [ -n "$wt_others" ] && out+=" ${dim}[wt: ${wt_others}]${reset}"
+        # Linked worktrees have a git-dir separate from the shared common dir
+        git_dirs=$(git -C "${cwd}" rev-parse --path-format=absolute --git-dir --git-common-dir 2>/dev/null)
+        if [ "$(echo "$git_dirs" | sed -n 1p)" != "$(echo "$git_dirs" | sed -n 2p)" ]; then
+            wt_root=$(git -C "${cwd}" rev-parse --show-toplevel 2>/dev/null)
+            wt_name="${wt_root##*/}"
+            [ "${#wt_name}" -gt 20 ] && wt_name="${wt_name:0:19}…"
+            out+=" ${dim}[${reset}${white}wt:${reset} ${purple}${wt_name}${reset}${dim}]${reset}"
+        fi
     fi
 fi
 
@@ -381,54 +380,19 @@ format_reset_time() {
 
 sep=" ${dim}|${reset} "
 
-# Render extra_usage segment from API usage data (not available via stdin rate_limits).
-# Appends to the global $out. No-op when data is missing or is_enabled is false.
-render_extra_usage() {
-    local data="$1"
-    [ -z "$data" ] && return
-    local enabled
-    enabled=$(echo "$data" | jq -r '.extra_usage.is_enabled // false' 2>/dev/null)
-    [ "$enabled" != "true" ] && return
-
-    local pct used limit
-    pct=$(echo "$data" | jq -r '.extra_usage.utilization // 0' | awk '{printf "%.0f", $1}')
-    used=$(echo "$data" | jq -r '.extra_usage.used_credits // 0' | LC_NUMERIC=C awk '{printf "%.2f", $1/100}')
-    limit=$(echo "$data" | jq -r '.extra_usage.monthly_limit // 0' | LC_NUMERIC=C awk '{printf "%.2f", $1/100}')
-
-    if [ -n "$used" ] && [ -n "$limit" ] && [[ "$used" != *'$'* ]] && [[ "$limit" != *'$'* ]]; then
-        local color
-        color=$(usage_color "$pct")
-        out+="${sep}${white}extra${reset} ${color}\$${used}/\$${limit}${reset}"
-    else
-        out+="${sep}${white}extra${reset} ${green}enabled${reset}"
-    fi
-}
-
 if $effective_builtin; then
     # ---- Use rate_limits data provided directly by Claude Code in JSON input ----
     # resets_at values are Unix epoch integers in this source
     if [ -n "$builtin_five_hour_pct" ]; then
         five_hour_pct=$(printf "%.0f" "$builtin_five_hour_pct")
-        five_hour_color=$(usage_color "$five_hour_pct")
-        out+="${sep}${white}5h${reset} ${five_hour_color}${five_hour_pct}%${reset}"
         if [ -n "$builtin_five_hour_reset" ] && [ "$builtin_five_hour_reset" != "null" ]; then
             five_hour_reset=$(date -j -r "$builtin_five_hour_reset" +"%H:%M" 2>/dev/null || date -d "@$builtin_five_hour_reset" +"%H:%M" 2>/dev/null)
-            [ -n "$five_hour_reset" ] && out+=" ${white}@${five_hour_reset}${reset}"
         fi
     fi
 
     if [ -n "$builtin_seven_day_pct" ]; then
         seven_day_pct=$(printf "%.0f" "$builtin_seven_day_pct")
-        seven_day_color=$(usage_color "$seven_day_pct")
-        out+="${sep}${white}7d${reset} ${seven_day_color}${seven_day_pct}%${reset}"
-        if [ -n "$builtin_seven_day_reset" ] && [ "$builtin_seven_day_reset" != "null" ]; then
-            seven_day_reset=$(date -j -r "$builtin_seven_day_reset" +"%a %b %-d, %H:%M" 2>/dev/null || date -d "@$builtin_seven_day_reset" +"%a %b %-d, %H:%M" 2>/dev/null)
-            [ -n "$seven_day_reset" ] && out+=" ${white}@${seven_day_reset}${reset}"
-        fi
     fi
-
-    # Render extra_usage from API cache (stdin rate_limits doesn't expose it)
-    render_extra_usage "$usage_data"
 
     # Cache builtin values so they're available as fallback when API is unavailable.
     # Convert epoch resets_at to ISO 8601 for compatibility with the API-format cache parser.
@@ -457,26 +421,26 @@ elif [ -n "$usage_data" ] && echo "$usage_data" | jq -e '.five_hour' >/dev/null 
     five_hour_pct=$(echo "$usage_data" | jq -r '.five_hour.utilization // 0' | awk '{printf "%.0f", $1}')
     five_hour_reset_iso=$(echo "$usage_data" | jq -r '.five_hour.resets_at // empty')
     five_hour_reset=$(format_reset_time "$five_hour_reset_iso" "time")
-    five_hour_color=$(usage_color "$five_hour_pct")
-
-    out+="${sep}${white}5h${reset} ${five_hour_color}${five_hour_pct}%${reset}"
-    [ -n "$five_hour_reset" ] && out+=" ${white}@${five_hour_reset}${reset}"
 
     # ---- 7-day (weekly) ----
     seven_day_pct=$(echo "$usage_data" | jq -r '.seven_day.utilization // 0' | awk '{printf "%.0f", $1}')
-    seven_day_reset_iso=$(echo "$usage_data" | jq -r '.seven_day.resets_at // empty')
-    seven_day_reset=$(format_reset_time "$seven_day_reset_iso" "datetime")
-    seven_day_color=$(usage_color "$seven_day_pct")
-
-    out+="${sep}${white}7d${reset} ${seven_day_color}${seven_day_pct}%${reset}"
-    [ -n "$seven_day_reset" ] && out+=" ${white}@${seven_day_reset}${reset}"
-
-    render_extra_usage "$usage_data"
-else
-    # No valid usage data — show placeholders
-    out+="${sep}${white}5h${reset} ${dim}-${reset}"
-    out+="${sep}${white}7d${reset} ${dim}-${reset}"
 fi
+
+# 5-cell bar plus percentage; "-" when the window has no data
+usage_bar() {
+    local pct=$1
+    [ -z "$pct" ] && { printf '%s' "${dim}-${reset}"; return; }
+    local filled=$(( (pct + 19) / 20 ))
+    [ "$filled" -gt 5 ] && filled=5
+    local color full empty
+    color=$(usage_color "$pct")
+    full=$(printf '%*s' "$filled" '' | sed 's/ /█/g')
+    empty=$(printf '%*s' $(( 5 - filled )) '' | sed 's/ /░/g')
+    printf '%s' "${color}${full}${reset}${dim}${empty}${reset} ${color}${pct}%${reset}"
+}
+
+out+="${sep}${white}usage${reset} ${white}5h${reset} $(usage_bar "$five_hour_pct") ${dim}·${reset} ${white}7d${reset} $(usage_bar "$seven_day_pct")"
+[ -n "$five_hour_reset" ] && out+=" ${white}@${five_hour_reset}${reset}"
 
 # ===== Update check (cached, 24h TTL) =====
 # Set STATUSLINE_CHECK_UPDATES=false to disable the update check (no network calls).
