@@ -104,7 +104,9 @@ map("x", "<leader><C-/>", "gb", { remap = true, desc = "Toggle blockwise comment
 map({ "n" }, "zx", "za", { desc = "Toggle fold under cursor" })
 map({ "n" }, "zcf", "zC", { desc = "Recursive fold under cursor" })
 map({ "n" }, "zcu", "zo", { desc = "Recursive unfold under cursor" })
-map({ "n" }, "zf", "zM", { desc = "Fold all" })
+map({ "n" }, "zf", function()
+  vim.cmd("normal! " .. (vim.wo.foldlevel == 0 and "zR" or "zM"))
+end, { desc = "Toggle fold all" })
 map({ "n" }, "zu", "zR", { desc = "Unfold all" })
 
 map("i", "jj", "<Esc>", { silent = true, noremap = false })
