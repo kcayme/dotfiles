@@ -135,10 +135,10 @@ return {
               }, ctx)
             end,
             confirm = function(picker, item)
+              picker:close()
               if item and item.branch then
                 vim.cmd("CodeDiff " .. item.branch)
               end
-              picker:close()
             end,
           })
         end,
