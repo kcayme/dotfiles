@@ -70,7 +70,7 @@ local function format_file_git_status(item, picker)
 end
 
 ---@type snacks.picker.Config
-M.source = {
+M.files = {
   title = "FFFiles",
   finder = function(opts, ctx)
     local conf = require("fff.conf")
@@ -309,10 +309,10 @@ function M.fff()
   -- })
   if Snacks and pcall(require, "snacks.picker") then
     -- Users can call Snacks.picker.fff() after this
-    Snacks.picker.sources.fff = M.source
+    Snacks.picker.sources.fff = M.files
   end
   if Snacks and pcall(require, "snacks.picker") then
-    Snacks.picker(M.source)
+    Snacks.picker(M.files)
   else
     vim.notify("fff-sncaks: Snacks is not loaded", vim.log.levels.ERROR)
   end
@@ -330,7 +330,7 @@ end
 
 -- fff live grep (in-memory index) as a snacks source
 ---@type snacks.picker.Config
-M.grep_source = {
+M.grep = {
   live = true,
   format = "file",
   finder = function(opts, ctx)
@@ -378,6 +378,6 @@ function M.smart(opts)
 end
 
 -- custom sources the unified picker can name with `backend = "fff"`
-M.sources = { files = M.source, grep = M.grep_source }
+M.sources = { files = M.files, grep = M.grep }
 
 return M

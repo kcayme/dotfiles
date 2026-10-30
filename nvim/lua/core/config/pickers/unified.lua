@@ -1,48 +1,42 @@
 -- VSCode-style unified picker modes keyed by query prefix ("" = files); `title`/`prompt` unset fall back to defaults, extra keys go to the source, `enabled = false` turns a prefix off
 
 local M = {}
-local snacks_src = require("core.config.pickers.snacks").sources
-local fff_src = require("core.config.pickers.fff").sources
 
-M.sources = vim.tbl_deep_extend("force", snacks_src, fff_src) or {}
-
-M.modes = {
+M.mode_map = {
   [""] = {
-    backend = "fff",
     source = "files",
     title = "Files",
     prompt = " 󰈔 ",
+    enabled = true,
+    backend = require("core.config.pickers.fff").files,
   },
   ["@"] = {
-    backend = "snacks",
     source = "lsp_symbols",
     title = "Symbols",
     prompt = " 󰊕 ",
     enabled = true,
   }, -- current file
   ["#"] = {
-    backend = "snacks",
     source = "lsp_workspace_symbols",
     title = "Workspace Symbols",
     prompt = " 󰅩 ",
     enabled = true,
   },
   ["%"] = {
-    backend = "fff",
     source = "grep",
     title = "Grep",
     prompt = "  ",
     enabled = true,
+    backend = require("core.config.pickers.fff").grep,
   },
   [":"] = {
-    backend = "snacks",
     source = "line",
     title = "Go to Line",
     prompt = " 󰉻 ",
     enabled = true,
+    backend = require("core.config.pickers.snacks").line_source,
   },
   [">"] = {
-    backend = "snacks",
     source = "commands",
     title = "Commands",
     prompt = "  ",
@@ -50,105 +44,141 @@ M.modes = {
   },
 }
 
--- the backend's own source table, else a builtin snacks source
-local function mode_source(prefix)
-  local mode = M.modes[prefix]
-  return M.sources[mode.source] or { source = mode.source, title = prefix .. " " .. mode.source }
+local function resolve_mode_by_prefix(prefix)
+  local mode = M.mode_map[prefix]
+  local source = mode.backend or { source = mode.source, title = prefix .. " " .. mode.source }
+
+  return {
+    title = mode.title,
+    prompt = mode.prompt,
+    source = source,
+  }
 end
 
-local function mode_title(prefix)
-  local title = M.modes[prefix].title
-  return type(title) == "function" and title() or title
+local function resolve_prefix_by_source(source)
+  for k, v in pairs(M.mode_map) do
+    if v.source == source and v.enabled ~= false then
+      return k
+    end
+  end
+
+  return nil
 end
 
 -- resolved snacks config per mode (finder/format/preview/confirm + user overrides)
-local mode_configs = {}
-local function mode_config(prefix)
-  if not mode_configs[prefix] then
-    local opts = vim.deepcopy(M.modes[prefix])
+
+local function init_configs()
+  local picker_configs = {}
+  local snacks_cfg = require("snacks.picker.config")
+
+  for prefix, v in pairs(M.mode_map) do
+    local mode = resolve_mode_by_prefix(prefix)
+    local opts = vim.deepcopy(v)
+
     opts.backend, opts.source, opts.title, opts.prompt, opts.enabled = nil, nil, nil, nil, nil
     -- tree rendering needs picker-level opts the unified picker doesn't have
     opts.tree = false
-    mode_configs[prefix] = require("snacks.picker.config").get(vim.tbl_deep_extend("force", mode_source(prefix), opts))
+
+    local merged_cfg = snacks_cfg.get(vim.tbl_deep_extend("force", mode.source, opts))
+
+    picker_configs[prefix] = merged_cfg
   end
-  return mode_configs[prefix]
+
+  return picker_configs
 end
 
-function M.unified()
+local picker_configs = init_configs()
+
+function M.unified(opts)
   local config = require("snacks.picker.config")
-  local mode = "" -- current mode; its prefix lives in the prompt, not the input text
+  local current_prefix = resolve_prefix_by_source(opts.source) or ""
+  local current_mode = resolve_mode_by_prefix(current_prefix)
   local found_mode = nil ---@type string?
-  local default_prompt = nil ---@type string?
+  local default_prompt = current_mode.prompt
 
   Snacks.picker({
-    title = mode_title(""),
-    live = true,
-    show_empty = true,
+    title = opts.title or current_mode.title,
+    live = opts.live_empty or true,
+    show_empty = opts.show_empty or true,
     formatters = { file = { filename_first = true } },
     filter = {
       transform = function(picker, filter)
-        filter.mode = mode
+        filter.meta.mode = current_prefix
 
-        local cfg = mode_config(mode)
+        local mode = resolve_mode_by_prefix(current_prefix)
+
+        local cfg = picker_configs[current_prefix]
         if not cfg.live then
           -- non-live sources load once per mode and fuzzy-filter on `pattern`
           filter.search, filter.pattern = "", filter.search
         end
-        -- every find, so function titles stay current
-        picker.title = mode_title(mode)
 
-        default_prompt = default_prompt or picker.opts.prompt
+        -- every find, so function titles stay current
+        picker.title = mode.title
         -- snacks draws the prompt in a statuscolumn without escaping `%`, so double it here
-        local prompt = (M.modes[mode].prompt or default_prompt) .. (mode ~= "" and mode .. " " or "")
+        local prompt = (mode.prompt or default_prompt) .. (current_prefix ~= "" and current_prefix .. " " or "")
 
         picker.opts.prompt = prompt:gsub("%%", "%%%%")
 
-        if mode ~= found_mode then
-          found_mode = mode
+        if current_prefix ~= found_mode then
+          found_mode = current_prefix
           return true -- force the finder to re-run even if the query is unchanged
         end
       end,
     },
+
     on_show = function(picker)
       -- a prefix typed first in files mode moves from the input into the prompt
       vim.api.nvim_create_autocmd("TextChangedI", {
         buffer = picker.input.win.buf,
         callback = function()
           local text = picker.input:get()
-          local m = M.modes[text:sub(1, 1)]
-          if mode ~= "" or text == "" or not m or m.enabled == false then
+          local mode = resolve_mode_by_prefix(text:sub(1, 1))
+
+          -- only switch from file mode when detected prefix is an enabled mode
+          if current_prefix ~= "" or text == "" or not mode or mode.enabled == false then
             return
           end
-          mode = text:sub(1, 1)
+
+          current_prefix = text:sub(1, 1)
           picker.input:set(nil, text:sub(2))
           picker:find()
         end,
       })
     end,
+
     finder = function(_, ctx)
-      local cfg = mode_config(ctx.filter.mode)
+      local meta = ctx.filter.meta
+      local cfg = picker_configs[meta.mode]
       return config.finder(cfg.finder)(cfg, ctx)
     end,
+
     -- tag items so format/preview/confirm follow the mode that produced them
     transform = function(item, ctx)
-      item.mode = ctx.filter.mode
+      local meta = ctx.filter.meta
+      item.mode = meta.mode
     end,
+
     format = function(item, picker)
-      return config.format(mode_config(item.mode))(item, picker)
+      return config.format(picker_configs[item.mode])(item, picker)
     end,
+
     preview = function(ctx)
-      return config.preview(mode_config(ctx.item.mode))(ctx)
+      return config.preview(picker_configs[ctx.item.mode])(ctx)
     end,
+
     confirm = function(picker, item, action)
-      return Snacks.picker.actions[mode_config(item.mode).confirm or "jump"](picker, item, action)
+      return Snacks.picker.actions[picker_configs[item.mode].confirm or "jump"](picker, item, action)
     end,
-    on_close = mode_config("").on_close,
+
+    on_close = picker_configs[""].on_close,
     actions = {
       unified_back = function(picker)
-        if mode == "" or picker.input:get() ~= "" then
+        if current_prefix == "" or picker.input:get() ~= "" then
           return vim.api.nvim_feedkeys(vim.keycode("<BS>"), "in", false)
         end
-        mode = ""
+
+        current_prefix = ""
         picker:find()
       end,
     },
