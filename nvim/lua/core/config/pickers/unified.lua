@@ -46,6 +46,11 @@ M.mode_map = {
 
 local function resolve_mode_by_prefix(prefix)
   local mode = M.mode_map[prefix]
+
+  if not mode then
+    return nil
+  end
+
   local source = mode.backend or { source = mode.source, title = prefix .. " " .. mode.source }
 
   return {
