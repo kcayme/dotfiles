@@ -45,16 +45,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- Fuzzy find all the symbols in your current document.
     --  Symbols are things like variables, functions, types, etc.
     map("<leader>@", function()
-      Picker.global({
+      Picker.unified({
         -- query = "@",
-        backend = "snacks",
+        source = "lsp_symbols",
       })
     end, "[D]ocument [S]ymbols")
 
     -- Fuzzy find all the symbols in your current workspace
     --  Similar to document symbols, except searches over your whole project.
     map("<leader>gs", function()
-      Picker.lsp_workspace_symbols(common_opt)
+      Picker.unified({
+        source = "lsp_workspace_symbols",
+      })
     end, "[W]orkspace [S]ymbols")
 
     -- Rename the variable under your cursor

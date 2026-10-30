@@ -234,7 +234,7 @@ map("n", "<leader>ff", function()
 end, { desc = "Find Files" })
 
 map("n", "<leader>fg", function()
-  Picker.grep({ backend = "snacks", hidden = true })
+  Picker.unified({ source = "grep" })
 end, { desc = "Live Grep" })
 
 map("n", "<leader>frg", function()
