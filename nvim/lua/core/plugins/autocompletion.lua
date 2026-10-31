@@ -76,19 +76,18 @@ return {
             components = {
               kind_icon = {
                 text = function(ctx)
-                  -- local lspkind = require("lspkind")
                   local icon = ctx.kind_icon
+
                   if vim.tbl_contains({ "Path" }, ctx.source_name) then
                     local dev_icon, _ = require("nvim-web-devicons").get_icon(ctx.label)
+
                     if dev_icon then
                       icon = dev_icon
                     end
                   else
-                    -- icon = require("lspkind").symbolic(ctx.kind, {
-                    --   mode = "symbol",
-                    -- })
-
-                    icon = require("lspkind").symbol_map[ctx.kind] or ""
+                    if not ctx.item.kind_icon then
+                      icon = require("lspkind").symbol_map[ctx.kind] or ""
+                    end
                   end
 
                   return icon .. ctx.icon_gap
