@@ -100,6 +100,10 @@ map("x", "<C-/>", "gc", { remap = true, desc = "Toggle linewise comment" })
 map("x", "<C-_>", "gc", { remap = true, desc = "Toggle linewise comment" })
 map("x", "<leader><C-/>", "gb", { remap = true, desc = "Toggle blockwise comment" })
 
+-- newline (o/O counterparts)
+map("n", "<leader>o", "]<Space>", { remap = true, desc = "Newline below cursor in normal mode" })
+map("n", "<leader>O", "[<Space>", { remap = true, desc = "Newline below cursor in normal mode" })
+
 -- fold
 map({ "n" }, "zx", "za", { desc = "Toggle fold under cursor" })
 map({ "n" }, "zcf", "zC", { desc = "Recursive fold under cursor" })
