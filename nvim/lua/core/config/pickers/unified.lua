@@ -133,6 +133,11 @@ function M.unified(opts)
     },
 
     on_show = function(picker)
+      -- files mode's own on_show (fff resumes git status tracking there), paired with on_close below
+      if picker_configs[""].on_show then
+        picker_configs[""].on_show(picker)
+      end
+
       -- a prefix typed first in files mode moves from the input into the prompt
       vim.api.nvim_create_autocmd("TextChangedI", {
         buffer = picker.input.win.buf,

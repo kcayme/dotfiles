@@ -1,3 +1,5 @@
+local signs = vim.tbl_map(vim.trim, require("core.themes.signs"))
+
 return {
   {
     "folke/snacks.nvim",
@@ -43,6 +45,14 @@ return {
       },
       statuscolumn = { enabled = true },
       picker = {
+        icons = {
+          -- signs.lua icons carry a trailing space; git formatters add their own
+          git = {
+            added = signs.added,
+            modified = signs.modified,
+            deleted = signs.removed,
+          },
+        },
         sources = {
           files = { hidden = true, ignored = false },
           smart = { hidden = true, ignored = false },
