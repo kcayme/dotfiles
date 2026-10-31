@@ -24,6 +24,33 @@ end, {
   bang = true,
 })
 
+-- Toggle an LSP display feature globally, or for the current buffer with !
+local function lsp_feature_toggle(name, label, feature, method)
+  vim.api.nvim_create_user_command(name, function(args)
+    local supported = #vim.lsp.get_clients({ bufnr = 0, method = method }) > 0
+    if args.bang and not supported then
+      notify(label .. " not available: no attached LSP supports it in this buffer", vim.log.levels.WARN)
+      return
+    end
+
+    local filter = args.bang and { bufnr = 0 } or nil
+    local enable = not feature.is_enabled(filter)
+    feature.enable(enable, filter)
+
+    local scope = args.bang and "for this buffer" or "globally"
+    notify(label .. " " .. (enable and "enabled " or "disabled ") .. scope, "info")
+    if not supported then
+      notify(label .. " not available in this buffer: no attached LSP supports it", vim.log.levels.WARN)
+    end
+  end, {
+    desc = "Toggle LSP " .. label:lower() .. " (! for current buffer only)",
+    bang = true,
+  })
+end
+
+lsp_feature_toggle("InlayHintToggle", "Inlay hints", vim.lsp.inlay_hint, "textDocument/inlayHint")
+lsp_feature_toggle("CodeLensToggle", "Code lens", vim.lsp.codelens, "textDocument/codeLens")
+
 -- Show linters for the current buffer's file type
 vim.api.nvim_create_user_command("LintInfo", function()
   local filetype = vim.bo.filetype

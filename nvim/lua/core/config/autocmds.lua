@@ -136,6 +136,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       local win = vim.api.nvim_get_current_win()
       vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
     end
+
+    if client and client:supports_method("textDocument/codeLens") then
+      map("<leader>cl", vim.lsp.codelens.run, "[C]ode [L]ens run")
+    end
   end,
 })
 
