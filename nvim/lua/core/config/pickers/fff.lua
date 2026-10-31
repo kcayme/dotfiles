@@ -48,6 +48,39 @@ local function format_git_status(item, picker)
 end
 
 -- init fff engine
+--- shared by the files and grep pickers: `Snacks.picker.format.file` with our git status column
+--- @type snacks.picker.format
+local function format_file(item, picker)
+  ---@type snacks.picker.Highlight[]
+  local ret = {}
+
+  if item.label then
+    ret[#ret + 1] = { item.label, "SnacksPickerLabel" }
+    ret[#ret + 1] = { " ", virtual = true }
+  end
+
+  if item.status then
+    vim.list_extend(ret, format_git_status(item, picker))
+  else
+    -- keep filenames aligned with rows that have a git icon
+    ret[#ret + 1] = { "  ", virtual = true }
+  end
+
+  vim.list_extend(ret, require("snacks").picker.format.filename(item, picker))
+
+  if item.line then
+    -- grep matches: highlight the matched characters in the line
+    if item.positions then
+      local offset = require("snacks").picker.highlight.offset(ret)
+      require("snacks").picker.highlight.matches(ret, item.positions, offset)
+    end
+    require("snacks").picker.highlight.format(item, item.line, ret)
+    table.insert(ret, { " " })
+  end
+
+  return ret
+end
+
 ---@param ctx snacks.picker.finder.ctx
 local function init_fff(ctx)
   local picker_engine = require("fff.file_picker")
@@ -71,7 +104,7 @@ end
 -- transform results from fff into snack items
 ---@param fff_result table
 ---@return snacks.picker.finder.Item[]
-local function to_snacks_items(fff_result)
+local function file_to_snacks_items(fff_result)
   ---@type snacks.picker.finder.Item[]
   local items = {}
 
@@ -85,6 +118,28 @@ local function to_snacks_items(fff_result)
   end
 
   return items
+end
+
+---@param m table an fff grep match
+---@param cwd string fff's base_path
+---@return snacks.picker.finder.Item
+local function grep_to_snacks_item(m, cwd)
+  local positions = {} ---@type number[]
+  for _, range in ipairs(m.match_ranges or {}) do
+    for i = range[1] + 1, range[2] do -- 0-based [start, end) -> 1-based
+      positions[#positions + 1] = i
+    end
+  end
+
+  return {
+    text = m.relative_path .. ":" .. m.line_content,
+    file = m.relative_path,
+    cwd = cwd,
+    pos = { m.line_number, m.col },
+    line = m.line_content,
+    positions = positions,
+    status = git_porcelain[m.git_status],
+  }
 end
 
 -- fff compares current_file against relative paths, so mirror picker_ui's get_current_file_cache
@@ -122,34 +177,10 @@ M.files = {
 
     local result = picker_engine.search_files(query, curr_buf_relpath, max_results, max_threads)
 
-    return to_snacks_items(result)
+    return file_to_snacks_items(result)
   end,
 
-  format = function(item, picker)
-    ---@type snacks.picker.Highlight[]
-    local ret = {}
-
-    if item.label then
-      ret[#ret + 1] = { item.label, "SnacksPickerLabel" }
-      ret[#ret + 1] = { " ", virtual = true }
-    end
-
-    if item.status then
-      vim.list_extend(ret, format_git_status(item, picker))
-    else
-      -- keep filenames aligned with rows that have a git icon
-      ret[#ret + 1] = { "  ", virtual = true }
-    end
-
-    vim.list_extend(ret, require("snacks").picker.format.filename(item, picker))
-
-    if item.line then
-      require("snacks").picker.highlight.format(item, item.line, ret)
-      table.insert(ret, { " " })
-    end
-
-    return ret
-  end,
+  format = format_file,
 
   -- fff's default git.status_updates = "while_open" only tracks git status while a picker is open
   on_show = function()
@@ -185,9 +216,11 @@ M.files = {
 ---@type snacks.picker.Config
 M.grep = {
   live = true,
-  format = "file",
+  format = format_file,
   finder = function(opts, ctx)
-    if ctx.filter.search == "" then
+    local query = ctx.filter.search
+
+    if query == "" then
       return {}
     end
 
@@ -195,33 +228,31 @@ M.grep = {
       return {}
     end
 
-    local grep = require("fff.picker_ui.grep_renderer")
+    local grep_engine = require("fff.picker_ui.grep_renderer")
     local cwd = require("fff.conf").get().base_path
+    local grep_mode = opts.mode or "plain"
+    local page_size = opts.page_size or 50
 
     ---@type snacks.picker.finder.Item[]
     local items = {}
     local offset = 0
-    -- fff pages by file; keep pulling pages up to the limit
+
     repeat
-      local result = grep.search(ctx.filter.search, offset, 50)
-      for _, m in ipairs(result.items) do
-        local positions = {} ---@type number[]
-        for _, range in ipairs(m.match_ranges or {}) do
-          for i = range[1] + 1, range[2] do -- 0-based [start, end) -> 1-based
-            positions[#positions + 1] = i
-          end
-        end
-        items[#items + 1] = {
-          text = m.relative_path .. ":" .. m.line_content,
-          file = m.relative_path,
-          cwd = cwd,
-          pos = { m.line_number, m.col },
-          line = m.line_content,
-          positions = positions,
-        }
+      local result = grep_engine.search(query, offset, page_size, nil, grep_mode)
+
+      -- when no exact matches, fallback to retry once with typo-tolerant fuzzy matching
+      if offset == 0 and grep_mode == "plain" and #result.items == 0 and result.next_file_offset == 0 then
+        grep_mode = "fuzzy"
+        result = grep_engine.search(query, 0, page_size, nil, grep_mode)
       end
+
+      for _, m in ipairs(result.items) do
+        items[#items + 1] = grep_to_snacks_item(m, cwd)
+      end
+
       offset = result.next_file_offset
     until offset == 0 or #items >= (opts.limit or 1000)
+
     return items
   end,
 }
