@@ -47,7 +47,31 @@ M.line_source = {
   end,
 }
 
+-- only gitignored files (fff's index never includes them)
+---@type snacks.picker.Config
+M.gitignored = {
+  title = "Ignored Files",
+  format = "file",
+  finder = function(opts, ctx)
+    local cwd = ctx:git_root()
+    return require("snacks.picker.source.proc").proc(
+      ctx:opts({
+        cmd = "git",
+        args = { "ls-files", "--others", "--ignored", "--exclude-standard" },
+        cwd = cwd,
+        ---@param item snacks.picker.finder.Item
+        transform = function(item)
+          item.cwd = cwd
+          item.file = item.text
+          item.status = "!!"
+        end,
+      }),
+      ctx
+    )
+  end,
+}
+
 -- custom sources the unified picker can name with `backend = "snacks"` (other names fall through to snacks' own)
-M.sources = { line = M.line_source }
+M.sources = { line = M.line_source, gitignored = M.gitignored }
 
 return M

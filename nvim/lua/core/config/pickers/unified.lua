@@ -36,6 +36,13 @@ M.mode_map = {
     enabled = true,
     backend = require("core.config.pickers.snacks").line_source,
   },
+  ["!"] = {
+    source = "gitignored",
+    title = "Gitgnored Files",
+    prompt = " 󰈉 ",
+    enabled = true,
+    backend = require("core.config.pickers.snacks").gitignored,
+  },
   [">"] = {
     source = "commands",
     title = "Commands",
@@ -97,7 +104,7 @@ local picker_configs = init_configs()
 function M.unified(opts)
   local config = require("snacks.picker.config")
   local current_prefix = resolve_prefix_by_source(opts.source) or ""
-  local current_mode = resolve_mode_by_prefix(current_prefix)
+  local current_mode = resolve_mode_by_prefix(current_prefix) or ""
   local found_mode = nil ---@type string?
   local default_prompt = current_mode.prompt
 
