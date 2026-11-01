@@ -1,14 +1,13 @@
 local dimensions = require("utils.screen").get_screen_dimensions()
 local notify = require("utils.notification").notify
+local map = vim.keymap
 
 return {
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
     lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       local function my_on_attach(bufnr)
         local api = require("nvim-tree.api")
@@ -32,15 +31,15 @@ return {
 
         -- custom mappings
         -- vim.keymap.set("n", "<C-t>", api.tree.change_root_to_parent, opts("Up"))
-        vim.keymap.set("n", "<ESC>", function()
-          require("notify").dismiss()
+        map.set("n", "<ESC>", function()
+          require("notify").dismiss({ pending = true })
         end, opts("Close"))
-        vim.keymap.set("n", "?", api.tree.toggle_help, opts("Help"))
-        vim.keymap.set("n", "<C-e>", api.tree.close, opts("Close Tree"))
-        vim.keymap.set("n", "<leader>[", api.tree.change_root_to_parent, opts("Up"))
-        vim.keymap.set("n", "<leader>]", api.tree.change_root_to_node, opts("CD"))
-        vim.keymap.set("n", "L", api.node.open.vertical, opts("Open:Vertical Split"))
-        vim.keymap.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggle Expand/Collapse All"))
+        map.set("n", "?", api.tree.toggle_help, opts("Help"))
+        map.set("n", "<C-e>", api.tree.close, opts("Close Tree"))
+        map.set("n", "<leader>[", api.tree.change_root_to_parent, opts("Up"))
+        map.set("n", "<leader>]", api.tree.change_root_to_node, opts("CD"))
+        map.set("n", "L", api.node.open.vertical, opts("Open:Vertical Split"))
+        map.set("n", "E", ToggleNvimTreeExpandCollapse, opts("Toggle Expand/Collapse All"))
       end
 
       local function open_win_config_func()
@@ -102,9 +101,8 @@ return {
         },
       })
 
-      local map = vim.keymap.set
       local api = require("nvim-tree.api")
-      map("n", "<C-e>", function()
+      map.set("n", "<C-e>", function()
         -- focus tree is visible but not focused; else, toggle tree
         if api.tree.is_visible() and not api.tree.is_tree_buf() then
           vim.cmd("NvimTreeFocus")
