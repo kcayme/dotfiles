@@ -1,9 +1,8 @@
 #!/bin/bash
-# Source: https://github.com/daniel3303/ClaudeCodeStatusLine
+# Originally based on https://github.com/daniel3303/ClaudeCodeStatusLine (MIT); now maintained here.
 # Single line: Model | tokens | %used | %remain | think | 5h bar @reset | 7d bar @reset | extra
 
 set -f  # disable globbing
-VERSION="1.4.4"
 
 input=$(cat)
 
@@ -55,21 +54,6 @@ usage_color() {
 # Resolve config directory: CLAUDE_CONFIG_DIR (set by alias) or default ~/.claude
 claude_config_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
-# Return 0 (true) if $1 > $2 using semantic versioning
-version_gt() {
-    local a="${1#v}" b="${2#v}"
-    local IFS='.'
-    read -r a1 a2 a3 <<< "$a"
-    read -r b1 b2 b3 <<< "$b"
-    a1=${a1:-0}; a2=${a2:-0}; a3=${a3:-0}
-    b1=${b1:-0}; b2=${b2:-0}; b3=${b3:-0}
-    [ "$a1" -gt "$b1" ] 2>/dev/null && return 0
-    [ "$a1" -lt "$b1" ] 2>/dev/null && return 1
-    [ "$a2" -gt "$b2" ] 2>/dev/null && return 0
-    [ "$a2" -lt "$b2" ] 2>/dev/null && return 1
-    [ "$a3" -gt "$b3" ] 2>/dev/null && return 0
-    return 1
-}
 # ===== Extract data from JSON =====
 model_name=$(echo "$input" | jq -r '.model.display_name // "Claude"')
 model_name=$(echo "$model_name" | sed 's/ *(\([0-9.]*[kKmM]*\) context)/ \1/')  # "(1M context)" → "1M"
@@ -442,47 +426,6 @@ usage_bar() {
 out+="${sep}${white}usage${reset} ${white}5h${reset} $(usage_bar "$five_hour_pct") ${dim}·${reset} ${white}7d${reset} $(usage_bar "$seven_day_pct")"
 [ -n "$five_hour_reset" ] && out+=" ${white}@${five_hour_reset}${reset}"
 
-# ===== Update check (cached, 24h TTL) =====
-# Set STATUSLINE_CHECK_UPDATES=false to disable the update check (no network calls).
-update_line=""
-if [ "${STATUSLINE_CHECK_UPDATES:-true}" != "false" ]; then
-    version_cache_file="/tmp/claude/statusline-version-cache.json"
-    version_cache_max_age=86400  # 24 hours
-
-    version_needs_refresh=true
-    version_data=""
-
-    if [ -f "$version_cache_file" ]; then
-        vc_mtime=$(stat -c %Y "$version_cache_file" 2>/dev/null || stat -f %m "$version_cache_file" 2>/dev/null)
-        vc_now=$(date +%s)
-        vc_age=$(( vc_now - vc_mtime ))
-        if [ "$vc_age" -lt "$version_cache_max_age" ]; then
-            version_needs_refresh=false
-        fi
-        version_data=$(cat "$version_cache_file" 2>/dev/null)
-    fi
-
-    if $version_needs_refresh; then
-        touch "$version_cache_file" 2>/dev/null
-        vc_response=$(curl -s --max-time 5 \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/daniel3303/ClaudeCodeStatusLine/releases/latest" 2>/dev/null)
-        if [ -n "$vc_response" ] && echo "$vc_response" | jq -e '.tag_name' >/dev/null 2>&1; then
-            version_data="$vc_response"
-            echo "$vc_response" > "$version_cache_file"
-        elif [ ! -s "$version_cache_file" ]; then
-            rm -f "$version_cache_file" 2>/dev/null
-        fi
-    fi
-
-    if [ -n "$version_data" ]; then
-        latest_tag=$(echo "$version_data" | jq -r '.tag_name // empty')
-        if [ -n "$latest_tag" ] && version_gt "$latest_tag" "$VERSION"; then
-            update_line="\n${dim}Update available: ${latest_tag} → Tell Claude: \"Find my installed status bar and update it\"${reset}"
-        fi
-    fi
-fi
-
 # Append CLI version as last segment
 if [ -n "$cli_version" ]; then
     out+=" ${dim}|${reset} ${orange}v${cli_version}${reset}"
@@ -498,6 +441,6 @@ if [ "$pad" -gt 2 ]; then
 else
     gap=" ${dim}|${reset} "
 fi
-printf "%b" "$left$gap$out$update_line"
+printf "%b" "$left$gap$out"
 
 exit 0
