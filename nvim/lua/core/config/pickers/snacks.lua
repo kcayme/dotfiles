@@ -7,7 +7,6 @@ M.grep = picker.grep
 M.grep_word = picker.grep_word
 M.buffers = picker.buffers
 M.keymaps = picker.keymaps
-M.global = picker.lsp_symbols
 M.diagnostics = picker.diagnostics
 M.help = picker.help
 M.jumps = picker.jumps
@@ -26,7 +25,6 @@ M.commands = picker.commands
 
 ---@type snacks.picker.Config
 M.line_source = {
-  title = ": go to line",
   live = true,
   format = "file",
   finder = function(_, ctx)
@@ -50,7 +48,6 @@ M.line_source = {
 -- only gitignored files (fff's index never includes them)
 ---@type snacks.picker.Config
 M.gitignored = {
-  title = "Ignored Files",
   format = "file",
   finder = function(opts, ctx)
     local cwd = ctx:git_root()

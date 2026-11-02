@@ -8,29 +8,13 @@ local function get_backend(opts)
     return nil
   end
 
-  -- local backend = backends[name]
-
   local ok_fff, backend = pcall(require, "core.config.pickers." .. name)
   if not ok_fff then
     notify("[PICKER] Failed to load picker backend: " .. tostring(name), vim.log.levels.ERROR)
     return nil
   end
 
-  -- local ok_snacks, snacks = pcall(require, "core.config.pickers.snacks")
-  -- if ok_snacks then
-  --   backends.snacks = snacks.picker
-  -- end
-
-  -- notify("[PICKER]: " .. table.concat(vim.tbl_keys(backends), ", "))
-
   return backend
-
-  -- if not backend then
-  -- end
-
-  -- return {
-  --   name = name,
-  -- }
 end
 
 local Picker = {}
@@ -58,12 +42,6 @@ end
 function Picker.keymaps(opts)
   local backend = get_backend(opts)
   backend.keymaps(opts)
-end
-
--- INFO: unused!
-function Picker.global(opts)
-  local backend = get_backend(opts)
-  backend.global(opts)
 end
 
 function Picker.diagnostics(opts)

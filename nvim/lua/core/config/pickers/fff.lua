@@ -160,7 +160,6 @@ end
 
 ---@type FFFSnacksConfig
 M.files = {
-  title = "FFFiles",
   ---@param opts FFFSnacksConfig
   ---@param ctx snacks.picker.finder.ctx
   finder = function(opts, ctx)

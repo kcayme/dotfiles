@@ -1,71 +1,67 @@
 -- VSCode-style unified picker modes keyed by query prefix ("" = files); `title`/`prompt` unset fall back to defaults, extra keys go to the source, `enabled = false` turns a prefix off
-
 local M = {}
+local notify = require("utils.notification").notify
 
 M.mode_map = {
   [""] = {
-    source = "files",
-    title = "Files",
-    prompt = " 󰈔 ",
     enabled = true,
-    backend = require("core.config.pickers.fff").files,
+    overrides = require("core.config.pickers.fff").files,
+    picker_config = {
+      title = "Files",
+      prompt = " 󰈔 ",
+    },
   },
   ["@"] = {
-    source = "lsp_symbols",
-    title = "Symbols",
-    prompt = " 󰊕 ",
     enabled = true,
-  }, -- current file
+    picker_config = {
+      title = "Symbols",
+      prompt = " 󰊕 ",
+      source = "lsp_symbols",
+    },
+  },
   ["#"] = {
-    source = "lsp_workspace_symbols",
-    title = "Workspace Symbols",
-    prompt = " 󰅩 ",
     enabled = true,
+    picker_config = {
+      title = "Workspace Symbols",
+      prompt = " 󰅩 ",
+      source = "lsp_workspace_symbols",
+    },
   },
   ["%"] = {
-    source = "grep",
-    title = "Grep",
-    prompt = "  ",
     enabled = true,
-    backend = require("core.config.pickers.fff").grep,
+    overrides = require("core.config.pickers.fff").grep,
+    picker_config = {
+      title = "Grep",
+      prompt = "  ",
+    },
   },
   [":"] = {
-    source = "line",
-    title = "Go to Line",
-    prompt = " 󰉻 ",
     enabled = true,
-    backend = require("core.config.pickers.snacks").line_source,
+    overrides = require("core.config.pickers.snacks").line_source,
+    picker_config = {
+      title = "Go to Line",
+      prompt = " 󰉻 ",
+      source = "line",
+    },
   },
   ["!"] = {
-    source = "gitignored",
-    title = "Gitgnored Files",
-    prompt = " 󰈉 ",
     enabled = true,
-    backend = require("core.config.pickers.snacks").gitignored,
+    overrides = require("core.config.pickers.snacks").gitignored,
+    picker_config = {
+      title = "Gitgnored Files",
+      prompt = " 󰈉 ",
+      source = "gitignored",
+    },
   },
   [">"] = {
-    source = "commands",
-    title = "Commands",
-    prompt = "  ",
     enabled = true,
+    picker_config = {
+      title = "Commands",
+      prompt = "  ",
+      source = "commands",
+    },
   },
 }
-
-local function resolve_mode_by_prefix(prefix)
-  local mode = M.mode_map[prefix]
-
-  if not mode then
-    return nil
-  end
-
-  local source = mode.backend or { source = mode.source, title = prefix .. " " .. mode.source }
-
-  return {
-    title = mode.title,
-    prompt = mode.prompt,
-    source = source,
-  }
-end
 
 local function resolve_prefix_by_source(source)
   for k, v in pairs(M.mode_map) do
@@ -77,39 +73,33 @@ local function resolve_prefix_by_source(source)
   return nil
 end
 
--- resolved snacks config per mode (finder/format/preview/confirm + user overrides)
-
-local function init_configs()
-  local picker_configs = {}
+-- merged per mode picker overrides to snacks picker config defaults  (finder/format/preview/confirm + user overrides)
+local function merge_picker_configs()
   local snacks_cfg = require("snacks.picker.config")
 
-  for prefix, v in pairs(M.mode_map) do
-    local mode = resolve_mode_by_prefix(prefix)
-    local opts = vim.deepcopy(v)
+  for prefix, mode in pairs(M.mode_map) do
+    local opts = vim.tbl_deep_extend("force", mode.opts or {}, { tree = false })
+    local custom_cfg = mode.overrides or {}
+    local merged_cfg = snacks_cfg.get(vim.tbl_deep_extend("force", mode.picker_config, custom_cfg, opts))
 
-    opts.backend, opts.source, opts.title, opts.prompt, opts.enabled = nil, nil, nil, nil, nil
-    -- tree rendering needs picker-level opts the unified picker doesn't have
-    opts.tree = false
-
-    local merged_cfg = snacks_cfg.get(vim.tbl_deep_extend("force", mode.source, opts))
-
-    picker_configs[prefix] = merged_cfg
+    M.mode_map[prefix].picker_config = merged_cfg
   end
-
-  return picker_configs
 end
 
-local picker_configs = init_configs()
+local ok, err = pcall(merge_picker_configs)
+if not ok then
+  notify("[Unified] failed to init configs: " .. tostring(err), vim.log.levels.ERROR)
+end
 
 function M.unified(opts)
   local config = require("snacks.picker.config")
   local current_prefix = resolve_prefix_by_source(opts.source) or ""
-  local current_mode = resolve_mode_by_prefix(current_prefix) or ""
+  local current_mode = M.mode_map[current_prefix]
   local found_mode = nil ---@type string?
-  local default_prompt = current_mode.prompt
+  local default_prompt = current_mode.picker_config.prompt
 
   Snacks.picker({
-    title = opts.title or current_mode.title,
+    title = opts.title or current_mode.picker_config.title,
     live = opts.live_empty or true,
     show_empty = opts.show_empty or true,
     formatters = { file = { filename_first = true } },
@@ -117,18 +107,18 @@ function M.unified(opts)
       transform = function(picker, filter)
         filter.meta.mode = current_prefix
 
-        local mode = resolve_mode_by_prefix(current_prefix)
+        local mode = M.mode_map[current_prefix]
+        local picker_cfg = mode.picker_config
 
-        local cfg = picker_configs[current_prefix]
-        if not cfg.live then
+        if not picker_cfg.live then
           -- non-live sources load once per mode and fuzzy-filter on `pattern`
           filter.search, filter.pattern = "", filter.search
         end
 
         -- every find, so function titles stay current
-        picker.title = mode.title
+        picker.title = picker_cfg.title
         -- snacks draws the prompt in a statuscolumn without escaping `%`, so double it here
-        local prompt = (mode.prompt or default_prompt) .. (current_prefix ~= "" and current_prefix .. " " or "")
+        local prompt = (picker_cfg.prompt or default_prompt) .. (current_prefix ~= "" and current_prefix .. " " or "")
 
         picker.opts.prompt = prompt:gsub("%%", "%%%%")
 
@@ -141,8 +131,9 @@ function M.unified(opts)
 
     on_show = function(picker)
       -- files mode's own on_show (fff resumes git status tracking there), paired with on_close below
-      if picker_configs[""].on_show then
-        picker_configs[""].on_show(picker)
+      local picker_config = M.mode_map[""].picker_config
+      if picker_config.on_show then
+        picker_config.on_show(picker)
       end
 
       -- a prefix typed first in files mode moves from the input into the prompt
@@ -150,7 +141,8 @@ function M.unified(opts)
         buffer = picker.input.win.buf,
         callback = function()
           local text = picker.input:get()
-          local mode = resolve_mode_by_prefix(text:sub(1, 1))
+          local query = text:sub(1, 1)
+          local mode = M.mode_map[query]
 
           -- only switch from file mode when detected prefix is an enabled mode
           if current_prefix ~= "" or text == "" or not mode or mode.enabled == false then
@@ -164,10 +156,12 @@ function M.unified(opts)
       })
     end,
 
+    on_close = M.mode_map[""].picker_config.on_close,
+
     finder = function(_, ctx)
       local meta = ctx.filter.meta
-      local cfg = picker_configs[meta.mode]
-      return config.finder(cfg.finder)(cfg, ctx)
+      local picker_config = M.mode_map[meta.mode].picker_config
+      return config.finder(picker_config.finder)(picker_config, ctx)
     end,
 
     -- tag items so format/preview/confirm follow the mode that produced them
@@ -177,18 +171,18 @@ function M.unified(opts)
     end,
 
     format = function(item, picker)
-      return config.format(picker_configs[item.mode])(item, picker)
+      return config.format(M.mode_map[item.mode].picker_config)(item, picker)
     end,
 
     preview = function(ctx)
-      return config.preview(picker_configs[ctx.item.mode])(ctx)
+      return config.preview(M.mode_map[ctx.item.mode].picker_config)(ctx)
     end,
 
     confirm = function(picker, item, action)
-      return Snacks.picker.actions[picker_configs[item.mode].confirm or "jump"](picker, item, action)
+      local cfg = M.mode_map[item.mode].picker_config
+      return Snacks.picker.actions[cfg.confirm or "jump"](picker, item, action)
     end,
 
-    on_close = picker_configs[""].on_close,
     actions = {
       unified_back = function(picker)
         if current_prefix == "" or picker.input:get() ~= "" then
