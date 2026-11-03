@@ -164,6 +164,16 @@ return {
           vim.keymap.set("n", "<C-u>", scroll("<C-u>"), { buffer = ev.buf, desc = "Scroll diff up" })
         end,
       })
+      -- layout.arrange() re-pins the explorer to config width on every layout change; keep the user's resize.
+      vim.api.nvim_create_autocmd("WinResized", {
+        callback = function()
+          for _, win in ipairs(vim.v.event.windows) do
+            if vim.api.nvim_win_is_valid(win) and vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "codediff-explorer" then
+              require("codediff.config").options.explorer.width = vim.api.nvim_win_get_width(win)
+            end
+          end
+        end,
+      })
     end,
     opts = {
       highlights = {
