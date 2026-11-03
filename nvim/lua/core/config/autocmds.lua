@@ -47,7 +47,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     map("<leader>@", function()
       Picker.unified({
         -- query = "@",
-        source = "lsp_symbols",
+        type = "lsp_document_symbols",
       })
     end, "[D]ocument [S]ymbols")
 
@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     --  Similar to document symbols, except searches over your whole project.
     map("<leader>gs", function()
       Picker.unified({
-        source = "lsp_workspace_symbols",
+        type = "lsp_workspace_symbols",
       })
     end, "[W]orkspace [S]ymbols")
 

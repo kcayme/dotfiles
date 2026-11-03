@@ -238,7 +238,7 @@ map("n", "<leader>ff", function()
 end, { desc = "Find Files" })
 
 map("n", "<leader>fg", function()
-  Picker.unified({ source = "grep" })
+  Picker.unified({ type = "grep" })
 end, { desc = "Live Grep" })
 
 map("n", "<leader>frg", function()

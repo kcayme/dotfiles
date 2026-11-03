@@ -6,6 +6,7 @@ M.mode_map = {
   [""] = {
     enabled = true,
     overrides = require("core.config.pickers.fff").files,
+    type = "files",
     picker_config = {
       title = "Files",
       prompt = " 󰈔 ",
@@ -13,6 +14,7 @@ M.mode_map = {
   },
   ["@"] = {
     enabled = true,
+    type = "lsp_document_symbols",
     picker_config = {
       title = "Symbols",
       prompt = " 󰊕 ",
@@ -21,6 +23,7 @@ M.mode_map = {
   },
   ["#"] = {
     enabled = true,
+    type = "lsp_workspace_symbols",
     picker_config = {
       title = "Workspace Symbols",
       prompt = " 󰅩 ",
@@ -29,6 +32,7 @@ M.mode_map = {
   },
   ["%"] = {
     enabled = true,
+    type = "grep",
     overrides = require("core.config.pickers.fff").grep,
     picker_config = {
       title = "Grep",
@@ -37,6 +41,7 @@ M.mode_map = {
   },
   [":"] = {
     enabled = true,
+    type = "line",
     overrides = require("core.config.pickers.snacks").line_source,
     picker_config = {
       title = "Go to Line",
@@ -46,6 +51,7 @@ M.mode_map = {
   },
   ["!"] = {
     enabled = true,
+    type = "gitignored",
     overrides = require("core.config.pickers.snacks").gitignored,
     picker_config = {
       title = "Gitgnored Files",
@@ -55,6 +61,7 @@ M.mode_map = {
   },
   [">"] = {
     enabled = true,
+    type = "commands",
     picker_config = {
       title = "Commands",
       prompt = "  ",
@@ -63,9 +70,9 @@ M.mode_map = {
   },
 }
 
-local function resolve_prefix_by_source(source)
+local function resolve_prefix_by_type(type)
   for k, v in pairs(M.mode_map) do
-    if v.source == source and v.enabled ~= false then
+    if v.type == type and v.enabled ~= false then
       return k
     end
   end
@@ -93,7 +100,7 @@ end
 
 function M.unified(opts)
   local config = require("snacks.picker.config")
-  local current_prefix = resolve_prefix_by_source(opts.source) or ""
+  local current_prefix = resolve_prefix_by_type(opts.type) or ""
   local current_mode = M.mode_map[current_prefix]
   local found_mode = nil ---@type string?
   local default_prompt = current_mode.picker_config.prompt
