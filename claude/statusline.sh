@@ -11,16 +11,41 @@ if [ -z "$input" ]; then
     exit 0
 fi
 
-# ANSI colors from oh-my-posh theme palette
-blue='\033[38;2;147;208;255m'    # #93d0ff  path brackets → model name
-orange='\033[38;2;240;118;35m'   # #F07623  vi mode → medium effort / token display
-green='\033[38;2;129;255;145m'   # #81ff91  success prompt → healthy usage / high effort
-cyan='\033[38;2;255;224;147m'    # #ffe093  session → directory
-red='\033[38;2;255;48;48m'       # #ff3030  error prompt → high usage / max effort
-yellow='\033[38;2;255;255;214m'  # #ffffd6  git segment → mid-high usage warning
-purple='\033[38;2;179;255;222m'  # #b3ffde  exec time/date → xhigh effort
-white='\033[38;2;255;255;255m'   # #ffffff  pure white → labels
+# Colours from the nvim bearded-arc palette, laid out like the nvim lualine config
+nvim_palette="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/lazy/bearded-arc.nvim/lua/bearded-arc/palette.lua"
+# "r;g;b" for a palette key, or <fallback> when the palette or key is missing
+nv_rgb() {
+    local hex=""
+    [ -f "$nvim_palette" ] && hex=$(sed -n "s/^[[:space:]]*$1[[:space:]]*=[[:space:]]*\"#\([0-9a-fA-F]\{6\}\)\".*/\1/p" "$nvim_palette" | head -1)
+    if [ -n "$hex" ]; then printf '%d;%d;%d' "$((16#${hex:0:2}))" "$((16#${hex:2:2}))" "$((16#${hex:4:2}))"; else printf '%s' "$2"; fi
+}
+blue="\033[38;2;$(nv_rgb blue 105\;195\;255)m"
+orange="\033[38;2;$(nv_rgb orange 255\;149\;92)m"
+green="\033[38;2;$(nv_rgb green 60\;236\;133)m"
+cyan="\033[38;2;$(nv_rgb cyan 34\;236\;219)m"
+red="\033[38;2;$(nv_rgb red 227\;85\;53)m"
+yellow="\033[38;2;$(nv_rgb yellow 234\;205\;97)m"
+purple="\033[38;2;$(nv_rgb purple 183\;138\;255)m"
+white="\033[38;2;$(nv_rgb white 208\;215\;228)m"
+black="\033[38;2;$(nv_rgb bg_darker 18\;24\;34)m"   # text on the blue sections
+grey="\033[38;2;$(nv_rgb bg_visual 43\;55\;75)m"   # empty part of the bars: a faint track
+bg_a="\033[48;2;$(nv_rgb blue 105\;195\;255)m"   # lualine a: blue
+shade_b=$(nv_rgb statusline_bg 33\;42\;58)
+bg_b="\033[48;2;${shade_b}m"   # lualine b: statusline_bg; needs CLAUDE_CODE_TMUX_TRUECOLOR in tmux
+bg_c='\033[49m'                  # section c and the middle fill use the terminal's own background
+fg_a="$blue"                     # section bg colours as fg, for the rounded caps
+fg_b="\033[38;2;${shade_b}m"
+cap_r=$'\xee\x82\xb4'            # U+E0B4, ends a left section
+cap_l=$'\xee\x82\xb6'            # U+E0B6, starts a right section
+branch_icon=$'\xee\xa9\xa8'      # U+EA68, same icon as lualine's branch
+model_icon=$'\xf3\xb0\x9a\xa9'   # U+F06A9 nf-md-robot
+effort_icon=$'\xf3\xb0\x93\x85'  # U+F04C5 nf-md-speedometer
+session_icon=$'\xf3\xb0\xad\xb9'   # U+F0B79 nf-md-chat
+ctx_icon=$'\xf3\xb0\xa7\x91'     # U+F09D1 nf-md-brain
+usage_icon=$'\xf3\xb0\x8a\x9a'   # U+F029A nf-md-gauge
+bold='\033[1m'
 dim='\033[2m'
+fgreset='\033[22;39m'            # reset fg/bold/dim but keep the section background
 reset='\033[0m'
 
 # Format token counts (e.g., 50k / 200k)
@@ -49,6 +74,24 @@ usage_color() {
     elif [ "$pct" -ge 50 ]; then echo "$yellow"
     else echo "$green"
     fi
+}
+
+# Bar coloured by usage; width in blocks, default 5
+bar() {
+    local pct=$1 width=${2:-8}
+    local filled=$(( (pct * width + 99) / 100 ))
+    [ "$filled" -gt "$width" ] && filled=$width
+    local color full empty
+    color=$(usage_color "$pct")
+    full=$(printf '%*s' "$filled" '' | sed 's/ /━/g')
+    empty=$(printf '%*s' $(( width - filled )) '' | sed 's/ /━/g')
+    printf '%s' "${color}${full}${fgreset}${grey}${empty}${fgreset}"
+}
+
+usage_bar() {
+    local pct=$1
+    [ -z "$pct" ] && { printf '%s' "${dim}-${fgreset}"; return; }
+    printf '%s' "$(bar "$pct") $(usage_color "$pct")${pct}%${fgreset}"
 }
 
 # Resolve config directory: CLAUDE_CONFIG_DIR (set by alias) or default ~/.claude
@@ -117,44 +160,58 @@ if [ -z "$cli_version" ]; then
 fi
 
 # ===== Build single-line output =====
-out=""
-out+="${blue}${model_name}${reset}"
+# Left sections a → b → c, each closed by a rounded cap in its own colour
+left=""
+prev_fg=""
+add_left() {  # <bg> <bg as fg> <content>
+    [ -n "$prev_fg" ] && left+="${1}${prev_fg}${cap_r}"
+    left+="${1}${3}"
+    prev_fg=$2
+}
+
+# Session name: the peer name from the session registry (e.g. carcloud-platform-c4), else the /rename name
+session_id=$(echo "$input" | jq -r '.session_id // empty')
+session_name=""
+[ -n "$session_id" ] && session_name=$(find "$HOME/.claude/sessions" -maxdepth 1 -name '*.json' -exec jq -r --arg id "$session_id" 'select(.sessionId == $id) | .name // empty' {} + 2>/dev/null | head -1)
+[ -z "$session_name" ] && session_name=$(echo "$input" | jq -r '.session_name // empty')
+[ "${#session_name}" -gt 20 ] && session_name="${session_name:0:19}…"
 
 # Current working directory
 cwd=$(echo "$input" | jq -r '.cwd // empty')
 if [ -n "$cwd" ]; then
     display_dir="${cwd##*/}"
     git_branch=$(git -C "${cwd}" rev-parse --abbrev-ref HEAD 2>/dev/null)
-    out+=" ${dim}|${reset} "
-    out+="${cyan}${display_dir}${reset}"
+    add_left "$bg_a" "$fg_a" "${black}${bold} ${display_dir} ${fgreset}"
     if [ -n "$git_branch" ]; then
-        out+="${dim}@${reset}${green}${git_branch}${reset}"
+        seg_b="${white} ${branch_icon} ${git_branch}${fgreset}"
         git_stat=$(git -C "${cwd}" diff --numstat 2>/dev/null | awk '{a+=$1; d+=$2} END {if (a+d>0) printf "+%d -%d", a, d}')
-        [ -n "$git_stat" ] && out+=" ${dim}(${reset}${green}${git_stat%% *}${reset} ${red}${git_stat##* }${reset}${dim})${reset}"
+        [ -n "$git_stat" ] && seg_b+=" ${green}${git_stat%% *}${fgreset} ${red}${git_stat##* }${fgreset}"
         # Linked worktrees have a git-dir separate from the shared common dir
         git_dirs=$(git -C "${cwd}" rev-parse --path-format=absolute --git-dir --git-common-dir 2>/dev/null)
         if [ "$(echo "$git_dirs" | sed -n 1p)" != "$(echo "$git_dirs" | sed -n 2p)" ]; then
             wt_root=$(git -C "${cwd}" rev-parse --show-toplevel 2>/dev/null)
             wt_name="${wt_root##*/}"
             [ "${#wt_name}" -gt 20 ] && wt_name="${wt_name:0:19}…"
-            out+=" ${dim}[${reset}${white}wt:${reset} ${purple}${wt_name}${reset}${dim}]${reset}"
+            seg_b+=" ${white}wt: ${purple}${wt_name}${fgreset}"
         fi
+        add_left "$bg_b" "$fg_b" "${seg_b} "
     fi
 fi
 
-out+=" ${dim}|${reset} "
-out+="${orange}${used_tokens}/${total_tokens}${reset} ${dim}(${reset}${green}${pct_used}%${reset}${dim})${reset}"
-# Everything from here on is right-aligned
-left="$out"
-out="effort: "
+add_left "$bg_c" "" "${white} ${ctx_icon} $(bar "$pct_used" 15) ${orange}${used_tokens}/${total_tokens}${fgreset} "
+
+# Right section x (on the c background): model, effort, session name
+right="${bg_c}${blue}${bold}${model_icon} ${model_name}${fgreset}  ${white}${effort_icon} "
 case "$effort_level" in
-    low)    out+="${dim}${effort_level}${reset}" ;;
-    medium) out+="${orange}med${reset}" ;;
-    high)   out+="${green}${effort_level}${reset}" ;;
-    xhigh)  out+="${purple}${effort_level}${reset}" ;;
-    max)    out+="${red}${effort_level}${reset}" ;;
-    *)      out+="${green}${effort_level}${reset}" ;;
+    low)    right+="${dim}${effort_level}${fgreset}" ;;
+    medium) right+="${orange}med${fgreset}" ;;
+    high)   right+="${green}${effort_level}${fgreset}" ;;
+    xhigh)  right+="${purple}${effort_level}${fgreset}" ;;
+    max)    right+="${red}${effort_level}${fgreset}" ;;
+    *)      right+="${green}${effort_level}${fgreset}" ;;
 esac
+[ -n "$session_name" ] && right+="  ${purple}${session_icon} ${session_name}${fgreset}"
+right+=" "
 
 # ===== Cross-platform OAuth token resolution (from statusline.sh) =====
 # Tries credential sources in order: env var → macOS Keychain → Linux creds file → GNOME Keyring
@@ -410,37 +467,20 @@ elif [ -n "$usage_data" ] && echo "$usage_data" | jq -e '.five_hour' >/dev/null 
     seven_day_pct=$(echo "$usage_data" | jq -r '.seven_day.utilization // 0' | awk '{printf "%.0f", $1}')
 fi
 
-# 5-cell bar plus percentage; "-" when the window has no data
-usage_bar() {
-    local pct=$1
-    [ -z "$pct" ] && { printf '%s' "${dim}-${reset}"; return; }
-    local filled=$(( (pct + 19) / 20 ))
-    [ "$filled" -gt 5 ] && filled=5
-    local color full empty
-    color=$(usage_color "$pct")
-    full=$(printf '%*s' "$filled" '' | sed 's/ /█/g')
-    empty=$(printf '%*s' $(( 5 - filled )) '' | sed 's/ /░/g')
-    printf '%s' "${color}${full}${reset}${dim}${empty}${reset} ${color}${pct}%${reset}"
-}
+# Right section y: 5-cell bars plus percentage; "-" when the window has no data
+right+="${bg_c}${fg_b}${cap_l}${bg_b}${white} ${usage_icon} 5h $(usage_bar "$five_hour_pct")  ${white}7d $(usage_bar "$seven_day_pct") "
 
-out+="${sep}${white}usage${reset} ${white}5h${reset} $(usage_bar "$five_hour_pct") ${dim}·${reset} ${white}7d${reset} $(usage_bar "$seven_day_pct")"
-[ -n "$five_hour_reset" ] && out+=" ${white}@${five_hour_reset}${reset}"
-
-# Append CLI version as last segment
-if [ -n "$cli_version" ]; then
-    out+=" ${dim}|${reset} ${orange}v${cli_version}${reset}"
-fi
+# Right section z: CLI version
+[ -n "$cli_version" ] && right+="${bg_b}${fg_a}${cap_l}${bg_a}${black}${bold} ${cli_version} "
+right+="${reset}"
 
 # Output
-# Pad between left and right halves to fill the terminal width; reserve covers Claude Code's own margins
+# Fill between the halves with the c background, like lualine's middle; reserve covers Claude Code's own margins
 strip() { printf '%b' "$1" | sed $'s/\x1b\[[0-9;]*m//g'; }
-visible="$(strip "$left")$(strip "$out")"
-pad=$(( ${COLUMNS:-0} - 4 - ${#visible} ))
-if [ "$pad" -gt 2 ]; then
-    gap=$(printf '%*s' "$pad" '')
-else
-    gap=" ${dim}|${reset} "
-fi
-printf "%b" "$left$gap$out"
+visible_len=$(printf '%s%s' "$(strip "$left")" "$(strip "$right")" | LC_ALL=en_US.UTF-8 wc -m | tr -d ' ')
+pad=$(( ${COLUMNS:-0} - 4 - visible_len ))
+[ "$pad" -lt 1 ] && pad=1
+gap="${bg_c}$(printf '%*s' "$pad" '')"
+printf "%b" "$left$gap$right"
 
 exit 0
