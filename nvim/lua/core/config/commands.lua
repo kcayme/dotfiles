@@ -119,7 +119,9 @@ end, { desc = "Insert a random v4 UUID after the cursor, quoted unless inside a 
 
 vim.api.nvim_create_user_command("PickGitWorktree", function()
   local items = {}
-  for _, line in ipairs(vim.fn.systemlist({ "git", "worktree", "list", "--porcelain" })) do
+  local dirs = vim.fn.systemlist({ "git", "worktree", "list", "--porcelain" })
+
+  for _, line in ipairs(dirs) do
     local path = line:match("^worktree (.+)")
     if path then
       items[#items + 1] = { path = vim.uv.fs_realpath(path) or path, branch = "(detached)" }
@@ -129,6 +131,7 @@ vim.api.nvim_create_user_command("PickGitWorktree", function()
       items[#items].branch = line:match("^branch refs/heads/(.+)")
     end
   end
+
   local current = vim.fn.systemlist({ "git", "rev-parse", "--show-toplevel" })[1]
   for _, item in ipairs(items) do
     item.text = item.branch .. " " .. item.path
@@ -137,6 +140,7 @@ vim.api.nvim_create_user_command("PickGitWorktree", function()
   if items[1] then
     items[1].main = true -- git always lists the main worktree first
   end
+
   Snacks.picker({
     title = "Git Worktrees",
     items = items,
@@ -219,12 +223,7 @@ vim.api.nvim_create_user_command("PickGitWorktree", function()
       end
 
       notify(
-        ("Switched to %s (%s)\nReopened %d buffer(s), closed %d"):format(
-          item.branch,
-          vim.fn.fnamemodify(item.path, ":~"),
-          reopened,
-          #moves - reopened
-        ),
+        ("Switched to %s (%s)\n"):format(item.branch, vim.fn.fnamemodify(item.path, ":~")),
         "info",
         { title = "Git Worktree" }
       )
