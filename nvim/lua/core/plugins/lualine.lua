@@ -23,6 +23,24 @@ return {
 
       local custom_signs = require("core.themes.signs")
 
+      -- linked worktree's folder name, empty on the main worktree; cached per buffer since the statusline redraws every 100ms
+      local function worktree()
+        if vim.b.worktree_name == nil then
+          local out = vim.fn.systemlist({
+            "git",
+            "-C",
+            vim.fn.expand("%:p:h"),
+            "rev-parse",
+            "--path-format=absolute",
+            "--show-toplevel",
+            "--git-dir",
+            "--git-common-dir",
+          })
+          vim.b.worktree_name = vim.v.shell_error == 0 and out[2] ~= out[3] and vim.fn.fnamemodify(out[1], ":t") or ""
+        end
+        return vim.b.worktree_name
+      end
+
       require("lualine").setup({
         options = {
           icons_enabled = true,
@@ -48,6 +66,7 @@ return {
           lualine_a = { "mode" },
           lualine_b = {
             { "branch", icon = "" },
+            { worktree, icon = "\u{f0645}" },
           },
           lualine_c = {
             {

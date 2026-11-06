@@ -124,6 +124,7 @@ vim.api.nvim_set_keymap("n", "<Leader>ll", "yss", { noremap = false, desc = "Sur
 
 -- git diff
 map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
+map("n", "<leader>gw", "<cmd>PickGitWorktree<cr>", { desc = "Git Switch Worktree" })
 
 -- map({ "n", "x" }, "<leader>cc", function()
 --   require("utils.case").cycle({ "snake", "camel", "pascal" })
