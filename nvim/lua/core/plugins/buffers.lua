@@ -337,6 +337,42 @@ return {
           components.modified,
           components.separator,
         },
+        tabs = {
+          placement = "left",
+          components = {
+            {
+              text = function(tab)
+                return tab.is_active and "\u{e0b6}" or ""
+              end,
+              highlight = function(tab)
+                return tab.is_active and "RoundedEdgeActive" or "RoundedEdgeInactive"
+              end,
+            },
+            {
+              text = function(tab)
+                return " " .. tab.index .. ""
+              end,
+              highlight = function(tab)
+                return tab.is_active and "RoundedInnerActive" or "RoundedInnerInactive"
+              end,
+            },
+            {
+              text = function(tab)
+                return tab.is_active and "\u{e0b4}" or ""
+              end,
+              highlight = function(tab)
+                return tab.is_active and "RoundedEdgeActive" or "RoundedEdgeInactive"
+              end,
+            },
+            {
+              text = function(tab)
+                return tab.is_last and "  " or ""
+              end,
+              fg = colors and colors.statusline_bg,
+              bg = colors and colors.darker_black,
+            },
+          },
+        },
       })
 
       local map = vim.keymap.set
