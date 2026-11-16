@@ -124,7 +124,9 @@ vim.api.nvim_set_keymap("n", "<Leader>ll", "yss", { noremap = false, desc = "Sur
 
 -- git diff
 map("n", "<leader>gc", "<cmd>DiffviewOpen<cr>", { desc = "Git Diff View" })
-map("n", "<leader>gw", "<cmd>PickGitWorktree<cr>", { desc = "Git Switch Worktree" })
+map("n", "<leader>gw", function()
+  require("core.config.pickers").git_worktrees({ backend = "snacks" })
+end, { desc = "Git Switch Worktree" })
 
 -- map({ "n", "x" }, "<leader>cc", function()
 --   require("utils.case").cycle({ "snake", "camel", "pascal" })
@@ -257,6 +259,10 @@ end, { desc = "Find Jumplist" })
 map("n", "<leader>ft", function()
   Picker.todo_comments({ backend = "snacks" })
 end, { desc = "Find Todo List" })
+
+map("n", "<leader>fT", function()
+  Picker.tabs({ backend = "snacks" })
+end, { desc = "Find Tabs" })
 
 map({ "n", "x" }, "<leader>fw", function()
   Picker.grep_word({ backend = "snacks" })

@@ -124,6 +124,16 @@ function Picker.commands(opts)
   backend.commands(opts)
 end
 
+function Picker.tabs(opts)
+  local backend = get_backend(opts)
+  backend.tabs(opts)
+end
+
+function Picker.git_worktrees(opts)
+  local backend = get_backend(opts)
+  backend.git_worktrees(opts)
+end
+
 function Picker.unified(opts)
   require("core.config.pickers.unified").unified(opts or {})
 end
